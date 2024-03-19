@@ -1,6 +1,4 @@
-# TODO: docs/components/style.md
-
-<!-- https://github.com/servo/servo/blob/b79e2a0b6575364de01b1f89021aba0ec3fcf399/docs/components/style.md -->
+<!-- TODO: needs copyediting -->
 
 # Servo's style system overview
 
