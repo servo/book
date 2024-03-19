@@ -1,6 +1,6 @@
-# TODO: wiki/Building-for-Android
+<!-- TODO: needs copyediting -->
 
-<!-- https://github.com/servo/servo/wiki/Building-for-Android/77acd4dd5bfe40aa48d4df967259f89ffadab066 -->
+# Building for Android
 
 ### Support for Android is currently in-progress and these instructions might change frequently.
 
