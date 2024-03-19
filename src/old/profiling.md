@@ -24,14 +24,17 @@ Several ways to get profiling information about Servo's runs:
 
 ## Interval Profiling
 
-Using the -p option followed by a number (time period in seconds), you can spit out profiling information to the terminal periodically. To do so, run Servo on the desired site (URLs and local file paths are both supported) with profiling enabled:
+Using the -p option followed by a number (time period in seconds), you can spit out profiling information to the terminal periodically.
+To do so, run Servo on the desired site (URLs and local file paths are both supported) with profiling enabled:
 ```
  ./mach run --release -p 5 https://www.cnn.com/
 ```
 
-In the example above, while Servo is still running (AND is processing new passes), the profiling information is printed to the terminal every 5 seconds. 
+In the example above, while Servo is still running (AND is processing new passes), the profiling information is printed to the terminal every 5 seconds.
 
-Once the page has loaded, hit ESC (or close the app) to exit. Profiling output will be provided, broken down by area of the browser and URL. For example, if you would like to profile loading Hacker News, you might get output of the form below:
+Once the page has loaded, hit ESC (or close the app) to exit.
+Profiling output will be provided, broken down by area of the browser and URL.
+For example, if you would like to profile loading Hacker News, you might get output of the form below:
 ```
 [larsberg@lbergstrom servo]$ ./mach run --release -p 5 http://news.ycombinator.com/
 _category_                          _incremental?_ _iframe?_             _url_                  _mean (ms)_   _median (ms)_      _min (ms)_      _max (ms)_       _events_ 
@@ -54,7 +57,10 @@ In this example, when loading the page we performed one full layout and three in
 
 ## TSV Profiling
 
-Using the -p option followed by a file name, you can spit out profiling information of Servo's execution to a TSV (tab-separated because certain url contained commas) file. The information is written to the file only upon Servo's termination. This works well with the -x OR -o option so that performance information can be collected during automated runs. Example usage:
+Using the -p option followed by a file name, you can spit out profiling information of Servo's execution to a TSV (tab-separated because certain url contained commas) file.
+The information is written to the file only upon Servo's termination.
+This works well with the -x OR -o option so that performance information can be collected during automated runs.
+Example usage:
 ```
 ./mach run -r -o out.png -p out.tsv https://www.google.com/
 ```
@@ -62,7 +68,8 @@ The formats of the profiling information in the Interval and TSV Profiling optio
 
 ## Generating Timelines
 
-Add the `--profiler-trace-path /timeline/output/path.html` flag to output the profiling data as a self contained HTML timeline. Because it is a self contained file (all CSS and JS is inline), it is easy to share, upload, or link to from bug reports.
+Add the `--profiler-trace-path /timeline/output/path.html` flag to output the profiling data as a self contained HTML timeline.
+Because it is a self contained file (all CSS and JS is inline), it is easy to share, upload, or link to from bug reports.
 
     $ ./mach run --release -p 5 --profiler-trace-path trace.html https://reddit.com/
 
@@ -84,7 +91,8 @@ All other code is in the `components/profile/` directory.
 
 ## Sampling profiler
 
-Servo includes a sampling profiler which generates profiles that can be opened in the [Gecko profiling tools](https://perf-html.io/). To use them:
+Servo includes a sampling profiler which generates profiles that can be opened in the [Gecko profiling tools](https://perf-html.io/).
+To use them:
 
 1. Run Servo, loading the page you wish to profile
 2. Press Ctrl+P (or Cmd+P on macOS) to start the profiler (the console should show "Enabling profiler")
@@ -93,11 +101,13 @@ Servo includes a sampling profiler which generates profiles that can be opened i
 5. Run `python etc/profilicate.py samples.json >gecko_samples.json` to transform the profile into a format that the Gecko profiler understands
 6. Load `gecko_samples.json` into https://perf-html.io/
 
-To control the output filename, set the `PROFILE_OUTPUT` environment variable. To control the sampling rate (default 10ms), set the `SAMPLING_RATE` environment variable.
+To control the output filename, set the `PROFILE_OUTPUT` environment variable.
+To control the sampling rate (default 10ms), set the `SAMPLING_RATE` environment variable.
 
 ## Using OSX Instruments
 
-This option is using the Instruments app on Mac OSX. First, before compiling the release mode, turn on the debug symbols in the Cargo.toml file under the top level directory by uncommenting the commented lines under `[profile.release]`.
+This option is using the Instruments app on Mac OSX.
+First, before compiling the release mode, turn on the debug symbols in the Cargo.toml file under the top level directory by uncommenting the commented lines under `[profile.release]`.
 
 Here are some videos for help with Instruments (they will stream only on Safari):
 * [Using Time Profiler in Instruments](https://developer.apple.com/videos/play/wwdc2016/418/)
@@ -125,11 +135,13 @@ Then start the profiler, it should produce reports which show all of the threads
 
 ## Comparing Servo Layout to Gecko
 
-There are no direct performance counters for the layout code in Gecko. Instead, use a sampling profiler (e.g., Instruments.app on OSX or perf on Linux) and sum the time spent in the `Reflow*` methods.
+There are no direct performance counters for the layout code in Gecko.
+Instead, use a sampling profiler (e.g., Instruments.app on OSX or perf on Linux) and sum the time spent in the `Reflow*` methods.
 
 ## Comparing Servo Layout to Chrome
 
-There are no direct performance counters for the layout code in Chrome. Instead, use a sampling profiler (e.g., Instruments.app on OSX or perf on Linux) and sum the time spent in the `layout*` methods.
+There are no direct performance counters for the layout code in Chrome.
+Instead, use a sampling profiler (e.g., Instruments.app on OSX or perf on Linux) and sum the time spent in the `layout*` methods.
 
 ## Profiling Webrender
 Use the following command to get some profile data from WebRender:
@@ -138,6 +150,6 @@ Use the following command to get some profile data from WebRender:
 
 When you run Servo with this command, you'll be looking at three things:
 
-CPU (backend):    The amount of time WebRender is packing and batching data.
-CPU (Compositor): Amount of time WebRender is issuing GL calls and interacting with the driver.
-GPU: Amount of time the GPU is taking to execute the shaders.
+- CPU (backend):    The amount of time WebRender is packing and batching data.
+- CPU (Compositor): Amount of time WebRender is issuing GL calls and interacting with the driver.
+- GPU: Amount of time the GPU is taking to execute the shaders.
