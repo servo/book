@@ -20,6 +20,18 @@
 - [Debugging](hacking/debugging.md)
 - [Automated testing\*](hacking/testing.md)
 
+# Servo’s architecture
+
+- [Architecture overview\*](architecture/overview.md)
+  - [Concurrency and parallelism\*](architecture/concurrency-and-parallelism.md)
+  - [Further reading\*](architecture/further-reading.md)
+- [Directory structure\*](architecture/directory-structure.md)
+- [Script\*](architecture/script.md)
+- [Style\*](architecture/style.md)
+- [Layout\*](architecture/layout.md)
+- [Compositor\*](architecture/compositor.md)
+- [WebXR\*](architecture/webxr.md)
+
 # Meta
 
 - [Docs for older versions](hacking/older-versions.md)
@@ -29,10 +41,6 @@
 
 - [README.md\*](old/README.md)
 - [CONTRIBUTING.md\*](old/CONTRIBUTING.md)
-- [docs/ORGANIZATION.md\*](old/ORGANIZATION.md)
 - [docs/STYLE_GUIDE.md\*](old/STYLE_GUIDE.md)
 - [docs/glossary.md\*](old/glossary.md)
-- [docs/components/style.md\*](old/components/style.md)
-- [docs/components/webxr.md\*](old/components/webxr.md)
 - [wiki/Building\*](old/building.md)
-- [wiki/Design\*](old/design.md)
