@@ -2,6 +2,22 @@
 
 [The Servo Book](title-page.md)
 
+# Hacking on Servo
+
+- [Getting started\*](hacking/getting-started.md)
+- [Building Servo\*](hacking/building-servo.md)
+  - [Building for Android\*](hacking/building-for-android.md)
+- [Running Servo\*](hacking/running-servo.md)
+- [mach\*](hacking/mach.md)
+- [Some basic Rust\*](hacking/some-basic-rust.md)
+  - [Cargo and crates\*](hacking/cargo-and-crates.md)
+  - [Working on a crate\*](hacking/working-on-a-crate.md)
+- [Editor support\*](hacking/editor-support.md)
+- [Debugging\*](hacking/debugging.md)
+- [Tests\*](hacking/tests.md)
+- [Documentation\*](hacking/documentation.md)
+- [Ask questions\*](hacking/ask-questions.md)
+
 # Meta
 
 - [Docs for older versions](hacking/older-versions.md)
@@ -12,7 +28,6 @@
 - [README.md\*](old/README.md)
 - [CONTRIBUTING.md\*](old/CONTRIBUTING.md)
 - [docs/COMMAND_LINE_ARGS.md\*](old/COMMAND_LINE_ARGS.md)
-- [docs/HACKING_QUICKSTART.md\*](old/HACKING_QUICKSTART.md)
 - [docs/ORGANIZATION.md\*](old/ORGANIZATION.md)
 - [docs/STYLE_GUIDE.md\*](old/STYLE_GUIDE.md)
 - [docs/debugging.md\*](old/debugging.md)
@@ -21,6 +36,5 @@
 - [docs/components/webxr.md\*](old/components/webxr.md)
 - [tests/wpt/README.md\*](old/wpt.md)
 - [wiki/Building\*](old/building.md)
-- [wiki/Building-for-Android\*](old/building-for-android.md)
 - [wiki/Design\*](old/design.md)
 - [wiki/Profiling\*](old/profiling.md)
