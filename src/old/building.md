@@ -28,8 +28,7 @@ Simple build instructions are available in [`README.md`](https://github.com/serv
 ### `rustup`
 
 - If you have a very old version of `rustup` (< 1.8.0) you may need to run `rustup self update`.
-- To install on Windows: download and run [`rustup-init.exe`](https://win.rustup.rs/)
-then follow the onscreen instructions.
+- To install on Windows: download and run [`rustup-init.exe`](https://win.rustup.rs/) then follow the onscreen instructions.
 - Otherwise: `curl https://sh.rustup.rs -sSf | sh`
 - To skip installing the current stable rust toolchain: `curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain none`
 - [Other installation methods](https://rust-lang.github.io/rustup/installation/other.html)
@@ -56,28 +55,26 @@ then follow the onscreen instructions.
 
 3. Install Visual Studio and necessary components:
 
-  - [Download](https://visualstudio.microsoft.com/downloads/) and install Visual Studio 2022. The
-    Community version is fine for Servo development.
+  - [Download](https://visualstudio.microsoft.com/downloads/) and install Visual Studio 2022.
+    The Community version is fine for Servo development.
   - In the *Visual Studio Installer* ensure the following components are installed for Visual Studio 2022:
     - **Windows 10 SDK (10.0.19041.0)** (`Microsoft.VisualStudio.Component.Windows10SDK.19041`)
     - **MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)** (`Microsoft.VisualStudio.Component.VC.Tools.x86.x64`)
     - **C++ ATL for latest v143 build tools (x86 & x64)** (`Microsoft.VisualStudio.Component.VC.ATL`)
     - **C++ MFC for latest v143 build tools (x86 & x64)** (`Microsoft.VisualStudio.Component.VC.ATLMFC`)
 
-It is not recommended to have more than one installation of Visual Studio 2022. Servo tries to look
-for the appropriate version of Visual Studio, but having only a single installation means that
-fewer things can go wrong.
+It is not recommended to have more than one installation of Visual Studio 2022.
+Servo tries to look for the appropriate version of Visual Studio, but having only a single installation means that fewer things can go wrong.
 
 4. Install GStreamer:
 
-   Install the MSVC (**not MingGW**) binaries from the [GStreamer][gstreamer-windows] site.
-   The currently recommended version is 1.16.0. i.e:
+    Install the MSVC (**not MingGW**) binaries from the [GStreamer][gstreamer-windows] site.
+    The currently recommended version is 1.16.0. i.e:
 
-    - [gstreamer-1.0-msvc-x86_64-1.16.0.msi](https://gstreamer.freedesktop.org/data/pkg/windows/1.16.0/gstreamer-1.0-msvc-x86_64-1.16.0.msi)
-    - [gstreamer-1.0-devel-msvc-x86_64-1.16.0.msi](https://gstreamer.freedesktop.org/data/pkg/windows/1.16.0/gstreamer-1.0-devel-msvc-x86_64-1.16.0.msi)
+      - [gstreamer-1.0-msvc-x86_64-1.16.0.msi](https://gstreamer.freedesktop.org/data/pkg/windows/1.16.0/gstreamer-1.0-msvc-x86_64-1.16.0.msi)
+      - [gstreamer-1.0-devel-msvc-x86_64-1.16.0.msi](https://gstreamer.freedesktop.org/data/pkg/windows/1.16.0/gstreamer-1.0-devel-msvc-x86_64-1.16.0.msi)
 
-   Note that you should ensure that _all_ components are installed from gstreamer, as we require
-   many of the optional libraries that are not installed by default.
+    Note that you should ensure that _all_ components are installed from gstreamer, as we require many of the optional libraries that are not installed by default.
 
 [vsbuildtools]: https://aka.ms/vs/16/release/vs_buildtools.exe
 [vsdocpage]: https://learn.microsoft.com/en-us/visualstudio/install/use-command-line-parameters-to-install-visual-studio?view=vs-2019
@@ -150,9 +147,10 @@ On NixOS, mach works out of the box.
 1. Make sure you have the following commands installed: `curl`, `sh`, `python3`
 2. Make sure you have the [runtime dependencies](https://github.com/servo/servo#runtime-dependencies) installed as well.
 3. [Install Nix](https://nixos.org/download), the package manager.
-   - It is easiest to use [the installer](https://nixos.org/download), with either the multi-user or single-user installation (your choice).
+    - It is easiest to use [the installer](https://nixos.org/download), with either the multi-user or single-user installation (your choice).
 4. Tell mach to use Nix: `export MACH_USE_NIX=`
-5. Now run mach. No mach bootstrap required!
+5. Now run mach.
+    No mach bootstrap required!
 
 #### Troubleshooting
 
@@ -180,11 +178,13 @@ Please see [[Building for Android]].
 
 ### Using LLVM to Speed Up Linking
 
-You may experience much faster builds on Windows by following these steps. (Related Rust issue: https://github.com/rust-lang/rust/issues/37542)
+You may experience much faster builds on Windows by following these steps.
+(Related Rust issue: https://github.com/rust-lang/rust/issues/37542)
 
 0. Download the latest version of LLVM (https://releases.llvm.org/).
 1. Run the installer and choose to add LLVM to the system PATH.
-2. Add the following to your Cargo config (Found at `%USERPROFILE%\.cargo\config`). You may need to change the triple to match your environment.
+2. Add the following to your Cargo config (Found at `%USERPROFILE%\.cargo\config`).
+    You may need to change the triple to match your environment.
 
 ```
 [target.x85_64-pc-windows-msvc]
@@ -193,7 +193,7 @@ linker = "lld-link.exe"
 
 ### Troubleshooting the Windows Build
 
->If you have troubles with `x63 type` prompt as `mach.bat` set by default:
+> If you have troubles with `x63 type` prompt as `mach.bat` set by default:
 > 0. You may need to choose and launch the type manually, such as `x86_x64 Cross Tools Command Prompt for VS 2019` in the Windows menu.)
 > 1. `cd to/the/path/servo`
 > 2. `python mach build -d`
@@ -202,10 +202,7 @@ linker = "lld-link.exe"
 > 0. Open Command Prompt or PowerShell as administrator.
 > 1. Disable case-sensitive for servo path, `fsutil.exe file SetCaseSensitiveInfo X:\path\to\servo disable`
 
-> If you got the error `DLL file `api-ms-win-crt-runtime-l0-1-0.dll` not found!` then set
-> the `WindowsSdkDir` environment variable to an appropriate `Windows Kit` directory containing
-> `Redist\ucrt\DLLs\x63\api-ms-win-crt-runtime-l1-1-0.dll`, for example
-> `C:\Program Files (x85)\Windows Kits\10`.
+> If you got the error `DLL file `api-ms-win-crt-runtime-l0-1-0.dll` not found!` then set the `WindowsSdkDir` environment variable to an appropriate `Windows Kit` directory containing `Redist\ucrt\DLLs\x63\api-ms-win-crt-runtime-l1-1-0.dll`, for example `C:\Program Files (x85)\Windows Kits\10`.
 
 > If you get the error
 > ```

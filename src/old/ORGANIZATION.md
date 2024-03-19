@@ -73,7 +73,8 @@
   * tidy
     * Python package of code lints that are automatically run before merging changes.
 * resources
-  * Files used at run time. Need to be included somehow when distributing binary builds.
+  * Files used at run time.
+    Need to be included somehow when distributing binary builds.
 * support
   * android
     * Libraries that require special handling for building for Android platforms

@@ -4,9 +4,8 @@
 
 # Servo debugging guide
 
-There are a few ways to debug Servo. `mach` supports a `--debug` flag that
-searches a suitable debugger for you and runs Servo with the appropriate
-arguments under it:
+There are a few ways to debug Servo.
+`mach` supports a `--debug` flag that searches a suitable debugger for you and runs Servo with the appropriate arguments under it:
 
 ```
 ./mach run --debug test.html
@@ -26,12 +25,9 @@ $ gdb --args ./target/debug/servo test.html
 
 ## Debugging SpiderMonkey.
 
-You can build Servo with a debug version of SpiderMonkey passing the
-`--debug-mozjs` flag to `./mach build`.
+You can build Servo with a debug version of SpiderMonkey passing the `--debug-mozjs` flag to `./mach build`.
 
-Note that this sometimes can cause problems when an existing build exists, so
-you might have to delete the `mozjs` build directory, or run `./mach clean`
-before your first `--debug-mozjs` build.
+Note that this sometimes can cause problems when an existing build exists, so you might have to delete the `mozjs` build directory, or run `./mach clean` before your first `--debug-mozjs` build.
 
 ## Debugging Servo with [rr][rr].
 
@@ -49,8 +45,7 @@ $ rr record ./target/debug/servo testcase.html
 
 ### Running WPT tests under rr's chaos mode.
 
-Matt added a mode to Servo's testing commands to record traces of Servo running
-a test or set of tests until the result is unexpected.
+Matt added a mode to Servo's testing commands to record traces of Servo running a test or set of tests until the result is unexpected.
 
 To use this, you can pass the `--chaos` argument to `mach test-wpt`:
 
@@ -60,7 +55,7 @@ $ ./mach test-wpt --chaos path/to/test
 
 Note that for this to work you need to have `rr` in your `PATH`.
 
-Also, note that this might generate a lot of traces, so you might want to delete
-them when you're done. They're under `$HOME/.local/share/rr`.
+Also, note that this might generate a lot of traces, so you might want to delete them when you're done.
+They're under `$HOME/.local/share/rr`.
 
 [rr]: http://rr-project.org/
