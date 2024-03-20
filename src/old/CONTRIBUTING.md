@@ -60,10 +60,6 @@ If you do not have permission to add labels to your pull request, add a comment 
 
 Servo Code of Conduct is published at <https://servo.org/coc/>.
 
-## Communication
-
-Servo contributors frequent the [Servo Zulip chat](https://servo.zulipchat.com/).
-
 ## Technical Steering Committee
 
 Technical oversight of the Servo Project is provided by the [Technical Steering Committee](https://github.com/servo/project/blob/main/governance/tsc/README.md).
