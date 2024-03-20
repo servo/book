@@ -1,0 +1,47 @@
+# Based on <https://github.com/rust-lang/mdBook/wiki/Automated-Deployment:-GitHub-Actions/6cd0e9edbaf9f5b3ae495ece9d48f4145d001d14>
+
+name: Deploy
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # To push a branch 
+      pages: write  # To push to a GitHub Pages site
+      id-token: write  # To update the deployment status
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Configure PATH
+        run: |
+          mkdir -p opt/mdbook
+          mkdir -p opt/mdbook-mermaid
+          echo "$(pwd)/opt/mdbook" >> $GITHUB_PATH
+          echo "$(pwd)/opt/mdbook-mermaid" >> $GITHUB_PATH
+      - name: Install latest mdbook
+        run: |
+          tag=$(curl 'https://api.github.com/repos/rust-lang/mdbook/releases/latest' | jq -r '.tag_name')
+          url="https://github.com/rust-lang/mdbook/releases/download/$tag/mdbook-$tag-x86_64-unknown-linux-gnu.tar.gz"
+          curl -sSL "$url" | tar -xz --directory=./opt/mdbook
+      - name: Install latest mdbook-mermaid
+        run: |
+          tag=$(curl 'https://api.github.com/repos/badboy/mdbook-mermaid/releases/latest' | jq -r '.tag_name')
+          url="https://github.com/badboy/mdbook-mermaid/releases/download/$tag/mdbook-mermaid-$tag-x86_64-unknown-linux-gnu.tar.gz"
+          curl -sSL "$url" | tar -xz --directory=./opt/mdbook-mermaid
+      - name: Build book
+        run: |
+          mdbook build
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v2
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: 'book'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
