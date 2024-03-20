@@ -1,5 +1,7 @@
 # Summary
 
+[The Servo Book](title-page.md)
+
 # Meta
 
 - [Docs for older versions](hacking/older-versions.md)
