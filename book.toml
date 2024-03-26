@@ -4,3 +4,9 @@ language = "en"
 multilingual = false
 src = "src"
 title = "The Servo Book"
+
+[output.html]
+git-repository-url = "https://github.com/servo/book"
+git-repository-icon = "fa-github"
+edit-url-template = "https://github.com/servo/book/edit/main/{path}"
+site-url = "/book/"
