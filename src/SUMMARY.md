@@ -2,6 +2,8 @@
 
 [The Servo Book](title-page.md)
 
+- [Getting Servo](getting-servo.md)
+
 # Hacking on Servo
 
 - [mach](hacking/mach.md)

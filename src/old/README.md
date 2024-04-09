@@ -6,18 +6,6 @@
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`HACKING_QUICKSTART.md`](docs/HACKING_QUICKSTART.md) for help getting started.
 
-## Getting Servo
-
-``` sh
-git clone https://github.com/servo/servo
-cd servo
-```
-
-- Your CARGO_HOME needs to point to (or be in) the same drive as your Servo repository ([#28530](https://github.com/servo/servo/issues/28530)).
-- The Servo repository is big!
-  If you have an unreliable network connection, consider [making a shallow clone](https://github.blog/2020-12-21-get-up-to-speed-with-partial-clone-and-shallow-clone/).
-
-
 ## Build Setup
 
 * [macOS](#macos)
