@@ -4,7 +4,6 @@
 
 # Hacking on Servo
 
-- [Getting started\*](hacking/getting-started.md)
 - [Building Servo\*](hacking/building-servo.md)
   - [Building for Android\*](hacking/building-for-android.md)
 - [Running Servo\*](hacking/running-servo.md)
@@ -15,8 +14,6 @@
 - [Editor support\*](hacking/editor-support.md)
 - [Debugging\*](hacking/debugging.md)
 - [Tests\*](hacking/tests.md)
-- [Documentation\*](hacking/documentation.md)
-- [Ask questions\*](hacking/ask-questions.md)
 
 # Meta
 
