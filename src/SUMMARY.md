@@ -11,7 +11,7 @@
 - [Some basic Rust\*](hacking/some-basic-rust.md)
   - [Cargo and crates\*](hacking/cargo-and-crates.md)
   - [Working on a crate\*](hacking/working-on-a-crate.md)
-- [Editor support\*](hacking/editor-support.md)
+- [Editor support](hacking/editor-support.md)
 - [Debugging\*](hacking/debugging.md)
 - [Automated testing\*](hacking/testing.md)
 
