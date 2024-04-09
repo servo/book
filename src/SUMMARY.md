@@ -3,6 +3,7 @@
 [The Servo Book](title-page.md)
 
 - [Getting Servo](getting-servo.md)
+- [Running servoshell](running-servoshell.md)
 
 # Hacking on Servo
 
@@ -26,7 +27,6 @@
 
 - [README.md\*](old/README.md)
 - [CONTRIBUTING.md\*](old/CONTRIBUTING.md)
-- [docs/COMMAND_LINE_ARGS.md\*](old/COMMAND_LINE_ARGS.md)
 - [docs/ORGANIZATION.md\*](old/ORGANIZATION.md)
 - [docs/STYLE_GUIDE.md\*](old/STYLE_GUIDE.md)
 - [docs/debugging.md\*](old/debugging.md)
