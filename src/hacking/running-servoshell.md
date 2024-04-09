@@ -1,6 +1,6 @@
 <!-- TODO: needs copyediting -->
 
-# Running Servo
+# Running servoshell
 
 The servo binary is located in `target/debug/servo` (or `target/release/servo`).
 You can directly run this binary, but we recommend using `./mach` instead:

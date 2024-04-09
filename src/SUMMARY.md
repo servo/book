@@ -6,7 +6,7 @@
 
 - [Building Servo\*](hacking/building-servo.md)
   - [Building for Android\*](hacking/building-for-android.md)
-- [Running Servo\*](hacking/running-servo.md)
+- [Running servoshell\*](hacking/running-servoshell.md)
 - [mach\*](hacking/mach.md)
 - [Some basic Rust\*](hacking/some-basic-rust.md)
   - [Cargo and crates\*](hacking/cargo-and-crates.md)
