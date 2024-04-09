@@ -115,18 +115,6 @@ If you’re making changes to one crate that cause build errors in another crate
 It will run `cargo check`, which runs the analysis phase of the compiler (and so shows build errors if any) but skips the code generation phase.
 This can be a lot faster than a full build, though of course it doesn’t produce a binary you can run.
 
-## Running
-
-Run Servo with the command:
-
-```sh
-./servo [url] [arguments] # if you run with nightly build
-./mach run [url] [arguments] # if you run with mach
-
-# For example
-./mach run https://www.google.com
-```
-
 ### Commandline Arguments
 
 - `-p INTERVAL` turns on the profiler and dumps info to the console every `INTERVAL` seconds
@@ -144,26 +132,7 @@ Run Servo with the command:
 - `Alt`+`right arrow` goes forwards in the history (`Cmd`+`right arrow` on Mac)
 - `Esc` or `Ctrl`+`Q` exits Servo (`Cmd`+`Q` on Mac)
 
-### Runtime dependencies
-
-#### Linux
-
-* `GStreamer` >=1.18
-* `gst-plugins-base` >=1.18
-* `gst-plugins-good` >=1.18
-* `gst-plugins-bad` >=1.18
-* `gst-plugins-ugly` >=1.18
-* `libXcursor`
-* `libXrandr`
-* `libXi`
-* `libxkbcommon`
-* `vulkan-loader`
-
 ## Developing
-
-There are lots of mach commands you can use.
-You can list them with `./mach --help`.
-
 
 The generated documentation can be found on https://doc.servo.org/servo/index.html
 
