@@ -1,5 +1,10 @@
 # Building Servo
 
+<div class="warning _note">
+
+**If this is your first time building Servo**, be sure to [set up your environment](setting-up-your-environment.md) before continuing with the steps below.
+</div>
+
 To build servoshell for your machine:
 
 ```sh
@@ -11,6 +16,15 @@ To build servoshell for Android (armv7):
 ```sh
 $ ./mach build --android
 ```
+
+<div class="warning _note">
+
+**Sometimes the tools or dependencies needed to build Servo will change.**
+If you start encountering build problems after updating Servo, try running `./mach bootstrap` again, or [set up your environment](setting-up-your-environment.md) from the beginning.
+
+**You are not alone!**
+If you have problems building Servo that you can’t solve, you can always ask for help in the [build issues](https://servo.zulipchat.com/#narrow/stream/263398-general/topic/Build.20Issues) chat on Zulip.
+</div>
 
 ## Build profiles
 

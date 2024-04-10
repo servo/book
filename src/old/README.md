@@ -17,34 +17,11 @@ If these instructions fail or you would like to install dependencies manually, t
 
 ### macOS
 
-- Ensure that the version showed by `python --version` is >= 3.10:
-- Install [Xcode](https://developer.apple.com/xcode/)
-- Install [Homebrew](https://brew.sh/)
-- Run `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
 - Run `./mach bootstrap`<br/>
   *Note: This will install the recommended version of GStreamer globally on your system.*
 
-### Linux
-
-- Run `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
-- Install Python (version >= 3.10):
-    - **Debian-like:** Run `sudo apt install python3-pip python3-venv`
-    - **Fedora:** Run `sudo dnf install python3 python3-pip python3-devel`
-    - **Arch:** Run `sudo pacman -S --needed python python-pip`
-    - **Gentoo:** Run `sudo emerge dev-python/pip`
-- Run `./mach bootstrap`
-
 ### Windows
 
-- Download and run [`rustup-init.exe`](https://win.rustup.rs/)
-  - Make sure to select *Quick install via the Visual Studio Community installer* or otherwise install Visual Studio 2022.
-- In the *Visual Studio Installer* ensure the following components are installed for Visual Studio 2022:
-  - **Windows 10 SDK (10.0.19041.0)** (`Microsoft.VisualStudio.Component.Windows10SDK.19041`)
-  - **MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)** (`Microsoft.VisualStudio.Component.VC.Tools.x86.x64`)
-  - **C++ ATL for latest v143 build tools (x86 & x64)** (`Microsoft.VisualStudio.Component.VC.ATL`)
-  - **C++ MFC for latest v143 build tools (x86 & x64)** (`Microsoft.VisualStudio.Component.VC.ATLMFC`)
-- Install [chocolatey](https://chocolatey.org/)
-- Install [Python 3.11](https://www.python.org/downloads/windows/)
 - Run `mach bootstrap`
   - *This will install CMake, Git, and Ninja via choco in an Administrator console.
     Allow the scripts to run and once the operation finishes, close the new console.*
