@@ -1,0 +1,11 @@
+:root {
+    --servo-blue: #1192E8;
+}
+
+/* Gentler variant of the warning box, for notes. */
+.warning._note {
+    border-inline-start-color: var(--servo-blue);
+}
+.warning._note::before {
+    color: var(--servo-blue);
+}

@@ -11,6 +11,7 @@ git-repository-icon = "fa-github"
 edit-url-template = "https://github.com/servo/book/edit/main/{path}"
 site-url = "/book/"
 # Putting additional-css and additional-js in src/ gives them live reload.
+additional-css = ["src/custom.css"]
 additional-js = ["src/mermaid.min.js", "src/mermaid-init.js"]
 
 [preprocessor]
