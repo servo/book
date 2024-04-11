@@ -1,5 +1,6 @@
 :root {
     --servo-blue: #1192E8;
+    --servo-green: #42BE65;
 }
 
 /* Gentler variant of the warning box, for notes. */
@@ -8,4 +9,29 @@
 }
 .warning._note::before {
     color: var(--servo-blue);
+}
+
+/* Styles for error messages. */
+samp {
+    /* Treat newlines as line breaks, but wrap the text... */
+    white-space: pre-wrap;
+    /* ...like it would in a terminal. */
+    word-break: break-all;
+}
+p > samp {
+    color: var(--servo-green);
+}
+blockquote > samp {
+    display: block;
+    margin: 1em 0;
+}
+samp strong {
+    color: var(--servo-green);
+}
+._blockquote_title {
+    padding: 0.5em;
+    background: var(--quote-bg);
+}
+._blockquote_title + blockquote {
+    margin-top: 0;
 }
