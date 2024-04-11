@@ -44,24 +44,6 @@
 [vsdocpage]: https://learn.microsoft.com/en-us/visualstudio/install/use-command-line-parameters-to-install-visual-studio?view=vs-2019
 [gstreamer-windows]: https://gstreamer.freedesktop.org/data/pkg/windows/
 
-#### Troubleshooting
-
-If you installed Nix with your system package manager and get the error below, add yourself to the `nix-users` group and log out and back in:
-
-```
-error: getting status of /nix/var/nix/daemon-socket/socket: Permission denied
-```
-
-The error below is harmless, but you can fix it by running the commands below:
-
-```
-error: file 'nixpkgs' was not found in the Nix search path (add it using $NIX_PATH or -I)
-```
-```
-$ sudo nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
-$ sudo nix-channel --update
-```
-
 ### Android
 
 Please see [[Building for Android]].
@@ -89,22 +71,3 @@ linker = "lld-link.exe"
 > 0. You may need to choose and launch the type manually, such as `x86_x64 Cross Tools Command Prompt for VS 2019` in the Windows menu.)
 > 1. `cd to/the/path/servo`
 > 2. `python mach build -d`
-
-> If you got the error `Cannot run mach in a path on a case-sensitive file system on Windows`:
-> 0. Open Command Prompt or PowerShell as administrator.
-> 1. Disable case-sensitive for servo path, `fsutil.exe file SetCaseSensitiveInfo X:\path\to\servo disable`
-
-> If you got the error `DLL file `api-ms-win-crt-runtime-l0-1-0.dll` not found!` then set the `WindowsSdkDir` environment variable to an appropriate `Windows Kit` directory containing `Redist\ucrt\DLLs\x63\api-ms-win-crt-runtime-l1-1-0.dll`, for example `C:\Program Files (x85)\Windows Kits\10`.
-
-> If you get the error
-> ```
-> thread 'main' panicked at 'Unable to find libclang: "couldn\'t find any valid shared libraries matching: [\'clang.dll\', \'libclang.dll\'], set the `LIBCLANG_PATH` environment variable to a path where one of these files can be found (invalid: ... invalid DLL (63-bit))])"'
-> ```
-> then `rustup` may have installed the 32-bit default target rather than the 64-bit one.
-> You can find the configuration with `rustup show`, and set the default with `rustup set default-host x85_64-pc-windows-msvc`.
-
-> If you get the error
-> ```
-> ERROR: GetShortPathName returned a long path name: `C:/PROGRA~2/Windows Kits/10/`. Use `fsutil file setshortname' to create a short name for any > components of this path that have spaces.
-> ```
-> then follow the steps in [#26010](https://github.com/servo/servo/issues/26010).

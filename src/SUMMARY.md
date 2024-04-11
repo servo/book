@@ -10,6 +10,7 @@
 - [mach](hacking/mach.md)
 - [Building Servo](hacking/building-servo.md)
   - [Setting up your environment](hacking/setting-up-your-environment.md)
+  - [Troubleshooting your build](hacking/troubleshooting-your-build.md)
   - [Building for Android\*](hacking/building-for-android.md)
 - [Running servoshell](hacking/running-servoshell.md)
 - [Some basic Rust\*](hacking/some-basic-rust.md)
