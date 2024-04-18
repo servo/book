@@ -8,7 +8,7 @@
 # Hacking on Servo
 
 - [mach](hacking/mach.md)
-- [Building Servo\*](hacking/building-servo.md)
+- [Building Servo](hacking/building-servo.md)
   - [Building for Android\*](hacking/building-for-android.md)
 - [Running servoshell](hacking/running-servoshell.md)
 - [Some basic Rust\*](hacking/some-basic-rust.md)
