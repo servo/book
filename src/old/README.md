@@ -77,33 +77,6 @@ For information about building and running the Android build, see the [Android d
 Servo's build system uses rustup.rs to automatically download a Rust compiler.
 This is a specific version of Rust Nightly determined by the [`rust-toolchain.toml`](https://github.com/servo/servo/blob/main/rust-toolchain.toml) file.
 
-### Normal build
-
-To build Servo in development mode.
-This is useful for development, but the resulting binary is very slow:
-
-``` sh
-./mach build --dev
-./mach run tests/html/about-mozilla.html
-```
-
-### Release build
-For benchmarking, performance testing, or real-world use.
-Add the `--release` flag to create an optimized build:
-
-``` sh
-./mach build --release
-./mach run --release tests/html/about-mozilla.html
-```
-
-### Android build
-
-For an armv7 Android build run the following command.
-
-```shell
-./mach build --android
-```
-
 ### Checking for build errors, without building
 
 If you’re making changes to one crate that cause build errors in another crate, consider this instead of a full build:
