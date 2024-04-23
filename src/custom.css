@@ -35,3 +35,9 @@ samp strong {
 ._blockquote_title + blockquote {
     margin-top: 0;
 }
+
+/* Make th cells in tbody have same styling as “table td”. */
+table > tbody > tr > th {
+    padding: 3px 20px;
+    border: 1px var(--table-border-color) solid;
+}
