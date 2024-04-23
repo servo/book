@@ -2,6 +2,25 @@
 
 # Debugging
 
+There are a few ways to debug Servo.
+`mach` supports a `--debug` flag that searches a suitable debugger for you and runs Servo with the appropriate arguments under it:
+
+```
+./mach run --debug test.html
+```
+
+You can also specify an alternative debugger using the `--debugger` flag:
+
+```
+./mach run --debugger=my-debugger test.html
+```
+
+You can also, of course, run directly your debugger on the Servo binary:
+
+```
+$ gdb --args ./target/debug/servo test.html
+```
+
 ## Logging
 
 Before starting the debugger right away, you might want to get some information about what's happening, how, and when.
@@ -108,3 +127,34 @@ To inspect variables and you are new with lldb, we recommend using the `gui` mod
 
 If lldb crashes on certain lines involving the `profile()` function, it's not just you.
 Comment out the profiling code, and only keep the inner function, and that should do it.
+
+## Debugging Servo with [rr][rr].
+
+To record a trace under rr you can either use:
+
+```
+$ ./mach run --debugger=rr testcase.html
+```
+
+Or:
+
+```
+$ rr record ./target/debug/servo testcase.html
+```
+
+## Running WPT tests under rr's chaos mode.
+
+Matt added a mode to Servo's testing commands to record traces of Servo running a test or set of tests until the result is unexpected.
+
+To use this, you can pass the `--chaos` argument to `mach test-wpt`:
+
+```
+$ ./mach test-wpt --chaos path/to/test
+```
+
+Note that for this to work you need to have `rr` in your `PATH`.
+
+Also, note that this might generate a lot of traces, so you might want to delete them when you're done.
+They're under `$HOME/.local/share/rr`.
+
+[rr]: http://rr-project.org/
