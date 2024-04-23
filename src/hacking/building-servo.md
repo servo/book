@@ -20,10 +20,37 @@ There are three main build profiles, which you can build and use independently o
 - release builds, which are slower to build but more performant
 - production builds, which are used for official releases only
 
-| profile    | mach option            | optimised? | debug<br>info? | debug<br>assertions? | finds resources in<br>current working dir? |
-| ---------- | ---------------------- | ---------- | -------------- | -------------------- | ------------------------------------------ |
-| debug      | `-d`                   | no         | yes            | yes                  | yes                                        |
-| release    | `-r`                   | yes        | no             | yes(!)               | yes                                        |
-| production | `--profile production` | yes        | yes            | no                   | no                                         |
+<table>
+<thead>
+    <tr>
+        <th>
+        <th>debug
+        <th>release
+        <th>production
+<tbody>
+    <tr>
+        <th>mach option
+        <td><code>-d</code>
+        <td><code>-r</code>
+        <td><code>--profile production</code>
+    <tr>
+        <th>optimised?
+        <td>no<td>yes<td>yes
+    <tr>
+        <th>debug info?
+        <td>yes<td>no<td>no
+    <tr>
+        <th>debug assertions?
+        <td>yes<td>yes(!)<td>no
+    <tr>
+        <th>maximum RUST_LOG level
+        <td><code>trace</code><td><code>info</code><td><code>info</code>
+    <tr>
+        <th>SpiderMonkey debug build?
+        <td colspan="3">no, unless you <code>./mach build --debug-mozjs</code>
+    <tr>
+        <th>finds resources in<br>current working dir?
+        <td>yes<td>yes<td>no
+</table>
 
 You can change these settings in a servobuild file (see [servobuild.example](https://github.com/servo/servo/blob/b79e2a0b6575364de01b1f89021aba0ec3fcf399/servobuild.example)) or in the root [Cargo.toml](https://github.com/servo/servo/blob/b79e2a0b6575364de01b1f89021aba0ec3fcf399/Cargo.toml).

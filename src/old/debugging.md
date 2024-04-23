@@ -23,12 +23,6 @@ You can also, of course, run directly your debugger on the Servo binary:
 $ gdb --args ./target/debug/servo test.html
 ```
 
-## Debugging SpiderMonkey.
-
-You can build Servo with a debug version of SpiderMonkey passing the `--debug-mozjs` flag to `./mach build`.
-
-Note that this sometimes can cause problems when an existing build exists, so you might have to delete the `mozjs` build directory, or run `./mach clean` before your first `--debug-mozjs` build.
-
 ## Debugging Servo with [rr][rr].
 
 To record a trace under rr you can either use:
