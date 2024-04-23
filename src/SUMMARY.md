@@ -4,6 +4,7 @@
 
 - [Getting Servo](getting-servo.md)
 - [Running servoshell](running-servoshell.md)
+- [Contributing to Servo\*](contributing.md)
 
 # Hacking on Servo
 
@@ -40,7 +41,6 @@
 # Pre-book docs\*
 
 - [README.md\*](old/README.md)
-- [CONTRIBUTING.md\*](old/CONTRIBUTING.md)
 - [docs/STYLE_GUIDE.md\*](old/STYLE_GUIDE.md)
 - [docs/glossary.md\*](old/glossary.md)
 - [wiki/Building\*](old/building.md)

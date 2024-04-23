@@ -1,6 +1,4 @@
-# TODO: CONTRIBUTING.md
-
-<!-- https://github.com/servo/servo/blob/b79e2a0b6575364de01b1f89021aba0ec3fcf399/CONTRIBUTING.md -->
+<!-- TODO: needs copyediting -->
 
 # Contributing to Servo
 
@@ -63,4 +61,3 @@ Servo Code of Conduct is published at <https://servo.org/coc/>.
 ## Technical Steering Committee
 
 Technical oversight of the Servo Project is provided by the [Technical Steering Committee](https://github.com/servo/project/blob/main/governance/tsc/README.md).
-
