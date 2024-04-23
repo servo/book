@@ -84,22 +84,6 @@ See also [Windows Troubleshooting Tips][windows-tips].
   ```
 For information about building and running the Android build, see the [Android documentation][android-docs].
 
-## Building
-
-Servo is built with [Cargo](https://crates.io/), the Rust package manager.
-We also use Mozilla's Mach tools to orchestrate the build and other tasks.
-You can call Mach like this:
-
-On Unix systems:
-```
-./mach [command] [arguments]
-```
-On Windows Commandline:
-```
-mach.bat [command] [arguments]
-```
-The examples below will use Unix, but the same applies to Windows.
-
 ### The Rust compiler
 
 Servo's build system uses rustup.rs to automatically download a Rust compiler.
