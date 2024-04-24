@@ -7,6 +7,7 @@ To render the book locally:
 
 ```sh
 $ cargo install mdbook --vers '^0.4' --locked
+$ cargo install mdbook-mermaid --vers '^0.13' --locked
 $ mdbook serve --open
 ```
 

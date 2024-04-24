@@ -3,5 +3,5 @@ with import (builtins.fetchTarball {
 }) {};
 stdenv.mkDerivation rec {
   name = "servo-book-env";
-  buildInputs = [ mdbook ];
+  buildInputs = [ mdbook mdbook-mermaid ];
 }
