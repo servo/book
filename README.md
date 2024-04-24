@@ -1,7 +1,7 @@
 The Servo Book
 ==============
 
-**<https://servo.github.io/book/>**
+**<https://book.servo.org>**
 
 To render the book locally:
 

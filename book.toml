@@ -9,7 +9,7 @@ title = "The Servo Book"
 git-repository-url = "https://github.com/servo/book"
 git-repository-icon = "fa-github"
 edit-url-template = "https://github.com/servo/book/edit/main/{path}"
-site-url = "/book/"
+site-url = "/"
 # Putting additional-css and additional-js in src/ gives them live reload.
 additional-css = ["src/custom.css"]
 additional-js = ["src/mermaid.min.js", "src/mermaid-init.js"]
