@@ -25,7 +25,7 @@ To check code tidiness:
 ./mach test-tidy
 ```
 
-### Updating a test
+## Updating a test
 
 In some cases, extensive tests for the feature you're working on already exist under tests/wpt:
 
@@ -38,7 +38,7 @@ If there are lots of changes, it's likely that your feature had tests in wpt alr
 
 Include this commit in your pull request.
 
-### Add a new test
+## Add a new test
 
 If you need to create a new test file, it should be located in `tests/wpt/mozilla/tests` or in `tests/wpt/web-platform-tests` if it's something that doesn't depend on servo-only features.
 You'll then need to update the list of tests and the list of expected results:
@@ -47,7 +47,7 @@ You'll then need to update the list of tests and the list of expected results:
 ./mach test-wpt --manifest-update
 ```
 
-### Debugging a test
+## Debugging a test
 
 See the [debugging guide](./debugging.md) to get started in how to debug Servo.
 
@@ -56,8 +56,7 @@ See the [debugging guide](./debugging.md) to get started in how to debug Servo.
 This folder contains the web platform tests and the code required to integrate them with Servo.
 To learn how to write tests, go [here](http://web-platform-tests.org/writing-tests/index.html).
 
-Contents
-========
+### Contents of `tests/wpt`
 
 In particular, this folder contains:
 
@@ -67,8 +66,7 @@ In particular, this folder contains:
 * `meta`: expected failures for the web-platform-tests we run.
 * `mozilla`: web-platform-tests that cannot be upstreamed.
 
-Running the tests
-=================
+## Running web tests
 
 The simplest way to run the web-platform-tests in Servo is `./mach test-wpt` in the root directory.
 This will run the subset of JavaScript tests defined in `include.ini` and log the output to stdout.
@@ -85,15 +83,13 @@ to run all the DOM tests.
 
 There are also a large number of command line options accepted by the test harness; these are documented by running with `--help`.
 
-Running all tests
-------------------------------
+### Running all web tests
 
 Running all the WPT tests with debug mode results in a lot of timeout.
 If one wants to run all the tests, build with `mach build -r` and
 test with `mach test-wpt --release`
 
-Running the tests with an external WPT server
----------------------------------------------
+### Running web tests with an external WPT server
 
 Normally wptrunner starts its own WPT server, but occasionally you might want to run multiple instances of `mach test-wpt`, such as when debugging one test while running the full suite in the background, or when running a single test many times in parallel (--processes only works across different tests).
 
@@ -119,8 +115,7 @@ To fix this:
 If you get unexpected TIMEOUT in testharness tests, then the custom testharnessreport.js may have been installed incorrectly (see [**Running the tests manually**](#running-the-tests-manually) for more details).
 
 
-Running the tests manually
---------------------------
+### Running web tests manually
 
 (See also [the relevant section of the upstream README][upstream-running].)
 
@@ -176,8 +171,7 @@ To prevent browser SSL warnings when running HTTPS tests locally, you will need 
 
 [upstream-running]: https://github.com/w3c/web-platform-tests#running-the-tests
 
-Running the tests in Firefox
-----------------------------
+### Running web tests in Firefox
 
 When working with tests, you may want to compare Servo's result with Firefox.
 You can supply `--product firefox` along with the path to a Firefox binary (as well as few more odds and ends) to run tests in Firefox from your Servo checkout:
@@ -186,8 +180,7 @@ You can supply `--product firefox` along with the path to a Firefox binary (as w
     GECKO_BINS="$GECKO/obj-firefox-release-artifact/dist/Nightly.app/Contents/MacOS"
     ./mach test-wpt dom --product firefox --binary $GECKO_BINS/firefox --certutil-binary $GECKO_BINS/certutil --prefs-root $GECKO/testing/profiles
 
-Updating test expectations
-==========================
+## Updating web test expectations
 
 When fixing a bug that causes the result of a test to change, the expected results for that test need to be changed.
 This can be done manually, by editing the `.ini` file under the `meta` folder that corresponds to the test.
@@ -199,8 +192,7 @@ Once the log is saved, run from the root directory:
 
     ./mach update-wpt /tmp/servo.log
 
-Writing new tests
-=================
+## Writing new web tests
 
 The simplest way to create a new test is to use the following command:
 
@@ -220,16 +212,12 @@ These new tests can then be run in the following manner like any other WPT test:
     ./mach test-wpt tests/wpt/path/to/new/test.html
     ./mach test-wpt tests/wpt/path/to/new/reftest.html
 
-
-
-Editing tests
-=============
+### Editing web tests
 
 web-platform-tests may be edited in-place and the changes committed to the servo tree.
 These changes will be upstreamed when the tests are next synced.
 
-Updating the upstream tests
-===========================
+## Updating the upstream tests
 
 In order to update the tests from upstream use the same mach update commands.
 e.g. to update the web-platform-tests:
@@ -242,14 +230,12 @@ e.g. to update the web-platform-tests:
 
 This should create two commits in your servo repository with the updated tests and updated metadata.
 
-Servo-specific tests
-====================
+## Servo-specific tests
 
 The `mozilla` directory contains tests that cannot be upstreamed for some reason (e.g. because they depend on Servo-specific APIs), as well as some legacy tests that should be upstreamed at some point.
 When run they are mounted on the server under `/_mozilla/`.
 
-Analyzing reftest results
-=========================
+## Analyzing reftest results
 
 Reftest results can be analyzed from a raw log file.
 To generate this run with the `--log-raw` option e.g.
@@ -264,8 +250,7 @@ Note that this ingests logs in a different format to [original version of the to
 The reftest analyzer allows pixel-level comparison of the test and reference screenshots.
 Tests that both fail and have an unexpected result are marked with a `!`.
 
-Updating the WPT manifest
-=========================
+## Updating the WPT manifest
 
 MANIFEST.json can be regenerated automatically with the mach command `update-manifest` e.g.
 
