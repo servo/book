@@ -12,7 +12,7 @@ For more information about why we wrote a new layout engine see the [[Servo-Layo
 This layout engine is currently in maintenance mode.
 
 Layout happens in three phases: box tree construction, fragment tree construction, and display list construction.
-Once a display list is generated, it is sent to [WebRender] for rendering.
+Once a display list is generated, it is sent to [WebRender](https://github.com/servo/webrender) for rendering.
 When possible during tree construction, layout will try to use parallelism with Rayon.
 Certain CSS feature prevent parallelism such as floats or counters.
 The same code is used for both parallel and serial layout.
@@ -45,7 +45,7 @@ This placeholder is used to build the display list in the proper order according
 ## Display List Construction
 
 Once layout has created a *fragment tree*, it can move on to the next phase of rendering which is to produce a display list for the tree.
-During this phase, the *fragment tree* is transformed into a [WebRender] display list which consists of display list items (rectangles, lines, images, text runs, shadows, etc).
+During this phase, the *fragment tree* is transformed into a [WebRender](https://github.com/servo/webrender) display list which consists of display list items (rectangles, lines, images, text runs, shadows, etc).
 WebRender does not need a large variety of display list items to represent web content.
 
 In addition to normal display list items, WebRender also uses a tree of *spatial nodes* to represent transformations, scrollable areas, and sticky content.

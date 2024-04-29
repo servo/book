@@ -25,7 +25,3 @@ Important research and accumulated knowledge about browser implementation, paral
 * [Quark](http://goto.ucsd.edu/quark/) - Formally verified browser kernel
 * [HPar: A Practical Parallel Parser for HTML](http://www.cs.ucr.edu/~zhijia/papers/taco13.pdf)
 * [Gecko HTML parser threading](https://developer.mozilla.org/en-US/docs/Mozilla/Gecko/HTML_parser_threading)
-
-[meyerovich]: http://www.eecs.berkeley.edu/~lmeyerov/projects/pbrowser/pubfiles/paper.pdf
-[constellation]: https://github.com/servo/servo/blob/master/components/constellation/lib.rs
-[webrender]: https://github.com/servo/webrender
