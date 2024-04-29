@@ -47,15 +47,15 @@ Solid lines here indicate communication channels.
 
 ### Description
 
-Each [constellation] instance can for now be thought of as a single tab or window, and manages a pipeline of tasks that accepts input, runs JavaScript against the DOM, performs layout, builds display lists, renders display lists to tiles and finally composites the final image to a surface.
+Each [constellation](https://github.com/servo/servo/blob/main/components/constellation/lib.rs) instance can for now be thought of as a single tab or window, and manages a pipeline of tasks that accepts input, runs JavaScript against the DOM, performs layout, builds display lists, renders display lists to tiles and finally composites the final image to a surface.
 
 The pipeline consists of three main tasks:
 
-* _[Script](#script)_—Script's primary mission is to create and own the DOM and execute the JavaScript engine.
+* _[Script](script.md)_—Script's primary mission is to create and own the DOM and execute the JavaScript engine.
   It receives events from multiple sources, including navigation events, and routes them as necessary.
   When the content task needs to query information about layout it must send a request to the layout task.
-* _[Layout](#compositor)_—Layout takes a snapshot of the DOM, calculates styles, and constructs the two main layout data structures, the *[box tree](#box-tree)* and the *[fragment tree](#fragment-tree)*.
+* _[Layout](layout.md)_—Layout takes a snapshot of the DOM, calculates styles, and constructs the two main layout data structures, the *[box tree](layout.md#box-tree)* and the *[fragment tree](layout.md#fragment-tree)*.
   The fragment tree is used to untransformed position of nodes and from there to build a display list, which is sent to the compositor.
-* _[Compositor](#compositor)_—The compositor forwards display lists to [WebRender], which is the content rasterization and display engine used by both Servo and Firefox.
+* _[Compositor](compositor.md)_—The compositor forwards display lists to [WebRender](https://github.com/servo/webrender), which is the content rasterization and display engine used by both Servo and Firefox.
   It uses the GPU to render to the final image of the page.
   As the UI thread, the compositor is also the first receiver of UI events, which are generally immediately sent to content for processing (although some events, such as scroll events, can be handled initially by the compositor for responsiveness).
