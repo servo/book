@@ -2,7 +2,10 @@
 
 # Script
 
-TODO: For now see https://github.com/servo/servo/blob/master/components/script/script_thread.rs
+TODO:
+
+- <https://github.com/servo/servo/blob/main/components/script/script_thread.rs>
+- [JavaScript: Servo’s only garbage collector](https://research.mozilla.org/2014/08/26/javascript-servos-only-garbage-collector/)
 
 ## SpiderMonkey
 
