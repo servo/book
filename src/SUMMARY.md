@@ -13,7 +13,7 @@
   - [Working on a crate\*](hacking/working-on-a-crate.md)
 - [Editor support\*](hacking/editor-support.md)
 - [Debugging\*](hacking/debugging.md)
-- [Tests\*](hacking/tests.md)
+- [Automated testing\*](hacking/testing.md)
 
 # Meta
 

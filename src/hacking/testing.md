@@ -1,6 +1,6 @@
 <!-- TODO: needs copyediting -->
 
-# Tests
+# Automated testing
 
 This is boring.
 But your PR won't get accepted without a test.
