@@ -1,113 +1,184 @@
-<!-- TODO: needs copyediting -->
-
 # Debugging
 
-There are a few ways to debug Servo.
-`mach` supports a `--debug` flag that searches a suitable debugger for you and runs Servo with the appropriate arguments under it:
+One of the simplest ways to debug Servo is to print interesting variables with the [`println!`](https://doc.rust-lang.org/std/macro.println.html), [`eprintln!`](https://doc.rust-lang.org/std/macro.eprintln.html), or [`dbg!`](https://doc.rust-lang.org/std/macro.dbg.html) macros.
+In general, these should only be used temporarily; you’ll need to remove them or convert them to proper debug logging before your pull request will be merged.
 
-```
-./mach run --debug test.html
-```
+## Debug logging with `log` and `RUST_LOG`
 
-You can also specify an alternative debugger using the `--debugger` flag:
-
-```
-./mach run --debugger=my-debugger test.html
-```
-
-You can also, of course, run directly your debugger on the Servo binary:
-
-```
-$ gdb --args ./target/debug/servo test.html
-```
-
-## Logging
-
-Before starting the debugger right away, you might want to get some information about what's happening, how, and when.
-Luckily, Servo comes with plenty of logs that will help us.
-Type these 2 commands:
-
-```shell
-./mach run -d -- --help
-./mach run -d -- --debug help
-```
-
-A typical command might be:
-
-```shell
-./mach run -d -- -i -y 1 --debug dump-style-tree /tmp/a.html
-```
-
-… to avoid using too many threads and make things easier to understand.
-
-On macOS, you can add some Cocoa-specific debug options:
-
-```shell
-./mach run -d -- /tmp/a.html -- -NSShowAllViews YES
-```
-
-You can also enable some extra logging (warning: verbose!):
-
-```
-RUST_LOG="debug" ./mach run -d -- /tmp/a.html
-```
-
-Using `RUST_LOG="debug"` is usually the very first thing you might want to do if you have no idea what to look for.
-Because this is very verbose, you can combine these with `ts` (`moreutils` package (apt-get, brew)) to add timestamps and `tee` to save the logs (while keeping them in the console):
-
-```
-RUST_LOG="debug" ./mach run -d -- -i -y 1 /tmp/a.html 2>&1 | ts -s "%.S: " | tee /tmp/log.txt
-```
-
-You can filter by crate or module, for example `RUST_LOG="layout::inline=debug" ./mach run …`.
-Check the [env_logger](https://docs.rs/env_logger) documentation for more details.
-
-Use `RUST_BACKTRACE=1` to dump the backtrace when Servo panics.
-
-## println!()
-
-You will want to add your own logs.
-Luckily, many structures [implement the `fmt::Debug` trait](https://doc.rust-lang.org/std/fmt/#fmtdisplay-vs-fmtdebug), so adding:
+Servo uses the [`log`](https://crates.io/crates/log) crate for long-term debug logging and error messages:
 
 ```rust
-println!("foobar: {:?}", foobar)
+log::error!("hello");
+log::warn!("hello");
+log::info!("hello");
+log::debug!("hello");
+log::trace!("hello");
 ```
 
-usually just works.
-If it doesn't, maybe some of foobar's properties don't implement the right trait.
+Unlike macros like `println!`, `log` adds a timestamp and tells you where the message came from:
 
-## Debugger
-
-To run the debugger:
-
-```shell
-./mach run -d --debug -- -y 1 /tmp/a.html
+```
+[2024-05-01T09:07:42Z ERROR servoshell::app] hello
+[2024-05-01T09:07:42Z WARN  servoshell::app] hello
+[2024-05-01T09:07:42Z INFO  servoshell::app] hello
+[2024-05-01T09:07:42Z DEBUG servoshell::app] hello
+[2024-05-01T09:07:42Z TRACE servoshell::app] hello
 ```
 
-This will start `lldb` on Mac, and `gdb` on Linux.
+You can use `RUST_LOG` to filter the output of `log` by level (`off`, `error`, `warn`, `info`, `debug`, `trace`) and/or by where the message came from, also known as the “target”.
+Usually the target is a Rust module path like `servoshell::app`, but there are some special targets too (see [§ *Event tracing*](#event-tracing)).
+To set `RUST_LOG`, prepend it to your command or use `export`:
 
-From here, use:
+```sh
+$ RUST_LOG=warn ./mach run -d test.html     # Uses the prepended RUST_LOG.
+$ export RUST_LOG=warn
+$ ./mach run -d test.html                   # Uses the exported RUST_LOG.
+```
 
-```shell
-(lldb) b a_servo_function # add a breakpoint
-(lldb) run # run until breakpoint is reached
-(lldb) bt # see backtrace
-(lldb) frame n # choose the stack frame from the number in the bt
+See [the `env_logger` docs](https://docs.rs/env_logger/0.11.3/env_logger/index.html#enabling-logging) for more details, but here are some examples:
+
+- to enable all messages up to and including `debug` level, but not `trace`:
+  <br>`RUST_LOG=debug`
+- to enable all messages from `servo::*`, `servoshell::*`, or any target starting with `servo`:
+  <br>`RUST_LOG=servo=trace` (or just `RUST_LOG=servo`)
+- to enable all messages from any target starting with `style`, but only `error` and `warn` messages from `style::rule_tree`:
+  <br>`RUST_LOG=style,style::rule_tree=warn`
+
+Note that even when a log message is filtered out, it can still impact runtime performance, albeit only slightly.
+[Some builds](building-servo.md#build-profiles) of Servo, **including official nightly releases**, remove DEBUG and TRACE messages at compile time, so enabling them with `RUST_LOG` will have no effect.
+
+### Event tracing
+
+In the **constellation**, the **compositor**, and **servoshell**, we log messages sent to and received from other components, using targets of the form `component>other@Event` or `component<other@Event`.
+This means you can select which event types to log at runtime with `RUST_LOG`!
+
+For example, in the **constellation** ([more details](https://github.com/servo/servo/blob/bccbc87db7b986cae31c8f14f0a130336f8417b2/components/constellation/tracing.rs)):
+
+- to trace only events from script:
+  <br>`RUST_LOG='constellation<=off,constellation<script@'`
+- to trace all events except for ReadyToPresent events:
+  <br>`RUST_LOG='constellation<,constellation<compositor@ReadyToPresent=off'`
+- to trace only script InitiateNavigateRequest events:
+  <br>`RUST_LOG='constellation<=off,constellation<script@InitiateNavigateRequest'`
+
+In the **compositor** ([more details](https://github.com/servo/servo/blob/bccbc87db7b986cae31c8f14f0a130336f8417b2/components/compositing/tracing.rs)):
+
+- to trace only MoveResizeWebView events:
+  <br>`RUST_LOG='compositor<constellation@MoveResizeWebView'`
+- to trace all events except for Forwarded events:
+  <br>`RUST_LOG=compositor<,compositor<constellation@Forwarded=off`
+
+In **servoshell** ([more details](https://github.com/servo/servo/blob/bccbc87db7b986cae31c8f14f0a130336f8417b2/ports/servoshell/tracing.rs)):
+
+- to trace only events from servo:
+  <br>`RUST_LOG='servoshell<=off,servoshell>=off,servoshell<servo@'`
+- to trace all events except for AxisMotion events:
+  <br>`RUST_LOG='servoshell<,servoshell>,servoshell<winit@WindowEvent(AxisMotion)=off'`
+- to trace only winit window moved events:
+  <br>`RUST_LOG='servoshell<=off,servoshell>=off,servoshell<winit@WindowEvent(Moved)'`
+
+Event tracing can generate an unwieldy amount of output.
+In general, we recommend the following config to keep things usable:
+
+- `constellation<,constellation>,constellation<compositor@ForwardEvent(MouseMoveEvent)=off,constellation<compositor@LogEntry=off,constellation<compositor@ReadyToPresent=off,constellation<script@LogEntry=off`
+- `compositor<,compositor>`
+- `servoshell<,servoshell>,servoshell<winit@DeviceEvent=off,servoshell<winit@MainEventsCleared=off,servoshell<winit@NewEvents(WaitCancelled)=off,servoshell<winit@RedrawEventsCleared=off,servoshell<winit@RedrawRequested=off,servoshell<winit@UserEvent(WakerEvent)=off,servoshell<winit@WindowEvent(CursorMoved)=off,servoshell<winit@WindowEvent(AxisMotion)=off,servoshell<servo@EventDelivered=off,servoshell<servo@ReadyToPresent=off,servoshell>servo@Idle=off,servoshell>servo@MouseWindowMoveEventClass=off`
+
+## Other debug logging
+
+`mach run` does this automatically, but to print a backtrace when Servo panics:
+
+```sh
+$ RUST_BACKTRACE=1 target/debug/servo test.html
+```
+
+Servo has some other kinds of debug logging with `-Z` (`--debug`):
+
+```sh
+$ ./mach run -d -- --debug help
+$ ./mach run -d -- --debug dump-style-tree test.html
+```
+
+On macOS, you can also add some Cocoa-specific debug options, after an extra `--`:
+
+```sh
+$ ./mach run -d -- test.html -- -NSShowAllViews YES
+```
+
+## Running servoshell with a debugger
+
+To run servoshell with a debugger, use `--debugger-cmd`.
+Note that if you choose `gdb` or `lldb`, we automatically use `rust-gdb` and `rust-lldb`.
+
+```sh
+$ ./mach run --debugger-cmd=gdb test.html   # Same as `--debugger-cmd=rust-gdb`.
+$ ./mach run --debugger-cmd=lldb test.html  # Same as `--debugger-cmd=rust-lldb`.
+```
+
+To pass extra options to the debugger, you’ll need to run the debugger yourself:
+
+```sh
+$ ./mach run --debugger-cmd=gdb -ex=r test.html         # Passes `-ex=r` to servoshell.
+$ rust-gdb -ex=r --args target/debug/servo test.html    # Passes `-ex=r` to gdb.
+
+$ ./mach run --debugger-cmd=lldb -o r test.html         # Passes `-o r` to servoshell.
+$ rust-lldb -o r -- target/debug/servo test.html        # Passes `-o r` to lldb.
+
+$ ./mach run --debugger-cmd=rr -M test.html             # Passes `-M` to servoshell.
+$ rr record -M target/debug/servo test.html             # Passes `-M` to rr.
+```
+
+Many debuggers need extra options to separate servoshell’s arguments from their own options, and `--debugger-cmd` will pass those options automatically [for a few debuggers](https://github.com/servo/servo/blob/bccbc87db7b986cae31c8f14f0a130336f8417b2/third_party/mozdebug/mozdebug/mozdebug.py#L32-L48), including `gdb` and `lldb`.
+For other debuggers, `--debugger-cmd` will only work if the debugger needs no extra options:
+
+```sh
+$ ./mach run --debugger-cmd=rr test.html                    # Good, because it’s...
+#  servoshell arguments        ^^^^^^^^^
+$ rr target/debug/servo test.html                           # equivalent to this.
+#  servoshell arguments ^^^^^^^^^
+
+$ ./mach run --debugger-cmd=renderdoccmd capture test.html  # Bad, because it’s...
+#                renderdoccmd arguments? ^^^^^^^
+#                  servoshell arguments          ^^^^^^^^^
+$ renderdoccmd target/debug/servo capture test.html         # equivalent to this.
+# => target/debug/servo is not a valid command.
+
+$ renderdoccmd capture target/debug/servo test.html         # Good.
+#              ^^^^^^^ renderdoccmd arguments
+#                    servoshell arguments ^^^^^^^^^
+```
+
+## Debugging with gdb or lldb
+
+To search for a function by name or regex:
+
+```
+(lldb) image lookup -r -n <name>
+(gdb) info functions <name>
+```
+
+To list the running threads:
+
+```
 (lldb) thread list
-(lldb) next / step / …
-(lldb) print varname
+(lldb) info threads
 ```
 
-And to search for a function's full name/regex:
+Other commands for gdb or lldb include:
 
-```shell
-(lldb) image lookup -r -n <name> #lldb
-(gdb) info functions <name> #gdb
+```
+(gdb) b a_servo_function    # Add a breakpoint.
+(gdb) run                   # Run until breakpoint is reached.
+(gdb) bt                    # Print backtrace.
+(gdb) frame n               # Choose the stack frame by its number in `bt`.
+(gdb) next                  # Run one line of code, stepping over function calls.
+(gdb) step                  # Run one line of code, stepping into function calls.
+(gdb) print varname         # Print a variable in the current scope.
 ```
 
-See this [lldb tutorial](https://lldb.llvm.org/tutorial.html) and this [gdb tutorial](http://www.unknownroad.com/rtfm/gdbtut/gdbtoc.html).
+See [this gdb tutorial](http://www.unknownroad.com/rtfm/gdbtut/gdbtoc.html) or [this lldb tutorial](https://lldb.llvm.org/tutorial.html) more details.
 
-To inspect variables and you are new with lldb, we recommend using the `gui` mode (use left/right to expand variables):
+To inspect variables in lldb, you can also type `gui`, then use the arrow keys to expand variables:
 
 ```
 (lldb) gui
@@ -125,36 +196,44 @@ To inspect variables and you are new with lldb, we recommend using the `gui` mod
 └────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-If lldb crashes on certain lines involving the `profile()` function, it's not just you.
+If lldb crashes on certain lines involving the `profile()` function, it’s not just you.
 Comment out the profiling code, and only keep the inner function, and that should do it.
 
-## Debugging Servo with [rr][rr].
+## Reversible debugging with rr (Linux only)
 
-To record a trace under rr you can either use:
+[rr](https://rr-project.org) is like gdb, but lets you rewind.
+Start by running servoshell via rr:
 
-```
-$ ./mach run --debugger=rr testcase.html
-```
-
-Or:
-
-```
-$ rr record ./target/debug/servo testcase.html
+```sh
+$ ./mach run --debugger=rr test.html    # Either this...
+$ rr target/debug/servo test.html       # ...or this.
 ```
 
-## Running WPT tests under rr's chaos mode.
-
-Matt added a mode to Servo's testing commands to record traces of Servo running a test or set of tests until the result is unexpected.
-
-To use this, you can pass the `--chaos` argument to `mach test-wpt`:
+Then replay the trace, using gdb commands or rr commands:
 
 ```
-$ ./mach test-wpt --chaos path/to/test
+$ rr replay
+(rr) continue
+(rr) reverse-cont
 ```
 
-Note that for this to work you need to have `rr` in your `PATH`.
+To run one or more tests repeatedly until the result is unexpected:
 
-Also, note that this might generate a lot of traces, so you might want to delete them when you're done.
-They're under `$HOME/.local/share/rr`.
+```sh
+$ ./mach test-wpt --chaos path/to/test [path/to/test ...]
+```
 
-[rr]: http://rr-project.org/
+Traces recorded by rr can take up a lot of space.
+To delete them, go to `~/.local/share/rr`.
+
+## OpenGL debugging with RenderDoc (Linux or Windows only)
+
+[RenderDoc](https://renderdoc.org/docs/) lets you debug Servo’s OpenGL activity.
+Start by running servoshell via renderdoccmd:
+
+```sh
+$ renderdoccmd capture -d . target/debug/servo test.html
+```
+
+While servoshell is running, run `qrenderdoc`, then choose **File** > **Attach to Running Instance**.
+Once attached, you can press **F12** or **Print Screen** to capture a frame.
