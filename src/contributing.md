@@ -48,7 +48,7 @@ If you do not have permission to add labels to your pull request, add a comment 
 
 | Label | Effect |
 |---|---|
-| `T-full` | Unit tests: Linux, macOS, Windows<br>Layout tests: Linux, macOS<br>Legacy layout tests: Linux, macOS |
+| `T-full` | Unit tests: Linux, macOS, Windows<br>Layout tests: Linux<br>Legacy layout tests: Linux |
 | `T-linux-wpt-2013` | Unit tests: Linux<br>Legacy layout tests: Linux |
 | `T-linux-wpt-2020` | Unit tests: Linux<br>Layout tests: Linux |
 | `T-macos` | Unit tests: macOS |
