@@ -46,13 +46,13 @@ When you push to a pull request, GitHub automatically checks that your changes h
 To run unit tests or Web Platform Tests against a pull request, add one or more of the labels below to your pull request.
 If you do not have permission to add labels to your pull request, add a comment on your bug requesting that they be added.
 
-| Label | Effect |
-|---|---|
-| `T-full` | Unit tests: Linux, macOS, Windows<br>Layout tests: Linux, macOS<br>Legacy layout tests: Linux, macOS |
-| `T-linux-wpt-2013` | Unit tests: Linux<br>Legacy layout tests: Linux |
-| `T-linux-wpt-2020` | Unit tests: Linux<br>Layout tests: Linux |
-| `T-macos` | Unit tests: macOS |
-| `T-windows` | Unit tests: Windows |
+| Label | Runs unit tests on | Runs web tests on |
+|---|---|---|
+| `T-full` | All platforms | Linux |
+| `T-linux-wpt-2013` | Linux | Linux (only legacy layout) |
+| `T-linux-wpt-2020` | Linux | Linux (skip legacy layout) |
+| `T-macos` | macOS | (none) |
+| `T-windows` | Windows | (none) |
 
 ## Conduct
 
