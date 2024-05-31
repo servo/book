@@ -20,7 +20,8 @@ If you have problems setting up your environment that you can’t solve, you can
 
 ## Checking if you have the tools installed
 
-- `curl --version` should print a version like 8.4.0
+- `curl --version` should print a version like 7.83.1 or 8.4.0
+  - On Windows, type `curl.exe --version` instead, to avoid getting the PowerShell alias for `Invoke-WebRequest`
 - `python --version` should print **3.11.0 or newer** (3.11.1, 3.12.0, …)
 - `rustup --version` should print a version like 1.26.0
 - (Windows only) `choco --version` should print a version like 2.2.2
