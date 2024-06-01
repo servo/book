@@ -4,23 +4,24 @@
 
 First, ensure that you are building Servo in release (optimized) mode with optimal debugging symbols:
 In Cargo.toml:
+
 ```
 [profile.release]
 debug = true
 lto = false
 ```
+
 ```
  ./mach build --release --with-frame-pointers
 ```
 
 Several ways to get profiling information about Servo's runs:
 * [Interval Profiling](#interval-profiling)
-* [TSV Profiling](#tsv-profiling)
-* [Generating Timelines](#generating-timelines)
-* [Built-in sampling profiler](#sampling-profiler)
-* [Using OSX Instruments](#using-osx-instruments)
-* [Using Magic Leap NVIDIA Nsight](#using-magic-leap-nvidia-nsight)
-* [Debugging JIT performance issues](https://github.com/servo/servo/wiki/Diagnosing-SpiderMonkey-JIT-issues)
+  * [TSV Profiling](#tsv-profiling)
+  * [Generating Timelines](#generating-timelines)
+  * [Built-in sampling profiler](#sampling-profiler)
+* [Memory Profiling](#memory-profiling)
+* [Using macOS Instruments](#using-macos-instruments)
 
 ## Interval Profiling
 
@@ -55,7 +56,7 @@ Layout                                  yes          no      https://news.ycombi
 
 In this example, when loading the page we performed one full layout and three incremental layout passes, for a total of (29.8497 + 11.0412 * 3) = 62.9733ms.
 
-## TSV Profiling
+### TSV Profiling
 
 Using the -p option followed by a file name, you can spit out profiling information of Servo's execution to a TSV (tab-separated because certain url contained commas) file.
 The information is written to the file only upon Servo's termination.
@@ -66,16 +67,14 @@ Example usage:
 ```
 The formats of the profiling information in the Interval and TSV Profiling options are the essentially the same; the url names are not truncated in the TSV Profiling option.
 
-## Generating Timelines
+### Generating Timelines
 
 Add the `--profiler-trace-path /timeline/output/path.html` flag to output the profiling data as a self contained HTML timeline.
 Because it is a self contained file (all CSS and JS is inline), it is easy to share, upload, or link to from bug reports.
 
     $ ./mach run --release -p 5 --profiler-trace-path trace.html https://reddit.com/
 
-![Profiler trace output](https://camo.githubusercontent.com/44afcc7af5e12f5f14726d26b0ec975c19da6e47/687474703a2f2f692e696d6775722e636f6d2f4f6857736d386d2e706e67)
-
-### Usage:
+#### Usage:
 
 * Use the mouse wheel or trackpad scrolling, with the mouse focused along the top of the timeline, to zoom the viewport in or out.
 
@@ -83,7 +82,7 @@ Because it is a self contained file (all CSS and JS is inline), it is easy to sh
 
 * Hover over a trace to show more information.
 
-### Hacking
+#### Hacking
 
 The JS, CSS, and HTML for the timeline comes from [fitzgen/servo-trace-dump](https://github.com/fitzgen/servo-trace-dump/) and there is a script in that repo for updating servo's copy.
 
@@ -104,12 +103,72 @@ To use them:
 To control the output filename, set the `PROFILE_OUTPUT` environment variable.
 To control the sampling rate (default 10ms), set the `SAMPLING_RATE` environment variable.
 
-## Using OSX Instruments
+## Memory Profiling
 
-This option is using the Instruments app on Mac OSX.
-First, before compiling the release mode, turn on the debug symbols in the Cargo.toml file under the top level directory by uncommenting the commented lines under `[profile.release]`.
+Using the -m option followed by a number (time period in seconds), you can spit out profiling information to the terminal periodically.
+To do so, run Servo on the desired site (URLs and local file paths are both supported) with profiling enabled:
+```
+./mach run --release -m 5 http://example.com/
+```
 
-Here are some videos for help with Instruments (they will stream only on Safari):
+In the example above, while Servo is still running (AND is processing new passes), the profiling information is printed to the terminal every 5 seconds.
+
+```
+./mach run --release -m 5 http://example.com/
+Begin memory reports 5
+|
+|  115.15 MiB -- explicit
+|     101.15 MiB -- jemalloc-heap-unclassified
+|      14.00 MiB -- url(http://example.com/)
+|         10.01 MiB -- layout-thread
+|            10.00 MiB -- font-context
+|             0.00 MiB -- stylist
+|             0.00 MiB -- display-list
+|          4.00 MiB -- js
+|             2.75 MiB -- malloc-heap
+|             1.00 MiB -- gc-heap
+|                0.56 MiB -- decommitted
+|                0.35 MiB -- used
+|                0.06 MiB -- unused
+|                0.02 MiB -- admin
+|             0.25 MiB -- non-heap
+|       0.00 MiB -- memory-cache
+|          0.00 MiB -- private
+|          0.00 MiB -- public
+|
+|  121.89 MiB -- jemalloc-heap-active
+|  111.16 MiB -- jemalloc-heap-allocated
+|  203.02 MiB -- jemalloc-heap-mapped
+|  272.61 MiB -- resident
+|404688.75 MiB -- vsize
+|
+End memory reports
+```
+
+## Using macOS Instruments
+
+Xcode has a [instruments](https://help.apple.com/instruments/mac/10.0/) tool to profile easily.
+
+First, you need to install Xcode instruments:
+
+```
+$ xcode-select --install
+```
+
+Second, install `cargo-instruments` via Homebrew:
+
+```
+$ brew install cargo-instruments
+```
+
+Then, you can simply run it via CLI:
+
+```
+$cargo instruments -t Allocations
+```
+
+Here are some links and resources for help with Instruments (Some will stream only on Safari):
+* [cargo-instruments on crates.io](https://crates.io/crates/cargo-instruments)
 * [Using Time Profiler in Instruments](https://developer.apple.com/videos/play/wwdc2016/418/)
 * [Profiling in Depth](https://developer.apple.com/videos/play/wwdc2015/412/)
 * [System Trace in Depth](https://developer.apple.com/videos/play/wwdc2016/411/)
@@ -117,31 +176,6 @@ Here are some videos for help with Instruments (they will stream only on Safari)
 * [Core Data Performance Optimization and Debugging](https://developer.apple.com/videos/play/wwdc2013/211/)
 * [Learning Instruments](https://developer.apple.com/videos/play/wwdc2012/409/)
 
-## Using Magic Leap NVIDIA NSight
-
-To profile the Magic Leap build of Servo, create a release build with debug symbols by setting `debug=true` in the `[profile.release]` section of Servo's `Cargo.toml` (see the [Cargo Reference](https://doc.rust-lang.org/cargo/reference/manifest.html#the-profile-sections) for more details).
-
-Install the NVIDIA Nsight tool using the Magic Leap Package Manager:
-
-![Magic Leap package manager](../images/magic-leap-package-manager.png)
-
-Create a new project to profile Servo, including setting the `Symbol locations` to the target directory of the Servo build:
-
-![Profiler configuration](../images/nvidia-nsight-create-project.png)
-
-Then start the profiler, it should produce reports which show all of the threads and their activity:
-
-![Profiling report](../images/nvidia-nsight-profiler-report.png)
-
-## Comparing Servo Layout to Gecko
-
-There are no direct performance counters for the layout code in Gecko.
-Instead, use a sampling profiler (e.g., Instruments.app on OSX or perf on Linux) and sum the time spent in the `Reflow*` methods.
-
-## Comparing Servo Layout to Chrome
-
-There are no direct performance counters for the layout code in Chrome.
-Instead, use a sampling profiler (e.g., Instruments.app on OSX or perf on Linux) and sum the time spent in the `layout*` methods.
 
 ## Profiling Webrender
 Use the following command to get some profile data from WebRender:
