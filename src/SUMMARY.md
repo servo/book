@@ -20,6 +20,7 @@
 - [Editor support](hacking/editor-support.md)
 - [Debugging](hacking/debugging.md)
 - [Automated testing\*](hacking/testing.md)
+- [Profiling\*](hacking/profiling.md)
 
 # Servo’s architecture
 
