@@ -15,4 +15,6 @@ Current state of, and outlook on, Servo's integration of SpiderMonkey: [https://
 
 ## Script Thread
 
+- [Microtask queuing](microtask.md)
+
 ## Layout DOM
