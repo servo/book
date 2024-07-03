@@ -9,7 +9,7 @@ TODO:
 
 ## SpiderMonkey
 
-Current state of, and outlook on, Servo's integration of SpiderMonkey: [[https://github.com/gterzian/spidermonkey_servo](https://github.com/gterzian/spidermonkey_servo) ](https://github.com/servo/servo/wiki/Servo-and-SpiderMonkey-Report)
+Current state of, and outlook on, Servo's integration of SpiderMonkey: [https://github.com/gterzian/spidermonkey_servo](https://github.com/servo/servo/wiki/Servo-and-SpiderMonkey-Report)
 
 ## DOM Bindings
 
