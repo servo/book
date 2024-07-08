@@ -1,6 +1,6 @@
-# TODO: wiki/Profiling
+<!-- TODO: needs copyediting -->
 
-<!-- https://github.com/servo/servo/wiki/Profiling/1963e5c31e3319d7167f29181cbb6229cf7384eb -->
+# Profiling
 
 First, ensure that you are building Servo in release (optimized) mode with optimal debugging symbols:
 In Cargo.toml:
