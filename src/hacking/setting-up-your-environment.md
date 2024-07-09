@@ -2,9 +2,12 @@
 
 Before you can build Servo, you will need to:
 
-1. Install the tools for your platform: [**Windows**](#tools-for-windows), [**macOS**](#tools-for-macos), [**Linux**](#tools-for-linux)
-2. If you are on **NixOS**, you can stop here, no further action needed!
-3. Install the other dependencies by running `./mach bootstrap` (or `.\mach bootstrap` on **Windows**).
+1. [**Check**](#check-tools) if you have the necessary tools.
+  If not, install them: [**Windows**](#tools-for-windows), [**macOS**](#tools-for-macos), [**Linux**](#tools-for-linux)
+2. [**Check**](#check-tools) your tools again.
+  If not, you may need to restart your shell, or log out and log back in.
+3. If you are on **NixOS**, you can stop here, no further action needed!
+4. Install the other dependencies by running `./mach bootstrap` (or `.\mach bootstrap` on **Windows**).
   If you prefer not to do that, or your **Linux** distro is unsupported by mach, you can instead follow the steps below:
     - Try the [Nix method](#nix-method) or a distro-specific method: [Arch](#dependencies-for-arch), [Debian](#dependencies-for-debian), [elementary OS](#dependencies-for-debian), [Fedora](#dependencies-for-fedora), [Gentoo](#dependencies-for-gentoo), [KDE neon](#dependencies-for-debian), [Linux Mint](#dependencies-for-debian), [Manjaro](#dependencies-for-arch), [openSUSE](#dependencies-for-opensuse), [Pop!_OS](#dependencies-for-debian), [Raspbian](#dependencies-for-debian), [TUXEDO OS](#dependencies-for-debian), [Ubuntu](#dependencies-for-debian), [Void Linux](#dependencies-for-void-linux)
     - Install `taplo` and `crown` by running `./mach bootstrap --skip-platform`
@@ -18,7 +21,7 @@ If you start encountering build problems after updating Servo, try running `./ma
 If you have problems setting up your environment that you can’t solve, you can always ask for help in the [build issues](https://servo.zulipchat.com/#narrow/stream/263398-general/topic/Build.20Issues) chat on Zulip.
 </div>
 
-## Checking if you have the tools installed
+## Checking if you have the tools installed { #check-tools }
 
 - `curl --version` should print a version like 7.83.1 or 8.4.0
   - On Windows, type `curl.exe --version` instead, to avoid getting the PowerShell alias for `Invoke-WebRequest`
