@@ -1,6 +1,6 @@
 # TODO: wiki/Building
 
-<!-- https://github.com/servo/servo/wiki/Building/65f6e7b7cc4fc98f1cf5e14980f7286e2d5b192a -->
+<!-- https://github.com/servo/servo/wiki/Building/95a6f67d29c58d9269c55b9128dbf863339c7502 -->
 
 - [Quickstart](#quickstart)
 - [Manual Build Setup](#manual-build-setup)
@@ -49,21 +49,6 @@
 Please see [[Building for Android]].
 
 ## Windows Tips
-
-### Using LLVM to Speed Up Linking
-
-You may experience much faster builds on Windows by following these steps.
-(Related Rust issue: https://github.com/rust-lang/rust/issues/37542)
-
-0. Download the latest version of LLVM (https://releases.llvm.org/).
-1. Run the installer and choose to add LLVM to the system PATH.
-2. Add the following to your Cargo config (Found at `%USERPROFILE%\.cargo\config`).
-    You may need to change the triple to match your environment.
-
-```
-[target.x85_64-pc-windows-msvc]
-linker = "lld-link.exe"
-```
 
 ### Troubleshooting the Windows Build
 
