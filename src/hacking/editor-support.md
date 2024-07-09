@@ -19,11 +19,12 @@ Because of this, and because Servo can currently only be built with `mach`, you 
 
 ```
 {
+    "rust-analyzer.rustfmt.overrideCommand": [ "./mach", "fmt" ],
+
     "rust-analyzer.check.overrideCommand": [
         "./mach", "check", "--message-format=json" ],
     "rust-analyzer.cargo.buildScripts.overrideCommand": [
         "./mach", "check", "--message-format=json" ],
-    "rust-analyzer.rustfmt.overrideCommand": [ "./mach", "fmt" ],
 }
 ```
 
@@ -36,13 +37,25 @@ This will require more disk space.
         "./mach", "check", "--message-format=json", "--target-dir", "target/lsp" ],
     "rust-analyzer.cargo.buildScripts.overrideCommand": [
         "./mach", "check", "--message-format=json", "--target-dir", "target/lsp" ],
-    "rust-analyzer.rustfmt.overrideCommand": [ "./mach", "fmt" ],
+}
+```
+
+To enable [optional build settings](building-servo.md#optional-build-settings), append each mach option separately:
+
+```
+{
+    "rust-analyzer.checkOnSave.overrideCommand": [
+        "./mach", "check", "--message-format=json", "--target-dir", "target/lsp",
+        "--debug-mozjs", "--use-crown" ],
+    "rust-analyzer.cargo.buildScripts.overrideCommand": [
+        "./mach", "check", "--message-format=json", "--target-dir", "target/lsp",
+        "--debug-mozjs", "--use-crown" ],
 }
 ```
 
 ### NixOS users
 
-If you are on NixOS, you should also set CARGO_BUILD_RUSTC in `.vscode/settings.json` as follows, where `/nix/store/.../crown` is the output of `nix-shell etc/shell.nix --run 'command -v crown'`.
+If you are on NixOS and using `--use-crown`, you should also set CARGO_BUILD_RUSTC in `.vscode/settings.json` as follows, where `/nix/store/.../crown` is the output of `nix-shell etc/shell.nix --run 'command -v crown'`.
 
 ```
 {
