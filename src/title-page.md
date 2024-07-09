@@ -8,9 +8,8 @@ Work is still ongoing to make Servo consumable as a webview library, so for now,
 
 This book will be your guide to building and running servoshell, hacking on and contributing to Servo, the architecture of Servo, and how to consume Servo and its libraries.
 
-**This book is still in early development!**
-In the table of contents, \* denotes chapters that have been imported from our existing docs, and still need to be copyedited or reworked.
-During this early stage of development, we’ll be frequently rewriting the Git history, so please be patient with us if you make a pull request.
+**This book is a work in progress!**
+In the table of contents, \* denotes chapters that were recently added or imported from older docs, and still need to be copyedited or reworked.
 
 ## Need help?
 
