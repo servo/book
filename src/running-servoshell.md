@@ -27,7 +27,7 @@ $ ./servo --devtools=6080
 
 <div class="warning">
 
-**Note:** devtools support is currently broken ([#29831](https://github.com/servo/servo/issues/29831)).
+**Note:** devtools support is currently a work in progress ([#32404](https://github.com/servo/servo/issues/32404)).
 </div>
 
 ## Runtime dependencies
