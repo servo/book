@@ -30,6 +30,19 @@ $ ./servo --devtools=6080
 **Note:** devtools support is currently a work in progress ([#32404](https://github.com/servo/servo/issues/32404)).
 </div>
 
+## Built servoshell yourself?
+
+When you build it yourself, servoshell will be in `target/debug/servo` or `target/release/servo`.
+You can run it directly as shown above, but we recommend using [mach](hacking/mach.md) instead.
+
+To run servoshell with mach, replace `./servo` with `./mach run -d --` or `./mach run -r --`, depending on the [build profile](hacking/building-servo.md) you want to run.
+For example, both of the commands below run the debug build of servoshell with the same options:
+
+```sh
+$ target/debug/servo https://demo.servo.org
+$ ./mach run -d -- https://demo.servo.org
+```
+
 ## Runtime dependencies
 
 On **Linux**, servoshell requires:
