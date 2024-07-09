@@ -44,3 +44,15 @@ On **Linux**, servoshell requires:
 * `libXi`
 * `libxkbcommon`
 * `vulkan-loader`
+
+## Keyboard shortcuts
+
+- **Ctrl**+`Q` (⌘Q on macOS) exits servoshell
+- **Ctrl**+`L` (⌘L on macOS) focuses the location bar
+- **Ctrl**+`R` (⌘R on macOS) reloads the page
+- **Alt**+`←` (⌘← on macOS) goes back in history
+- **Alt**+`→` (⌘→ on macOS) goes forward in history
+- **Ctrl**+`=` (⌘= on macOS) increases the page zoom
+- **Ctrl**+`-` (⌘- on macOS) decreases the page zoom
+- **Ctrl**+`0` (⌘0 on macOS) resets the page zoom
+- **Esc** exits fullscreen mode

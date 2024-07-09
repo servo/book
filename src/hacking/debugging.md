@@ -92,17 +92,20 @@ In general, we recommend the following config to keep things usable:
 $ RUST_BACKTRACE=1 target/debug/servo test.html
 ```
 
-Servo has some other kinds of debug logging with `-Z` (`--debug`):
+Use `-Z` (`-- --debug`) to enable debug options.
+For example, to print the stacking context tree after each layout, or get help about these options:
 
 ```sh
-$ ./mach run -d -- --debug help
-$ ./mach run -d -- --debug dump-style-tree test.html
+$ ./mach run -Z dump-stacking-context-tree test.html
+$ ./mach run -Z help            # Lists available debug options.
+$ ./mach run -- --debug help    # Same as above: lists available debug options.
+$ ./mach run --debug            # Not the same! This just chooses target/debug.
 ```
 
 On macOS, you can also add some Cocoa-specific debug options, after an extra `--`:
 
 ```sh
-$ ./mach run -d -- test.html -- -NSShowAllViews YES
+$ ./mach run -- test.html -- -NSShowAllViews YES
 ```
 
 ## Running servoshell with a debugger

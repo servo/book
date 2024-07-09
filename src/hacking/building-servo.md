@@ -17,6 +17,12 @@ To build servoshell for Android (armv7):
 $ ./mach build --android
 ```
 
+To check your code for compile errors, without a full build:
+
+```sh
+$ ./mach check
+```
+
 <div class="warning _note">
 
 **Sometimes the tools or dependencies needed to build Servo will change.**
