@@ -1,6 +1,6 @@
 # TODO: README.md
 
-<!-- https://github.com/servo/servo/blob/b79e2a0b6575364de01b1f89021aba0ec3fcf399/README.md -->
+<!-- https://github.com/servo/servo/blob/574a22a6cd0ca4a6eb9e6af4541f835f22691768/README.md -->
 
 # The Servo Parallel Browser Engine Project
 
@@ -80,7 +80,8 @@ This can be a lot faster than a full build, though of course it doesn’t produc
 - `Ctrl`+`=` zooms in (`Cmd`+`=` on Mac)
 - `Alt`+`left arrow` goes backwards in the history (`Cmd`+`left arrow` on Mac)
 - `Alt`+`right arrow` goes forwards in the history (`Cmd`+`right arrow` on Mac)
-- `Esc` or `Ctrl`+`Q` exits Servo (`Cmd`+`Q` on Mac)
+- `Ctrl`+`Q` exits Servo (`Cmd`+`Q` on Mac)
+- `Esc` exits fullscreen
 
 ## Developing
 

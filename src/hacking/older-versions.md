@@ -4,7 +4,7 @@ Some parts of this book may not apply to older versions of Servo.
 
 If you need to work with a very old version of Servo, you may find these docs helpful:
 
-- [README.md](https://github.com/servo/servo/blob/b79e2a0b6575364de01b1f89021aba0ec3fcf399/README.md)
+- [README.md](https://github.com/servo/servo/blob/574a22a6cd0ca4a6eb9e6af4541f835f22691768/README.md)
 - [CONTRIBUTING.md](https://github.com/servo/servo/blob/b79e2a0b6575364de01b1f89021aba0ec3fcf399/CONTRIBUTING.md)
 - [docs/COMMAND_LINE_ARGS.md](https://github.com/servo/servo/blob/b79e2a0b6575364de01b1f89021aba0ec3fcf399/docs/COMMAND_LINE_ARGS.md)
 - [docs/HACKING_QUICKSTART.md](https://github.com/servo/servo/blob/26bbfe9b551c268188d952b1b565da890d3eb6f4/docs/HACKING_QUICKSTART.md)
