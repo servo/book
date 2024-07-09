@@ -15,7 +15,7 @@ If you need to work with a very old version of Servo, you may find these docs he
 - [docs/components/style.md](https://github.com/servo/servo/blob/b79e2a0b6575364de01b1f89021aba0ec3fcf399/docs/components/style.md)
 - [docs/components/webxr.md](https://github.com/servo/servo/blob/b79e2a0b6575364de01b1f89021aba0ec3fcf399/docs/components/webxr.md)
 - [tests/wpt/README.md](https://github.com/servo/servo/blob/025a98773223412edd8a0032a44c60ee84d69eee/tests/wpt/README.md)
-- [Building](https://github.com/servo/servo/wiki/Building/e04d7a194b59fad65fbd3eefb7aab12ae3a60eba) Servo (on the wiki)
+- [Building](https://github.com/servo/servo/wiki/Building/65f6e7b7cc4fc98f1cf5e14980f7286e2d5b192a) Servo (on the wiki)
 - [Building for Android](https://github.com/servo/servo/wiki/Building-for-Android/77acd4dd5bfe40aa48d4df967259f89ffadab066) (on the wiki)
 - [Design](https://github.com/servo/servo/wiki/Design/0941531122361aac8c88d582aa640ec689cdcdd1) (on the wiki)
 - [Profiling](https://github.com/servo/servo/wiki/Profiling/1963e5c31e3319d7167f29181cbb6229cf7384eb) (on the wiki)

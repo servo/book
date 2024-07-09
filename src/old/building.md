@@ -1,6 +1,6 @@
 # TODO: wiki/Building
 
-<!-- https://github.com/servo/servo/wiki/Building/e04d7a194b59fad65fbd3eefb7aab12ae3a60eba -->
+<!-- https://github.com/servo/servo/wiki/Building/65f6e7b7cc4fc98f1cf5e14980f7286e2d5b192a -->
 
 - [Quickstart](#quickstart)
 - [Manual Build Setup](#manual-build-setup)

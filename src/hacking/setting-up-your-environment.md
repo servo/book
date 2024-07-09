@@ -3,11 +3,11 @@
 Before you can build Servo, you will need to:
 
 1. Install the tools for your platform: [**Windows**](#tools-for-windows), [**macOS**](#tools-for-macos), [**Linux**](#tools-for-linux)
-2. If you are on **NixOS**, no further action is needed!
-3. Install the other dependencies with one of the methods below:
-    - Run `./mach bootstrap` (or `.\mach bootstrap` on **Windows**)
-    - On other **Linux** distros, you can try the [Nix method](#nix-method)
-    - On other **Linux** distros, you can try a distro-specific method: [Arch](#dependencies-for-arch), [Debian](#dependencies-for-debian), [elementary OS](#dependencies-for-debian), [Fedora](#dependencies-for-fedora), [Gentoo](#dependencies-for-gentoo), [KDE neon](#dependencies-for-debian), [Linux Mint](#dependencies-for-debian), [Manjaro](#dependencies-for-arch), [openSUSE](#dependencies-for-opensuse), [Pop!_OS](#dependencies-for-debian), [Raspbian](#dependencies-for-debian), [TUXEDO OS](#dependencies-for-debian), [Ubuntu](#dependencies-for-debian), [Void Linux](#dependencies-for-void-linux)
+2. If you are on **NixOS**, you can stop here, no further action needed!
+3. Install the other dependencies by running `./mach bootstrap` (or `.\mach bootstrap` on **Windows**).
+  If you prefer not to do that, or your **Linux** distro is unsupported by mach, you can instead follow the steps below:
+    - Try the [Nix method](#nix-method) or a distro-specific method: [Arch](#dependencies-for-arch), [Debian](#dependencies-for-debian), [elementary OS](#dependencies-for-debian), [Fedora](#dependencies-for-fedora), [Gentoo](#dependencies-for-gentoo), [KDE neon](#dependencies-for-debian), [Linux Mint](#dependencies-for-debian), [Manjaro](#dependencies-for-arch), [openSUSE](#dependencies-for-opensuse), [Pop!_OS](#dependencies-for-debian), [Raspbian](#dependencies-for-debian), [TUXEDO OS](#dependencies-for-debian), [Ubuntu](#dependencies-for-debian), [Void Linux](#dependencies-for-void-linux)
+    - Install `taplo` and `crown` by running `./mach bootstrap --skip-platform`
 
 <div class="warning _note">
 
