@@ -8,7 +8,7 @@ If you need to work with a very old version of Servo, you may find these docs he
 - [CONTRIBUTING.md](https://github.com/servo/servo/blob/b79e2a0b6575364de01b1f89021aba0ec3fcf399/CONTRIBUTING.md)
 - [docs/COMMAND_LINE_ARGS.md](https://github.com/servo/servo/blob/b79e2a0b6575364de01b1f89021aba0ec3fcf399/docs/COMMAND_LINE_ARGS.md)
 - [docs/HACKING_QUICKSTART.md](https://github.com/servo/servo/blob/b79e2a0b6575364de01b1f89021aba0ec3fcf399/docs/HACKING_QUICKSTART.md)
-- [docs/ORGANIZATION.md](https://github.com/servo/servo/blob/b79e2a0b6575364de01b1f89021aba0ec3fcf399/docs/ORGANIZATION.md)
+- [docs/ORGANIZATION.md](https://github.com/servo/servo/blob/cd2ab36759dc58acdeb2b8321c38b7345b524a63/docs/ORGANIZATION.md)
 - [docs/STYLE_GUIDE.md](https://github.com/servo/servo/blob/b79e2a0b6575364de01b1f89021aba0ec3fcf399/docs/STYLE_GUIDE.md)
 - [docs/debugging.md](https://github.com/servo/servo/blob/b79e2a0b6575364de01b1f89021aba0ec3fcf399/docs/debugging.md)
 - [docs/glossary.md](https://github.com/servo/servo/blob/b79e2a0b6575364de01b1f89021aba0ec3fcf399/docs/glossary.md)
