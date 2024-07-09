@@ -60,11 +60,15 @@ There are three main build profiles, which you can build and use independently o
         <th>maximum RUST_LOG level
         <td><code>trace</code><td><code>info</code><td><code>info</code>
     <tr>
-        <th>SpiderMonkey debug build?
-        <td colspan="3">no, unless you <code>./mach build --debug-mozjs</code>
-    <tr>
         <th>finds resources in<br>current working dir?
         <td>yes<td>yes<td>no
 </table>
 
 You can change these settings in a servobuild file (see [servobuild.example](https://github.com/servo/servo/blob/b79e2a0b6575364de01b1f89021aba0ec3fcf399/servobuild.example)) or in the root [Cargo.toml](https://github.com/servo/servo/blob/b79e2a0b6575364de01b1f89021aba0ec3fcf399/Cargo.toml).
+
+## Optional build settings
+
+Some build settings can only be enabled manually:
+
+- **SpiderMonkey debug builds** are enabled with `./mach build --debug-mozjs`, or `[build] debug-mozjs = true` in your servobuild file
+- **crown linting** is recommended when hacking on DOM code, and is enabled with `./mach build --use-crown`
