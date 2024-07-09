@@ -67,16 +67,16 @@ To start Servo, tap the "Servo" icon in your launcher screen, or run this :
 
 Force-stop:
 ```
-adb shell am force-stop org.mozilla.servo/org.mozilla.servo.MainActivity
+adb shell am force-stop org.servo.servoshell/org.servo.servoshell.MainActivity
 ```
 If the above doesn't work, try this:
 ```
-adb shell am force-stop org.mozilla.servo
+adb shell am force-stop org.servo.servoshell
 ```
 
 Uninstall:
 ```
-adb uninstall org.mozilla.servo
+adb uninstall org.servo.servoshell
 ```
 ### NOTE: The following instructions are outdated and might not apply any longer. They are retained here for reference until the Android build is fully functional and the below instructions are reviewed.
 
@@ -110,12 +110,12 @@ Running:
 
 Force-stop:
 ```
-adb shell am force-stop org.mozilla.servo
+adb shell am force-stop org.servo.servoshell
 ```
 
 Uninstall:
 ```
-adb uninstall org.mozilla.servo
+adb uninstall org.servo.servoshell
 ```
 
 ## Viewing logs and stdout
@@ -142,7 +142,7 @@ First, you will need to enable debugging in the project files by adding `android
 ~/android-ndk-r9c/ndk-gdb \
     --adb=/Users/larsberg/android-sdk-macosx/platform-tools/adb \
     --project=servo/support/android/apk/app/src/main/
-    --launch=org.mozilla.servo.MainActivity \
+    --launch=org.servo.servoshell.MainActivity \
     --verbose
 ```
 
@@ -151,7 +151,7 @@ To get symbols resolved, you may need to provide additional library paths (at th
 
 OR you may need to enter the same path names as above in the support/android/apk/libs/armeabi/gdb.setup file.
 
-If you are not able to get past the "Application Servo (process com.mozilla.servo) is waiting for the debugger to attach." prompt after entering `continue` at `(gdb)` prompt, you might have to set Servo as the debug app (Use the "Select debug app" option under "Developer Options" in the Settings app).
+If you are not able to get past the "Application Servo (process org.servo.servoshell) is waiting for the debugger to attach." prompt after entering `continue` at `(gdb)` prompt, you might have to set Servo as the debug app (Use the "Select debug app" option under "Developer Options" in the Settings app).
 If this doesn't work, Stack Overflow will help you.
 
 The ndk-gdb debugger may complain about `... function not defined` when you try to set breakpoints.
