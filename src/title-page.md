@@ -11,6 +11,9 @@ This book will be your guide to building and running servoshell, hacking on and 
 **This book is a work in progress!**
 In the table of contents, \* denotes chapters that were recently added or imported from older docs, and still need to be copyedited or reworked.
 
+Contributions are always welcome.
+Click the pencil button in the top right of each page to propose changes, or go to [servo/book](https://github.com/servo/book) for more details.
+
 ## Need help?
 
 Join the [Servo Zulip](https://servo.zulipchat.com) if you have any questions.
