@@ -41,3 +41,8 @@ table > tbody > tr > th {
     padding: 3px 20px;
     border: 1px var(--table-border-color) solid;
 }
+
+/* Don’t collapse spaces in inline code. */
+code {
+    white-space: pre-wrap;
+}
