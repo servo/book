@@ -39,10 +39,8 @@ This method [sends a message](https://github.com/servo/webxr/blob/614420b9830615
 The WebXR message handler iterates over all known discovery objects and attempts to [request a session](https://github.com/servo/webxr/blob/614420b9830615376563fc6e1d98c52119f97123/webxr-api/registry.rs#L217-L231) from each of them.
 The discovery objects encapsulate creating a session for each supported backend.
 
-As of Feb 3, 2024, there are five WebXR backends:
+As of July 19, 2024, there are three WebXR backends:
 
-* [magicleap](https://github.com/servo/webxr/tree/main/webxr/magicleap) - supports Magic Leap 1.0 devices
-* [googlevr](https://github.com/servo/webxr/tree/main/webxr/googlevr) - supports Google VR
 * [headless](https://github.com/servo/webxr/tree/main/webxr/headless) - supports a window-less, device-less device for automated tests
 * [glwindow](https://github.com/servo/webxr/tree/main/webxr/glwindow) - supports a GL-based window for manual testing in desktop environments without real devices
 * [openxr](https://github.com/servo/webxr/tree/main/webxr/openxr) - supports devices that implement the OpenXR standard
