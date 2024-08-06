@@ -1,4 +1,4 @@
-# Building for OpenHarmony 
+# Building for OpenHarmony
 
 <div class="warning _note">
 Support for OpenHarmony is currently in-progress and these instructions might change from time to time and might also be incomplete.
@@ -6,16 +6,16 @@ Support for OpenHarmony is currently in-progress and these instructions might ch
 
 ## Get the OpenHarmony tools
 
-Building for OpenHarmony requires the following: 
+Building for OpenHarmony requires the following:
 
 1. The OpenHarmony SDK. This is sufficient to compile servo as a shared library for OpenHarmony.
 2. The `hvigorw` build tool to compile apps into an app bundle and sign it.
 
 ### Setting up the OpenHarmony SDK
 
-The OpenHarmony SDK is required to compile applications for OpenHarmony. 
+The OpenHarmony SDK is required to compile applications for OpenHarmony.
 
-#### Downloading via DevEco Studio 
+#### Downloading via DevEco Studio
 
 [DevEco Studio] is an IDE for developing applications for HarmonyOS NEXT and OpenHarmony.
 It supports Windows and MacOS.
@@ -27,8 +27,8 @@ DevEco Studio will automatically download and install the components for you.
 #### Manual installation of the OpenHarmony SDK (e.g. on Linux)
 
 <div class="warning _note">
-    Before rushing and downloading the OH SDK from gitee as described here, please note that you will also need `hvigor` to compile applications.
-    `hvigor` is currently only available via the [HarmonyOS NEXT commandline tools], which also contains a copy of the OpenHarmony SDK.
+    Before rushing and downloading the OH SDK from gitee as described here, please note that you will also need hvigor to compile applications.
+    hvigor is currently recommended to be downloaded via the HarmonyOS NEXT commandline tools package, which also contains a copy of the OpenHarmony SDK.
 </div>
 
 Go to the [OpenHarmony release notes] and select the version you want to compile for.
@@ -58,10 +58,10 @@ Currently, the commandline tools package is not publicly available and requires 
 <div class="warning _note">
 This section is not fully tested and may change based on user feedback.
 It's recommended to install the commandline-tools bundle. If you decide to install manually, you need to take
-care to install the `hvigor` version matching the requirements of your project.
+care to install the hvigor version matching the requirements of your project.
 </div>
 
-`hvigor` (not the wrapper `hvigorw`) is also available via `npm`. 
+`hvigor` (not the wrapper `hvigorw`) is also available via `npm`.
 1. Install the same nodejs version as the commandline-tools ship.
    For HarmonyOS NEXT Node 18 is shipped.
 2. Edit your `.npmrc` to contain the following line:
@@ -90,7 +90,7 @@ care to install the `hvigor` version matching the requirements of your project.
 
 ### Configuring hdc on Linux
 
-`hdc` is the equivalent to `adb` for OpenHarmony devices. 
+`hdc` is the equivalent to `adb` for OpenHarmony devices.
 You can find it in the `toolchains` directory of your SDK.
 For convenience purposes, you might want to add `toolchains` to your `PATH`.
 Among others, `hdc` can be used to open a shell or send/receive files from a device
@@ -99,16 +99,16 @@ Among others, `hdc` can be used to open a shell or send/receive files from a dev
 It's recommended to add a `udev` rule to allow hdc to access the corresponding device without needing to run `hdc` as root.
 [This stackoverflow answer](https://stackoverflow.com/a/53887437) also applies to `hdc`.
 Run `lsusb` and check the vendor id of your device, and then create the corresponding `udev` rule.
-Please note that your user should be a member of the group you specify with `GROUP="xxx"`. 
+Please note that your user should be a member of the group you specify with `GROUP="xxx"`.
 Depending on your Linux distributions you may want to use a different group.
 
 To check if `hdc` is now working, you can run `hdc list targets` and it should show your device serial number.
 If it doesn't work, try rebooting.
 
-Please note, that your phone needs to be in "Developer mode" with USB debugging enabled. 
+Please note, that your phone needs to be in "Developer mode" with USB debugging enabled.
 The process here is exactly the same as one android:
 1. Tap the build number multiple times to enable developer mode.
-2. Then navigate to the developer options and enable USB debugging. 
+2. Then navigate to the developer options and enable USB debugging.
 3. When you connect your device for the first time, confirm the pop-up asking you if you want to trust the computer you are connecting to.
 
 ## Installing and running on-device
