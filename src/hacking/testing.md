@@ -31,7 +31,7 @@ In some cases, extensive tests for the feature you're working on already exist u
 
 - Make a release build
 - run `./mach test-wpt --release --log-raw=/path/to/some/logfile`
-- run [`update-wpt` on it](https://github.com/servo/servo/blob/main/tests/wpt/README.md#updating-test-expectations)
+- run [`update-wpt` on it](#updating-web-test-expectations)
 
 This may create a new commit with changes to expectation ini files.
 If there are lots of changes, it's likely that your feature had tests in wpt already.
@@ -96,7 +96,7 @@ Normally wptrunner starts its own WPT server, but occasionally you might want to
 This would lead to a “Failed to start HTTP server” errors, because you can only run one WPT server at a time.
 To fix this:
 
-1. Follow the steps in [**Running the tests manually**](#running-the-tests-manually)
+1. Follow the steps in [**Running web tests manually**](#running-web-tests-manually)
 2. Add a `break` to [start_servers in serve.py](https://github.com/servo/servo/blob/ce92b7bfbd5855aac18cb4f8a8ec59048041712e/tests/wpt/web-platform-tests/tools/serve/serve.py#L745-L783) as follows:
   ```
   --- a/tests/wpt/tests/tools/serve/serve.py
@@ -112,7 +112,7 @@ To fix this:
   ```
 3. Run `mach test-wpt` as many times as needed
 
-If you get unexpected TIMEOUT in testharness tests, then the custom testharnessreport.js may have been installed incorrectly (see [**Running the tests manually**](#running-the-tests-manually) for more details).
+If you get unexpected TIMEOUT in testharness tests, then the custom testharnessreport.js may have been installed incorrectly (see [**Running web tests manually**](#running-web-tests-manually) for more details).
 
 
 ### Running web tests manually
