@@ -16,10 +16,10 @@ Should you wish to work on an issue, please claim it first by commenting on the 
 This is to prevent duplicated efforts from contributors on the same issue.
 
 Head over to [Servo Starters](https://starters.servo.org/) to find good tasks to start with.
-If you come across words or jargon that do not make sense, please check [the glossary](docs/glossary.md) first.
+If you come across words or jargon that do not make sense, please check [the glossary](old/glossary.md) first.
 If there's no matching entry, please make a pull request to add one with the content `TODO` so we can correct that!
 
-See [`HACKING_QUICKSTART.md`](docs/HACKING_QUICKSTART.md) for more information on how to start working on Servo.
+See [Hacking on Servo](hacking/mach.md) for more information on how to start working on Servo.
 
 ## Pull request checklist
 
@@ -28,7 +28,7 @@ See [`HACKING_QUICKSTART.md`](docs/HACKING_QUICKSTART.md) for more information o
 
 - Commits should be as small as possible, while ensuring that each commit is correct independently (i.e., each commit should compile and pass tests).
 
-- Commits should be accompanied by a Developer Certificate of Origin (http://developercertificate.org) sign-off, which indicates that you (and your employer if applicable) agree to be bound by the terms of the [project license](LICENSE).
+- Commits should be accompanied by a Developer Certificate of Origin (http://developercertificate.org) sign-off, which indicates that you (and your employer if applicable) agree to be bound by the terms of the [project license](https://github.com/servo/servo/blob/main/LICENSE).
   In git, this is the `-s` option to `git commit`.
 
 - If your patch is not getting reviewed or you need a specific person to review it, you can @-reply a reviewer asking for a review in the pull request or a comment, or you can ask for a review in [the Servo chat](https://servo.zulipchat.com/).
