@@ -37,7 +37,7 @@ Here are some ways that we take advantage of both:
 * _GC JS concurrent with layout_ - Under most any design with concurrent JS and layout, JS is going to be waiting to query layout sometimes, perhaps often.
   This will be the most opportune time to run the GC.
 
-For information on the design of WebXR see the [in-tree documentation](https://github.com/servo/servo/blob/main/docs/components/webxr.md).
+For information on the design of WebXR see the [in-tree documentation](./webxr.md).
 
 ## Challenges
 
