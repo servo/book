@@ -21,6 +21,7 @@
 - [Debugging](hacking/debugging.md)
 - [Automated testing\*](hacking/testing.md)
 - [Profiling\*](hacking/profiling.md)
+- [Diagnosing bugs in real websites](hacking/web-compat-bugs.md)
 
 # Servo’s architecture
 
