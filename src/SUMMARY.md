@@ -19,6 +19,7 @@
   - [Working on a crate\*](hacking/working-on-a-crate.md)
 - [Editor support](hacking/editor-support.md)
 - [Debugging](hacking/debugging.md)
+  - [Using DevTools](hacking/using-devtools.md)
 - [Automated testing\*](hacking/testing.md)
 - [Profiling\*](hacking/profiling.md)
 - [Diagnosing bugs in real websites](hacking/web-compat-bugs.md)

@@ -19,16 +19,11 @@ For example, to run our [Conway’s Game of Life demo](https://demo.servo.org/ex
 $ ./servo --pref dom.webgpu.enabled https://demo.servo.org/experiments/webgpu-game-of-life/
 ```
 
-Use `--devtools=6080` to enable support for [debugging pages with Firefox devtools](https://firefox-source-docs.mozilla.org/devtools-user/about_colon_debugging/index.html#connecting-over-the-network):
+Use `--devtools=6080` to enable support for [debugging pages with Firefox devtools](hacking/using-devtools.md):
 
 ```sh
 $ ./servo --devtools=6080
 ```
-
-<div class="warning">
-
-**Note:** devtools support is currently a work in progress ([#32404](https://github.com/servo/servo/issues/32404)).
-</div>
 
 ## Built servoshell yourself?
 
