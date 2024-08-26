@@ -6,7 +6,7 @@ Servo has support for a subset of DevTools functionality, allowing for simple de
 ## Connecting to Servo
 
 1. Run servoshell with the DevTools server enabled.
-   Use the same port as before.
+   The number after the `devtools` parameter is the port used by the server.
 
 ```sh
 ./mach run --devtools=6080
@@ -14,6 +14,7 @@ Servo has support for a subset of DevTools functionality, allowing for simple de
 
 2. Open Firefox and go to `about:debugging`.
    If this is your first time using the DevTools integration, go to **Setup** and add `localhost:6080` as a [network location](https://firefox-source-docs.mozilla.org/devtools-user/about_colon_debugging/index.html#connecting-over-the-network).
+   The port number must be the same as in the previous step.
 
 3. Click on **Connect** in the sidebar next to `localhost:6080`.
 
