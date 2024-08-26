@@ -3,7 +3,7 @@
 [Firefox DevTools](https://firefox-source-docs.mozilla.org/devtools-user) are a set of web developer tools that can be used to examine, edit, and debug a website's HTML, CSS, and JavaScript.
 Servo has support for a subset of DevTools functionality, allowing for simple debugging.
 
-## Connect to Servo
+## Connecting to Servo
 
 1. Run servoshell with the DevTools server enabled.
    Use the same port as before.
