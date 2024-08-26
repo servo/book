@@ -12,6 +12,11 @@ Then to fix indentation of simple lists, you can replace `^([*-] .*\n([* -].*\n)
 
 - For consistency, indent nested lists with two spaces, and use `-` for unordered lists
 
+## Notation
+
+- Use **bold text** when referring to UI elements like menu options, e.g. “click **Inspect**”
+- Use `backticks` when referring to single-letter keyboard keys, e.g. “press `A` or Ctrl+`A`”
+
 ## Error messages
 
 - Where possible, always include a link to documentation, Zulip chat, or source code — this helps preserve the original context, and helps us check and update our advice over time
