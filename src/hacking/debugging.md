@@ -55,34 +55,34 @@ This means you can select which event types to log at runtime with `RUST_LOG`!
 For example, in the **constellation** ([more details](https://github.com/servo/servo/blob/bccbc87db7b986cae31c8f14f0a130336f8417b2/components/constellation/tracing.rs)):
 
 - to trace only events from script:
-  <br>`RUST_LOG='constellation<=off,constellation<script@'`
+  <br>`RUST_LOG='constellation-from-=off,constellation-from-script:'`
 - to trace all events except for ReadyToPresent events:
-  <br>`RUST_LOG='constellation<,constellation<compositor@ReadyToPresent=off'`
+  <br>`RUST_LOG='constellation-from-,constellation-from-compositor:ReadyToPresent=off'`
 - to trace only script InitiateNavigateRequest events:
-  <br>`RUST_LOG='constellation<=off,constellation<script@InitiateNavigateRequest'`
+  <br>`RUST_LOG='constellation-from-=off,constellation-from-script:InitiateNavigateRequest'`
 
 In the **compositor** ([more details](https://github.com/servo/servo/blob/bccbc87db7b986cae31c8f14f0a130336f8417b2/components/compositing/tracing.rs)):
 
 - to trace only MoveResizeWebView events:
-  <br>`RUST_LOG='compositor<constellation@MoveResizeWebView'`
+  <br>`RUST_LOG='compositor-from-constellation:MoveResizeWebView'`
 - to trace all events except for Forwarded events:
-  <br>`RUST_LOG=compositor<,compositor<constellation@Forwarded=off`
+  <br>`RUST_LOG=compositor-from-,compositor-from-constellation:Forwarded=off`
 
 In **servoshell** ([more details](https://github.com/servo/servo/blob/bccbc87db7b986cae31c8f14f0a130336f8417b2/ports/servoshell/tracing.rs)):
 
 - to trace only events from servo:
-  <br>`RUST_LOG='servoshell<=off,servoshell>=off,servoshell<servo@'`
+  <br>`RUST_LOG='servoshell-from-=off,servoshell-to-=off,servoshell-from-servo:'`
 - to trace all events except for AxisMotion events:
-  <br>`RUST_LOG='servoshell<,servoshell>,servoshell<winit@WindowEvent(AxisMotion)=off'`
+  <br>`RUST_LOG='servoshell-from-,servoshell-to-,servoshell-from-winit:WindowEvent:AxisMotion=off'`
 - to trace only winit window moved events:
-  <br>`RUST_LOG='servoshell<=off,servoshell>=off,servoshell<winit@WindowEvent(Moved)'`
+  <br>`RUST_LOG='servoshell-from-=off,servoshell-to-=off,servoshell-from-winit:WindowEvent:Moved'`
 
 Event tracing can generate an unwieldy amount of output.
 In general, we recommend the following config to keep things usable:
 
-- `constellation<,constellation>,constellation<compositor@ForwardEvent(MouseMoveEvent)=off,constellation<compositor@LogEntry=off,constellation<compositor@ReadyToPresent=off,constellation<script@LogEntry=off`
-- `compositor<,compositor>`
-- `servoshell<,servoshell>,servoshell<winit@DeviceEvent=off,servoshell<winit@MainEventsCleared=off,servoshell<winit@NewEvents(WaitCancelled)=off,servoshell<winit@RedrawEventsCleared=off,servoshell<winit@RedrawRequested=off,servoshell<winit@UserEvent(WakerEvent)=off,servoshell<winit@WindowEvent(CursorMoved)=off,servoshell<winit@WindowEvent(AxisMotion)=off,servoshell<servo@EventDelivered=off,servoshell<servo@ReadyToPresent=off,servoshell>servo@Idle=off,servoshell>servo@MouseWindowMoveEventClass=off`
+- `constellation-from-,constellation-to-,constellation-from-compositor:ForwardEvent:MouseMoveEvent=off,constellation-from-compositor:LogEntry=off,constellation-from-compositor:ReadyToPresent=off,constellation-from-script:LogEntry=off`
+- `compositor-from-,compositor-to-`
+- `servoshell-from-,servoshell-to-,servoshell-from-winit:DeviceEvent=off,servoshell-from-winit:MainEventsCleared=off,servoshell-from-winit:NewEvents:WaitCancelled=off,servoshell-from-winit:RedrawEventsCleared=off,servoshell-from-winit:RedrawRequested=off,servoshell-from-winit:UserEvent:WakerEvent=off,servoshell-from-winit:WindowEvent:CursorMoved=off,servoshell-from-winit:WindowEvent:AxisMotion=off,servoshell-from-servo:EventDelivered=off,servoshell-from-servo:ReadyToPresent=off,servoshell-to-servo:Idle=off,servoshell-to-servo:MouseWindowMoveEventClass=off`
 
 ## Other debug logging
 
