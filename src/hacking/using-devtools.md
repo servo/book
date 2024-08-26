@@ -39,11 +39,13 @@ From left to right:
 
 - The **HTML tree** shows the document nodes.
   This allows you to see, add, or modify attributes by double-clicking on the tag name or attribute.
-- The **style inspector** displays the associated CSS styling for one element.
-  The entries here come from the element's style attribute, from a stylesheet, or are inherited.
-  Styles can be added or modified by clicking on the style name or the empty space below.
-- The **extra column** contains more helpful tools.
-  The two relevant ones are the **Layout** tab, which contains information about the box model properties of the element (flex and grid do not work yet), and **Computed**, which contains a list of every calculated CSS value for the element.
+- The **style inspector** displays the CSS styles associated with the selected element.
+  The entries here come from the element's style attribute, from matching stylesheet rules, or inherited from other elements.
+  Styles can be added or modified by clicking on a selector or property, or clicking in the empty space below.
+- The **extra column** contains more helpful tools:
+  - **Layout** contains information about the box model properties of the element.
+    Note that flex and grid do not work yet.
+  - **Computed**, which contains all of the CSS [computed values](https://drafts.csswg.org/css-cascade/#computed) after resolving things like relative units.
 
 ![Inspector](../images/devtools-inspector.png)
 
