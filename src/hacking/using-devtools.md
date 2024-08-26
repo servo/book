@@ -19,7 +19,8 @@ Servo has support for a subset of DevTools functionality, allowing for simple de
 
 ![Setting up the port in Firefox](../images/devtools-firefox-setup.png)
 
-4. Accept the incoming connection by pressing `Y` in the terminal that servoshell is running in.
+4. Accept the incoming connection.
+   If no confirmation dialog appears, press `Y` in the terminal that servoshell is running in.
 
 ![Accept the connection in the terminal](../images/devtools-accept-connection.png)
 
