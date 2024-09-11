@@ -1,12 +1,12 @@
-# The Servo Book
+#伺服书
 
-**[API docs](https://doc.servo.org/servo/)**
+**[API文档](https://doc.servo.org/servo/)**
 
 ***
 
-[_Servo_](https://servo.org) is a web browser engine written in the Rust programming language, and currently developed on 64-bit Linux, 64-bit macOS, 64-bit Windows, and Android.
+[_伺服系统_](https://servo.org)是用Rust编程语言编写的web浏览器引擎，目前在64位Linux、64位macOS、64位Windows和Android上开发。
 
-Work is still ongoing to make Servo consumable as a webview library, so for now, the only supported way to use Servo is via _servoshell_, our [winit](https://crates.io/crates/winit)- and [egui](https://crates.io/crates/egui)-based example browser.
+使Servo作为webview库可消费的工作仍在进行中，所以现在，使用Servo唯一支持的方式是通过_伺服壳_，我们的[winit](https://crates.io/crates/winit)表示“对象”:　analysand[鄂桂](https://crates.io/crates/egui)基于的示例浏览器。
 
 ![Screenshot of servoshell](images/servoshell.png)
 
