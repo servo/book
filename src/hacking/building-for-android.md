@@ -35,17 +35,17 @@ in the shell session before invoking ./mach commands
 
 ## Build Servo
 
-In the following sub-commands the `--android` flag is short for `--target armv7-linux-androideabi`
+In the following sub-commands the `--android` flag is short for `--target aarch64-linux-android`
 
 ```sh
 # Replace "--release" with "--dev" to create an unoptimized debug build.
 ./mach build --release --android
 ```
 
-For running in an emulator however, you’ll likely want to build for Android x86 instead:
+For running in an emulator however, you’ll likely want to build for Android x86-64 instead:
 
 ```sh
-./mach build --release --target i686-linux-android
+./mach build --release --target x86_64-linux-android
 ```
 
 ## Installing and running on-device
