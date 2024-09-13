@@ -2,18 +2,14 @@
 
 # Profiling
 
-First, ensure that you are building Servo in release (optimized) mode with optimal debugging symbols:
-In Cargo.toml:
+When profiling Servo or troubleshooting performance issues, make sure your build is optimised while still allowing for accurate profiling data.
 
-```
-[profile.release]
-debug = true
-lto = false
+```sh
+$ ./mach build --profile profiling --with-frame-pointer
 ```
 
-```
- ./mach build --release --with-frame-pointers
-```
+- **--profile profiling** builds Servo with [our profiling configuration](building-servo.md#build-profiles)
+- **--with-frame-pointer** builds Servo with stack frame pointers on all platforms
 
 Several ways to get profiling information about Servo's runs:
 * [Interval Profiling](#interval-profiling)
