@@ -9,7 +9,7 @@ Support for OpenHarmony is currently in-progress and these instructions might ch
 Building for OpenHarmony requires the following:
 
 1. The OpenHarmony SDK. This is sufficient to compile servo as a shared library for OpenHarmony.
-2. The `hvigorw` build tool to compile apps into an app bundle and sign it.
+2. The `hvigor` build tool to compile an application into an app bundle and sign it.
 
 ### Setting up the OpenHarmony SDK
 
@@ -31,11 +31,24 @@ DevEco Studio will automatically download and install the components for you.
     hvigor is currently recommended to be downloaded via the HarmonyOS NEXT commandline tools package, which also contains a copy of the OpenHarmony SDK.
 </div>
 
-Go to the [OpenHarmony release notes] and select the version you want to compile for.
-Scroll down to the section "Acquiring Source Code from Mirrors" and click the download link for the version of "Public SDK package for the standard system" matching your host system.
-Extract the archive to a suitable location.
-Then switch into the SDK folder with `cd <sdk_folder>/<your_operating_system>` and unzip the zip files of the individual components.
-Preferably use the `unzip` command on the command-line, or manually ensure that the unzipped bundles are called e.g. `native` and not `native-linux-x64-5.x.y.z`.
+1. Go to the [OpenHarmony release notes] and select the version you want to compile for.
+2. Scroll down to the section "Acquiring Source Code from Mirrors" and click the download link for the version of "Public SDK package for the standard system" matching your host system.
+3. Extract the archive to a suitable location.
+4. Switch into the SDK folder with `cd <sdk_folder>/<your_operating_system>`.
+5. Create a sub-folder with the same name as the API version (e.g 11 for SDK v4.1) and switch into it.
+6. Unzip the zip files of the individual components into the folder created in the previous step. Preferably use the `unzip` command on the command-line, or manually ensure that the unzipped bundles are called e.g. `native` and not `native-linux-x64-5.x.y.z`.
+
+The following snippet can be used as a reference for steps 4-6:
+```commandline
+cd ~/ohos-sdk/linux
+for COMPONENT in "native toolchains ets js previewer" do
+    echo "Extracting component ${COMPONENT}"
+    unzip ${COMPONENT}-*.zip
+    API_VERSION=$(cat ${COMPONENT}/oh-uni-package.json | jq -r '.apiVersion')
+    mkdir -p ${API_VERSION}
+    mv ${COMPONENT} "${API_VERSION}/"
+done
+```
 On windows, it is recommended to use 7zip to unzip the archives, since the windows explorer unzip tool is extremely slow.
 
 [DevEco Studio]: https://developer.huawei.com/consumer/cn/deveco-studio
@@ -63,29 +76,21 @@ care to install the hvigor version matching the requirements of your project.
 
 `hvigor` (not the wrapper `hvigorw`) is also available via `npm`.
 1. Install the same nodejs version as the commandline-tools ship.
-   For HarmonyOS NEXT Node 18 is shipped.
+   For HarmonyOS NEXT Node 18 is shipped. Ensure that the `node` binary is in PATH.
 2. Edit your `.npmrc` to contain the following line:
 
     ```
     @ohos:registry=https://repo.harmonyos.com/npm/
     ```
 
-3. Install hvigor and the hvigor-ohos-plugin
+3. Install hvigor and the hvigor-ohos-plugin. This will create a `node_modules` directory in the current directory.
    ```commandline
    npm install @ohos/hvigor
    npm install @ohos/hvigor-ohos-plugin
    ```
-4. Set the following environment variables
-    ```
-    # Note: The openharmony sdk is under ${DEVECO_SDK_HOME}/HarmonyOS-NEXT-${HOS_VERSION}/openharmony
-    # Presumably you would need to replicate this directory structure
-    export DEVECO_SDK_HOME=/path/to/commandline-tools/sdk
-    export NODE_HOME=/path/to/node
-    export PATH=${NODE_HOME}/bin:$PATH
-    ```
-5. Now you should be able to run `hvigor.js` in your OpenHarmony project to build a hap bundle:
+4. Now you should be able to run `hvigor.js` in your OpenHarmony project to build a hap bundle:
    ```
-   /path/to/hvigor.js assembleHap
+   /path/to/node_modules/@ohos/hvigor/bin/hvigor.js assembleHap
    ```
 
 ### Configuring hdc on Linux
@@ -93,7 +98,7 @@ care to install the hvigor version matching the requirements of your project.
 `hdc` is the equivalent to `adb` for OpenHarmony devices.
 You can find it in the `toolchains` directory of your SDK.
 For convenience purposes, you might want to add `toolchains` to your `PATH`.
-Among others, `hdc` can be used to open a shell or send/receive files from a device
+Among others, `hdc` can be used to open a shell or transfer files between a device and the host system.
 `hdc` needs to connect to a physical device via `usb`, which requires the user has permissions to access the device.
 
 It's recommended to add a `udev` rule to allow hdc to access the corresponding device without needing to run `hdc` as root.
@@ -105,15 +110,79 @@ Depending on your Linux distributions you may want to use a different group.
 To check if `hdc` is now working, you can run `hdc list targets` and it should show your device serial number.
 If it doesn't work, try rebooting.
 
-Please note, that your phone needs to be in "Developer mode" with USB debugging enabled.
+Please note that your device needs to be in "Developer mode" with USB debugging enabled.
 The process here is exactly the same as one android:
 1. Tap the build number multiple times to enable developer mode.
 2. Then navigate to the developer options and enable USB debugging.
 3. When you connect your device for the first time, confirm the pop-up asking you if you want to trust the computer you are connecting to.
 
+## Signing configuration
+
+Most devices require that the HAP is digitally signed by the developer to be able to install it.
+When using the `hvigor` tool, this can be accomplished by setting a static `signingConfigs` object in the `build-profile.json5` file or by dynamically creating the `signingConfigs` array on the application context object in the `hvigorfile.ts` script.
+
+The `signingConfigs` property is an array of objects with the following structure:
+
+```json
+{
+    "name": "default",
+    "type": "<OpenHarmony or HarmonyOS>",
+    "material": {
+        "certpath": "/path/to/app-signing-certificate.cer",
+        "storePassword": "<encrypted password>",
+        "keyAlias": "debugKey",
+        "keyPassword": "<encrypted password>",
+        "profile": "/path/to/signed-profile-certificate.p7b",
+        "signAlg": "SHA256withECDSA",
+        "storeFile": "/path/to/java-keystore-file.p12"
+    }
+}
+```
+
+Here `<encrypted password>` is a hexadecimal string representation of the plaintext password after being encrypted.
+The key and salt used to encrypt the passwords are generated by DevEco Studio IDE and are stored on-disk alongside the certificate files and keystore, usually under `<USER HOME>/.ohos/config/openharmony`.
+
+You can use the IDE to generate the information needed for password encryption, the required application and profile certificate files, and the keystore itself.
+
+1. Open Project Structure dialog from `File > Project Structure` menu.
+2. Under the 'Signing Config' tab, enable the 'Automatically generate signature' checkbox.
+
+**NOTE: The signature autogenerated above is intended only for development and testing. For production builds and distribution via an App Store, the relevant configuration needs to be obtained from the App Store provider.**
+
+Once generated, it is necessary to point `mach` to the above "signing material" configuration using the `SERVO_OHOS_SIGNING_CONFIG` environment variable.
+The value of the variable must be a file path to a valid `.json` file with the same structure as the `signingConfigs` property given above, but with `certPath`, `storeFile` and `profile` given as *paths relative to the json file*, instead of absolute paths.
+
+
+## Building servoshell
+
+Before building servo, ensure the following environment variables are set in the current shell:
+
+```commandline
+    # Note: The openharmony sdk is under ${DEVECO_SDK_HOME}/default/openharmony
+    # Presumably you would need to replicate this directory structure
+    export OHOS_SDK_NATIVE=/path/to/openharmony-sdk/platform/api-version/native
+    export OHOS_BASE_SDK_HOME=/path/to/openharmony-sdk/platform
+    export HVIGOR_PATH=/path/to/parent/directory/containing/node_modules # not required if hvigorw is in PATH
+    export SERVO_OHOS_SIGNING_CONFIG=/path/to/signing-configs.json # required if the HAP must be signed.
+```
+
+The following command can then be used to compile the servoshell application for a 64-bit ARM device or emulator:
+
+```commandline
+./mach build --ohos --release
+```
+
+In `mach build`, `mach install` and `mach package` commands, `--ohos` is an alias for `--target aarch64-unknown-linux-ohos`.
+To build for an emulator running on an x86-64 host, use `--target x86_64-unknown-linux-ohos`
+
+
 ## Installing and running on-device
 
-See the instructions in the repository for the Demo application: https://github.com/jschwe/ServoDemo
+The following command can be used to install previously built servoshell application on a 64-bit ARM device or emulator:
+
+```commandline
+./mach install --ohos --release
+```
 
 ## Further reading
 
