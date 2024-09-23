@@ -52,22 +52,58 @@ There are three main build profiles, which you can build and use independently o
         <th>mach option
         <td><code>-d</code>
         <td><code>-r</code>
-        <td><code>--profile production</code>
+        <td><code>--prod</code>
     <tr>
         <th>optimised?
-        <td>no<td>yes<td>yes
+        <td><a href="https://doc.rust-lang.org/cargo/reference/profiles.html#dev">no</a>
+        <td><a href="https://github.com/servo/servo/blob/457d37d94ee6966cad377c373d333a00c637e1ae/Cargo.toml#L153">yes</a>
+        <td>yes, <a href="https://github.com/servo/servo/blob/457d37d94ee6966cad377c373d333a00c637e1ae/Cargo.toml#L159-L160">more</a> <a href="https://github.com/servo/servo/blob/457d37d94ee6966cad377c373d333a00c637e1ae/Cargo.toml#L170-L171">than</a> in <strong>release</strong>
     <tr>
-        <th>debug info?
-        <td>yes<td>no<td>no
+        <th>maximum RUST_LOG level
+        <td><code>trace</code>
+        <td><code>info</code>
+        <td><code>info</code>
     <tr>
         <th>debug assertions?
         <td>yes<td>yes(!)<td>no
     <tr>
-        <th>maximum RUST_LOG level
-        <td><code>trace</code><td><code>info</code><td><code>info</code>
+        <th>debug info?
+        <td>yes<td>no<td>no
+    <tr>
+        <th>symbols?
+        <td>yes<td>no<td>yes
     <tr>
         <th>finds resources in<br>current working dir?
-        <td>yes<td>yes<td>no
+        <td>yes<td>yes<td>no(!)
+</table>
+
+There are also two special variants of production builds for performance-related use cases:
+
+- `production-stripped` builds are ideal for benchmarking Servo over time, with debug symbols stripped for faster initial startup
+- `profiling` builds are ideal for [profiling](profiling.md) and troubleshooting performance issues; they behave like a debug or release build, but have the same performance as a production build
+
+<table>
+<thead>
+    <tr>
+        <th>
+        <th>production
+        <th>production-stripped
+        <th>profiling
+<tbody>
+    <tr>
+        <th>mach <code>--profile</code>
+        <td><code>production</code>
+        <td><code>production-stripped</code>
+        <td><code>profiling</code>
+    <tr>
+        <th>debug info?
+        <td>no<td>no<td>yes
+    <tr>
+        <th>symbols?
+        <td>yes<td>no<td>yes
+    <tr>
+        <th>finds resources in<br>current working dir?
+        <td>no<td>no<td>yes(!)
 </table>
 
 You can change these settings in a servobuild file (see [servobuild.example](https://github.com/servo/servo/blob/b79e2a0b6575364de01b1f89021aba0ec3fcf399/servobuild.example)) or in the root [Cargo.toml](https://github.com/servo/servo/blob/b79e2a0b6575364de01b1f89021aba0ec3fcf399/Cargo.toml).
