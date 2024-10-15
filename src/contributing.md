@@ -68,6 +68,13 @@ For now, we’re taking a cautious approach to these tools due to their effects 
 
 **Ethical issues:** AI tools require an unreasonable amount of energy and water to build and operate, their models are built with heavily exploited workers in unacceptable working conditions, and they are being used to undermine labor and justify layoffs. These are harms that we do not want to perpetuate, even if only indirectly.
 
+<div class="warning">
+
+Note that aside from generating code or other contributions, AI tools can sometimes answer questions you may have about Servo, but we’ve found that these answers are often incorrect or very misleading.
+
+In general, do not assume that AI tools are a source of truth regarding how Servo works. Consider asking your questions [on Zulip](https://servo.zulipchat.com) instead.
+</div>
+
 ## Conduct
 
 Servo Code of Conduct is published at <https://servo.org/coc/>.
