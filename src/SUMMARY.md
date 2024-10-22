@@ -23,6 +23,7 @@
 - [Automated testing\*](hacking/testing.md)
 - [Profiling\*](hacking/profiling.md)
 - [Diagnosing bugs in real websites](hacking/web-compat-bugs.md)
+- [Requesting crate releases](hacking/requesting-crate-releases.md)
 
 # Servo’s architecture
 
