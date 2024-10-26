@@ -1,21 +1,21 @@
-The Servo Book
+伺服书
 ==============
 
-**<https://book.servo.org>**
+**< https://book.servo.org >**
 
-To render the book locally:
+要在本地呈现图书:
 
-```sh
-$ cargo install mdbook --vers '^0.4' --locked
-$ cargo install mdbook-mermaid --vers '^0.14' --locked
-$ mdbook serve --open
+```嘘
+$货物安装'^0.4'市场锁定
+$货物安装医学博士书-美人鱼-弗斯·'^0.14'-锁定
+$ mdbook服务-打开
 ```
 
-Or if you have [Nix](https://nixos.org/download/) (the package manager):
+或者如果你有[无](https://nixos.org/download/)(软件包管理器):
 
-```sh
-$ nix-shell --run 'mdbook serve --open'
+```嘘
+$ nix-shell-run ' MD book serve-open '
 ```
 
-**This book is a work in progress!**
-In the table of contents, \* denotes chapters that were recently added or imported from older docs, and still need to be copyedited or reworked.
+**这本书是正在进行中的工作！**
+在目录中，*表示最近从旧文档中添加或导入的章节，仍然需要进行编辑或修改。
