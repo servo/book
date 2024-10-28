@@ -22,9 +22,9 @@ Because of this, and because Servo can currently only be built with `mach`, you 
     "rust-analyzer.rustfmt.overrideCommand": [ "./mach", "fmt" ],
 
     "rust-analyzer.check.overrideCommand": [
-        "./mach", "check", "--message-format=json" ],
+        "./mach", "cargo-clippy", "--message-format=json" ],
     "rust-analyzer.cargo.buildScripts.overrideCommand": [
-        "./mach", "check", "--message-format=json" ],
+        "./mach", "cargo-clippy", "--message-format=json" ],
 }
 ```
 
@@ -34,9 +34,9 @@ This will require more disk space.
 ```
 {
     "rust-analyzer.checkOnSave.overrideCommand": [
-        "./mach", "check", "--message-format=json", "--target-dir", "target/lsp" ],
+        "./mach", "cargo-clippy", "--message-format=json", "--target-dir", "target/lsp" ],
     "rust-analyzer.cargo.buildScripts.overrideCommand": [
-        "./mach", "check", "--message-format=json", "--target-dir", "target/lsp" ],
+        "./mach", "cargo-clippy", "--message-format=json", "--target-dir", "target/lsp" ],
 }
 ```
 
