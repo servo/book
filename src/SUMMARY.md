@@ -5,6 +5,7 @@
 - [Getting Servo](getting-servo.md)
 - [Running servoshell](running-servoshell.md)
 - [Contributing to Servo\*](contributing.md)
+  - [Requesting crate releases](hacking/requesting-crate-releases.md)
 
 # Hacking on Servo
 
@@ -23,7 +24,6 @@
 - [Automated testing\*](hacking/testing.md)
 - [Profiling\*](hacking/profiling.md)
 - [Diagnosing bugs in real websites](hacking/web-compat-bugs.md)
-- [Requesting crate releases](hacking/requesting-crate-releases.md)
 
 # Servo’s architecture
 
