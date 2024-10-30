@@ -156,27 +156,32 @@ The value of the variable must be a file path to a valid `.json` file with the s
 ## Building servoshell
 
 Before building servo you will need to set some environment variables.
-[direnv](https://direnv.net/) is a convenient tool to automatically set the variables based on an `.envrc` file, but you can also use any other method to set the required environment variables.
+[direnv](https://direnv.net) is a convenient tool that can automatically set these variables based on an `.envrc` file, but you can also use any other method to set the required environment variables.
 
 `.envrc`:
 ```commandline
     export OHOS_SDK_NATIVE=/path/to/openharmony-sdk/platform/api-version/native
+
     # Required if the HAP must be signed. See the signing configuration section above.
     export SERVO_OHOS_SIGNING_CONFIG=/path/to/signing-configs.json
+
     # Required only when building for HarmonyOS:
     export DEVECO_SDK_HOME=/path/to/command-line-tools/sdk # OR /path/to/DevEcoStudio/sdk OR on MacOS /Applications/DevEco-Studio.app/Contents/sdk
+
     # Required only when building for OpenHarmony:
     # Note: The openharmony sdk is under ${DEVECO_SDK_HOME}/default/openharmony
     # Presumably you would need to replicate this directory structure
     export OHOS_BASE_SDK_HOME=/path/to/openharmony-sdk/platform
+
     # If you have the command-line tools installed:
     export PATH="${PATH}:/path/to/command-line-tools/bin/"
     export NODE_HOME=/path/to/command-line-tools/tool/node
+
     # Alternatively, if you do NOT have the command-line tools installed:
-    export HVIGOR_PATH=/path/to/parent/directory/containing/node_modules # not required if hvigorw is in PATH
+    export HVIGOR_PATH=/path/to/parent/directory/containing/node_modules  # Not required if `hvigorw` is in $PATH
 ```
 
-If you use `direnv` and an `.envrc` file please remember to run `direnv allow .` after modifying the `.envrc` file.
+If you use `direnv` and an `.envrc` file, please remember to run `direnv allow .` after modifying the `.envrc` file.
 Otherwise, the environment variables will not be loaded.
 
 The following command can then be used to compile the servoshell application for a 64-bit ARM device or emulator:
@@ -187,7 +192,7 @@ The following command can then be used to compile the servoshell application for
 
 In `mach build`, `mach install` and `mach package` commands, `--ohos` is an alias for `--target aarch64-unknown-linux-ohos`.
 To build for an emulator running on an x86-64 host, use `--target x86_64-unknown-linux-ohos`.
-The default ohos build / package / install targets OpenHarmony.
+The default `ohos` build / package / install targets OpenHarmony.
 If you want to build for HarmonyOS you can add `--flavor=harmonyos`.
 Please check the [Signing configuration](#signing-configuration) and a configuration with `"name": "hos"` and `"type": "HarmonyOS""` and the respective signing certificates.
 
