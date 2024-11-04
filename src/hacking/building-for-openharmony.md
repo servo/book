@@ -194,7 +194,7 @@ In `mach build`, `mach install` and `mach package` commands, `--ohos` is an alia
 To build for an emulator running on an x86-64 host, use `--target x86_64-unknown-linux-ohos`.
 The default `ohos` build / package / install targets OpenHarmony.
 If you want to build for HarmonyOS you can add `--flavor=harmonyos`.
-Please check the [Signing configuration](#signing-configuration) and a configuration with `"name": "hos"` and `"type": "HarmonyOS""` and the respective signing certificates.
+Please check the [Signing configuration](#signing-configuration) and add a configuration with `"name": "hos"` and `"type": "HarmonyOS""` and the respective signing certificates.
 
 
 ## Installing and running on-device
