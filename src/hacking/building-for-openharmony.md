@@ -78,6 +78,13 @@ care to install the hvigor version matching the requirements of your project.
 `hvigor` (not the wrapper `hvigorw`) is also available via `npm`.
 1. Install the same nodejs version as the commandline-tools ship.
    For HarmonyOS NEXT Node 18 is shipped. Ensure that the `node` binary is in PATH.
+2. Install Java using the recommended installation method for your OS.
+   The build steps are known to work with OpenJDK v17, v21 and v23.
+   On MacOS, if you install Homebrew's [OpenJDK formula], the following additional command may need to be run after the installation:
+   ```
+   # For the system Java wrappers to find this JDK, symlink it with
+   sudo ln -sfn $HOMEBREW_PREFIX/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
+   ```
 2. Edit your `.npmrc` to contain the following line:
 
     ```
@@ -93,6 +100,7 @@ care to install the hvigor version matching the requirements of your project.
    ```
    /path/to/node_modules/@ohos/hvigor/bin/hvigor.js assembleHap
    ```
+[OpenJDK formula]: https://formulae.brew.sh/formula/openjdk#default
 
 ### Configuring hdc on Linux
 
