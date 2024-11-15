@@ -14,6 +14,7 @@ Building for OpenHarmony requires the following:
 ### Setting up the OpenHarmony SDK
 
 The OpenHarmony SDK is required to compile applications for OpenHarmony.
+The minimum version of SDK that Servo currently supports is v5.0 (API-12).
 
 #### Downloading via DevEco Studio
 
@@ -35,7 +36,7 @@ DevEco Studio will automatically download and install the components for you.
 2. Scroll down to the section "Acquiring Source Code from Mirrors" and click the download link for the version of "Public SDK package for the standard system" matching your host system.
 3. Extract the archive to a suitable location.
 4. Switch into the SDK folder with `cd <sdk_folder>/<your_operating_system>`.
-5. Create a sub-folder with the same name as the API version (e.g 11 for SDK v4.1) and switch into it.
+5. Create a sub-folder with the same name as the API version (e.g 12 for SDK v5.0) and switch into it.
 6. Unzip the zip files of the individual components into the folder created in the previous step. Preferably use the `unzip` command on the command-line, or manually ensure that the unzipped bundles are called e.g. `native` and not `native-linux-x64-5.x.y.z`.
 
 The following snippet can be used as a reference for steps 4-6:
