@@ -55,7 +55,7 @@ To enable [optional build settings](building-servo.md#optional-build-settings), 
 
 ### NixOS users
 
-If you are on NixOS and using `--use-crown`, you should also set CARGO_BUILD_RUSTC in `.vscode/settings.json` as follows, where `/nix/store/.../crown` is the output of `nix-shell etc/shell.nix --run 'command -v crown'`.
+If you are on NixOS and using `--use-crown`, you should also set CARGO_BUILD_RUSTC in `.vscode/settings.json` as follows, where `/nix/store/.../crown` is the output of `nix-shell --run 'command -v crown'`.
 
 ```
 {
@@ -65,7 +65,7 @@ If you are on NixOS and using `--use-crown`, you should also set CARGO_BUILD_RUS
 }
 ```
 
-These settings should be enough to not need to run `code .` from within a `nix-shell etc/shell.nix`, but it wouldn’t hurt to try that if you still have problems.
+These settings should be enough to not need to run `code .` from within a `nix-shell`, but it wouldn’t hurt to try that if you still have problems.
 
 When enabling rust-analyzer’s proc macro support, you may start to see errors like
 
@@ -76,7 +76,7 @@ Use mach to query the current sysroot path, and copy the last line of output:
 
 ```
 $ ./mach rustc --print sysroot
-NOTE: Entering nix-shell etc/shell.nix
+NOTE: Entering nix-shell /path/to/servo/shell.nix
 info: component 'llvm-tools' for target 'x86_64-unknown-linux-gnu' is up to date
 /home/me/.rustup/toolchains/nightly-2023-02-01-x86_64-unknown-linux-gnu
 ```
