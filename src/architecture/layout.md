@@ -5,9 +5,9 @@
 Servo has two layout systems:
 
  - Layout (Layout 2020): This is a new layout system for Servo which doesn't yet have all the features of the legacy layout, but will have support for proper fragmentation.
-For more on the benefits of the new layout system, see [[Layout 2020|Layout-2020]].
+For more on the benefits of the new layout system, see [Layout 2020](https://github.com/servo/servo/wiki/Layout-2020).
 The architecture described below refers to the new layout system.
-For more information about why we wrote a new layout engine see the [[Servo-Layout-Engines-Report]].
+For more information about why we wrote a new layout engine see the [Servo Layout Engines Report](https://github.com/servo/servo/wiki/Servo-Layout-Engines-Report).
  - Legacy layout (Layout 2013): This is the original layout engine written for Servo.
 This layout engine is currently in maintenance mode.
 
