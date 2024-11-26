@@ -199,7 +199,9 @@ Once the log is saved, run from the root directory:
 
     ./mach update-wpt /tmp/servo.log
 
-Running all Web Platform Tests locally will take a long time and usually cause unrelated failures (such as the runner exceeding the maximum number of open files on your system).
+Running *all* Web Platform Tests locally will take a long time and often cause unrelated failures (such as the runner exceeding the maximum number of open files on your system).
+The test expectations are set based on the results of servo's CI machines, so differences in your setup might cause failures.
+
 Usually you will have a rough idea where tests for your changes are. For example,
 almost all tests for [SubtleCrypto](https://github.com/servo/servo/blob/63793ccbb7c0768af3f31c274df70625abacb508/components/script/dom/subtlecrypto.rs) code are in the [`WebCryptoAPI`](https://github.com/web-platform-tests/wpt/tree/550fb109615cf434b03b30b76aa0dea6bfb0ebe1/WebCryptoAPI) directory. In this case you can run only these tests
 with `./mach test-wpt WebCryptoAPI`, followed by `./mach update-wpt` as described above. To ensure that other tests didn't break,
