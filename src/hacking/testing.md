@@ -83,6 +83,9 @@ to run all the DOM tests.
 
 There are also a large number of command line options accepted by the test harness; these are documented by running with `--help`.
 
+Running the WPT tests with debug mode often results in timeouts.
+Instead, consider building with `mach build -r` and testing with `mach test-wpt -r`.
+
 ### Running tests on your GitHub fork
 
 Alternatively, you can execute the tests on GitHub hosted runners using `mach try`. Usually, `mach try wpt-2020`
@@ -92,12 +95,6 @@ You can view the run results in your fork under the "Actions" tab. Any failed ta
 stable unexpected results at the bottom of the log. Unexpected results that are known-intermittent can likely be ignored.
 
 When opening a PR, you can include a link to the run. Otherwise, reviewers will run the tests again.
-
-### Running all web tests
-
-Running all the WPT tests with debug mode results in a lot of timeout.
-If one wants to run all the tests, build with `mach build -r` and
-test with `mach test-wpt --release`
 
 ### Running web tests with an external WPT server
 
