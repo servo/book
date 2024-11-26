@@ -83,6 +83,16 @@ to run all the DOM tests.
 
 There are also a large number of command line options accepted by the test harness; these are documented by running with `--help`.
 
+### Running tests on your GitHub fork
+
+Alternatively, you can execute the tests on GitHub hosted runners using `mach try`. Usually, `mach try wpt-2020`
+(all tests, linux, `layout-2020`) will be enough.
+
+You can view the run results in your fork under the "Actions" tab. Any failed tasks will include a list of
+stable unexpected results at the bottom of the log. Unexpected results that are known-intermittent can likely be ignored.
+
+When opening a PR, you can include a link to the run. Otherwise, reviewers will run the tests again.
+
 ### Running all web tests
 
 Running all the WPT tests with debug mode results in a lot of timeout.
