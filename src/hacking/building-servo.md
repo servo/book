@@ -57,7 +57,7 @@ There are three main build profiles, which you can build and use independently o
         <th>optimised?
         <td><a href="https://doc.rust-lang.org/cargo/reference/profiles.html#dev">no</a>
         <td><a href="https://github.com/servo/servo/blob/457d37d94ee6966cad377c373d333a00c637e1ae/Cargo.toml#L153">yes</a>
-        <td>yes, <a href="https://github.com/servo/servo/blob/457d37d94ee6966cad377c373d333a00c637e1ae/Cargo.toml#L159-L160">more</a> <a href="https://github.com/servo/servo/blob/457d37d94ee6966cad377c373d333a00c637e1ae/Cargo.toml#L170-L171">than</a> in <strong>release</strong>
+        <td>yes, with <a href="https://github.com/servo/servo/blob/9457a40ca2cd4b9530ba7c5334c82f3b3f2e7ac8/Cargo.toml#L177-L182">LTO, opt-level. </a>More</a> <a href="https://github.com/servo/servo/blob/9457a40ca2cd4b9530ba7c5334c82f3b3f2e7ac8/Cargo.toml#L166-L67">than</a> in <strong>release</strong>
     <tr>
         <th>maximum RUST_LOG level
         <td><code>trace</code>
