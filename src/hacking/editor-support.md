@@ -53,6 +53,10 @@ To enable [optional build settings](building-servo.md#optional-build-settings), 
 }
 ```
 
+### Windows Users
+
+If you are on Windows, you will need to use `./mach.bat` instead of just `./mach`. Not doing so will cause rust-analyzer to throw an error when running any of these commands.
+
 ### NixOS users
 
 If you are on NixOS and using `--use-crown`, you should also set CARGO_BUILD_RUSTC in `.vscode/settings.json` as follows, where `/nix/store/.../crown` is the output of `nix-shell --run 'command -v crown'`.
