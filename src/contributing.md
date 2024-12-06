@@ -79,6 +79,7 @@ In general, do not assume that AI tools are a source of truth regarding how Serv
 
 Servo Code of Conduct is published at <https://servo.org/coc/>.
 
-## Technical Steering Committee
+## Governance
 
-Technical oversight of the Servo Project is provided by the [Technical Steering Committee](https://github.com/servo/project/blob/main/governance/tsc/README.md).
+Servo’s governance is defined by the **Technical Steering Committee (TSC)** and documented [in the `servo/project` repository](https://github.com/servo/project/blob/main/governance/README.md).
+
