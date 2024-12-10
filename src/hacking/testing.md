@@ -83,11 +83,19 @@ to run all the DOM tests.
 
 There are also a large number of command line options accepted by the test harness; these are documented by running with `--help`.
 
-### Running all web tests
+Running the WPT tests with a debug build often results in timeouts.
+Instead, consider building with `mach build -r` and testing with `mach test-wpt -r`.
 
-Running all the WPT tests with debug mode results in a lot of timeout.
-If one wants to run all the tests, build with `mach build -r` and
-test with `mach test-wpt --release`
+### Running tests on your GitHub fork
+
+Alternatively, you can execute the tests on GitHub-hosted runners using `mach try`.
+Usually, `mach try wpt-2020` (all tests, linux, `layout-2020`) will be enough.
+
+You can view the run results in your fork under the "Actions" tab.
+Any failed tasks will include a list of stable unexpected results at the bottom of the log.
+Unexpected results that are known-intermittent can likely be ignored.
+
+When opening a PR, you can include a link to the run. Otherwise, reviewers will run the tests again.
 
 ### Running web tests with an external WPT server
 
@@ -191,6 +199,14 @@ This first requires saving the raw, unformatted log from a test run, for example
 Once the log is saved, run from the root directory:
 
     ./mach update-wpt /tmp/servo.log
+
+Running *all* Web Platform Tests locally will take a long time and often cause unrelated failures (such as the runner exceeding the maximum number of open files on your system).
+The test expectations are also set based on the results of Servo's CI machines, so differences in your setup might cause failures.
+
+Usually you will have a rough idea where tests for your changes are.
+For example, almost all tests for [SubtleCrypto](https://github.com/servo/servo/blob/63793ccbb7c0768af3f31c274df70625abacb508/components/script/dom/subtlecrypto.rs) code are in the [`WebCryptoAPI`](https://github.com/web-platform-tests/wpt/tree/550fb109615cf434b03b30b76aa0dea6bfb0ebe1/WebCryptoAPI) directory.
+In this case you can run only these tests with `./mach test-wpt WebCryptoAPI`, followed by `./mach update-wpt` as described above.
+To ensure that other tests didn't break, do a [try run](#running-tests-on-your-github-fork) afterwards.
 
 ## Writing new web tests
 
