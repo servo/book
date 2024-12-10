@@ -53,9 +53,16 @@ To enable [optional build settings](building-servo.md#optional-build-settings), 
 }
 ```
 
-### Windows Users
+### Windows users
 
-If you are on Windows, you will need to use `./mach.bat` instead of just `./mach`. Not doing so will cause rust-analyzer to throw an error when running any of these commands.
+If you are on Windows, you will need to use `./mach.bat` instead of just `./mach`.
+Not doing so will cause rust-analyzer to throw an error, such as below:
+
+<pre><samp>
+Failed to run the following command: "./mach" "cargo-clippy" "--message-format=json" error=%1 is not a valid Win32 application. (os error 193)
+</samp></pre>
+
+This is due to the fact that `./mach` utilizes the shebang statement `#!/usr/bin/python3` to run as a Python script, which Windows does not support.
 
 ### NixOS users
 
