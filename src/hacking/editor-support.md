@@ -53,6 +53,15 @@ To enable [optional build settings](building-servo.md#optional-build-settings), 
 }
 ```
 
+### Windows users
+
+If you are on Windows, you will need to use `./mach.bat` instead of just `./mach`.
+Not doing so will cause rust-analyzer to throw an error, such as below:
+
+<pre><blockquote><samp>Failed to run the following command: "./mach" "cargo-clippy" "--message-format=json" error=%1 is not a valid Win32 application. (os error 193)</samp></blockquote></pre>
+
+This is due to the fact that `./mach` utilizes the shebang statement `#!/usr/bin/python3` to run as a Python script, which Windows does not support.
+
 ### NixOS users
 
 If you are on NixOS and using `--use-crown`, you should also set CARGO_BUILD_RUSTC in `.vscode/settings.json` as follows, where `/nix/store/.../crown` is the output of `nix-shell --run 'command -v crown'`.
