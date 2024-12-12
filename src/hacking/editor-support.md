@@ -22,9 +22,9 @@ Because of this, and because Servo can currently only be built with `mach`, you 
     "rust-analyzer.rustfmt.overrideCommand": [ "./mach", "fmt" ],
 
     "rust-analyzer.check.overrideCommand": [
-        "./mach", "cargo-clippy", "--message-format=json" ],
+        "./mach", "clippy", "--message-format=json" ],
     "rust-analyzer.cargo.buildScripts.overrideCommand": [
-        "./mach", "cargo-clippy", "--message-format=json" ],
+        "./mach", "clippy", "--message-format=json" ],
 }
 ```
 
