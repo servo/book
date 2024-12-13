@@ -104,7 +104,7 @@ You can install `python3` to allow [mach](mach.md) to run `nix-shell` automatica
 <!-- see python/servo/platform/linux.py for how to update this -->
 - `sudo apt install build-essential ccache clang cmake curl g++ git gperf libdbus-1-dev libfreetype6-dev libgl1-mesa-dri libgles2-mesa-dev libglib2.0-dev gstreamer1.0-plugins-good l gstreamer1.0-plugins-bad libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-ugly gstreamer1.0-plugins-base libgstreamer-plugins-base1.0-dev gstreamer1.0-libav libgstrtspserver-1.0-dev gstreamer1.0-tools libges-1.0-dev libharfbuzz-dev liblzma-dev libudev-dev libunwind-dev libvulkan1 libx11-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev libxmu-dev libxmu6 libegl1-mesa-dev llvm-dev m4 xorg-dev`
 
-**Note:** For Debian-based distributions, such as Ubuntu, ensure that you also include the `libgstreamer-plugins-good1.0-dev` package alongside the packages listed above.
+**Note:** For Ubuntu-based distributions, ensure that you also include the `libgstreamer-plugins-good1.0-dev` package alongside the packages listed above.
 
 ## Dependencies for Fedora { #dependencies-for-fedora }
 
