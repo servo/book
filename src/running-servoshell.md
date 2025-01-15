@@ -12,11 +12,14 @@ Use `--help` to list the available command line options:
 $ ./servo --help
 ```
 
-Use `--pref` to [configure Servo’s behaviour](https://github.com/servo/servo/blob/main/resources/prefs.json), including to enable experimental web platform features.
+Use `--pref` to configure Servo’s behaviour including to enable experimental web platform features.
+You can find the list of [preferences] in the Servo API documentation.
 For example, to run our [Conway’s Game of Life demo](https://demo.servo.org/experiments/webgpu-game-of-life/) with WebGPU enabled:
 
+[preferences]: https://doc.servo.org/servo_config/prefs/struct.Preferences.html
+
 ```sh
-$ ./servo --pref dom.webgpu.enabled https://demo.servo.org/experiments/webgpu-game-of-life/
+$ ./servo --pref dom_webgpu_enabled https://demo.servo.org/experiments/webgpu-game-of-life/
 ```
 
 Use `--devtools=6080` to enable support for [debugging pages with Firefox devtools](hacking/using-devtools.md):
