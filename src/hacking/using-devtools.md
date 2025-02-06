@@ -20,12 +20,7 @@ Servo has support for a subset of DevTools functionality, allowing for simple de
 
 ![Setting up the port in Firefox](../images/devtools-firefox-setup.png)
 
-4. Accept the incoming connection.
-   If no confirmation dialog appears, press `Y` in the terminal that servoshell is running in.
-
-![Accept the connection in the terminal](../images/devtools-accept-connection.png)
-
-5. Back in Firefox, choose a webview and click **Inspect**.
+4. Back in Firefox, choose a webview and click **Inspect**.
    A new window should open with the page's inspector.
 
 ![Inspect a tab](../images/devtools-inspect-tab.png)
