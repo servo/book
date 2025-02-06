@@ -173,7 +173,8 @@ Here are some links and resources for help with Instruments (Some will stream on
 * [Learning Instruments](https://developer.apple.com/videos/play/wwdc2012/409/)
 
 
-## Profiling Webrender
+## Profiling WebRender
+
 Use the following command to get some profile data from WebRender:
 
     $ ./mach run -w -Z wr-stats --release http://www.nytimes.com
