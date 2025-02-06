@@ -82,7 +82,7 @@ In general, we recommend the following config to keep things usable:
 
 - `constellation<,constellation>,constellation<compositor@ForwardEvent(MouseMoveEvent)=off,constellation<compositor@LogEntry=off,constellation<compositor@ReadyToPresent=off,constellation<script@LogEntry=off`
 - `compositor<,compositor>`
-- `servoshell<,servoshell>,servoshell<winit@DeviceEvent=off,servoshell<winit@MainEventsCleared=off,servoshell<winit@NewEvents(WaitCancelled)=off,servoshell<winit@RedrawEventsCleared=off,servoshell<winit@RedrawRequested=off,servoshell<winit@UserEvent(WakerEvent)=off,servoshell<winit@WindowEvent(CursorMoved)=off,servoshell<winit@WindowEvent(AxisMotion)=off,servoshell<servo@EventDelivered=off,servoshell<servo@ReadyToPresent=off,servoshell>servo@Idle=off,servoshell>servo@MouseWindowMoveEventClass=off`
+- `servoshell<,servoshell>,servoshell<winit@DeviceEvent=off,servoshell<winit@MainEventsCleared=off,servoshell<winit@NewEvents(WaitCancelled)=off,servoshell<winit@RedrawEventsCleared=off,servoshell<winit@RedrawRequested=off,servoshell<winit@UserEvent(WakerEvent)=off,servoshell<winit@WindowEvent(CursorMoved)=off,servoshell<winit@WindowEvent(AxisMotion)=off`
 
 ## Other debug logging
 
