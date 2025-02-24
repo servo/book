@@ -15,7 +15,7 @@ Versions before and after change the layout of the NDK and add or remove files.
 
 If you are using the `sdkmanager` tool, you can do:
 ```sh
-tools/bin/sdkmanager platform-tools "platforms;android-33" "build-tools;34.0.0" "ndk;26.2.11394342"
+sudo tools/bin/sdkmanager platform-tools "platforms;android-33" "build-tools;34.0.0" "ndk;26.2.11394342"
 ```
 
 Set the following environment variables while building.
