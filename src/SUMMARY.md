@@ -47,4 +47,5 @@
 
 - [docs/STYLE_GUIDE.md\*](old/STYLE_GUIDE.md)
 - [docs/glossary.md\*](old/glossary.md)
+- [docs/building-for-openharmonyos](old/building-for-openharmonyos.md)
 - [wiki/Building\*](old/building.md)
