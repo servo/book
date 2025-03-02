@@ -52,6 +52,8 @@ Note that `curl` will already be installed on Windows 1804 or newer.
     (`Microsoft.VisualStudio.Component.VC.ATL`)
   - **C++ MFC for latest v143 build tools (x86 & x64)**<br>
     (`Microsoft.VisualStudio.Component.VC.ATLMFC`)
+  - **C++ Clang tools for Windows (19.1.1 - x64/x86)<br>
+    (`Microsoft.VisualStudio.VC.Llvm.Clang`)
 
 <div class="warning _note">
 
