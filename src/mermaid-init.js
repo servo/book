@@ -1,29 +1,35 @@
 (() => {
-    // When the mdBook theme changes, rerender diagrams with a suitable Mermaid theme.
-    const mermaids = [...document.querySelectorAll(".mermaid")];
-    const texts = mermaids.map(x => x.textContent);
-    const observer = new MutationObserver((mutations, observer) => {
-        reinitMermaid();
-    });
-    observer.observe(document.documentElement, {
-        attributeFilter: ["class"],
-    });
-    reinitMermaid();
+    const darkThemes = ['ayu', 'navy', 'coal'];
+    const lightThemes = ['light', 'rust'];
 
-    function reinitMermaid() {
-        // Restore the original state of each diagram.
-        for (const [i, pre] of mermaids.entries()) {
-            delete pre.dataset.processed;
-            pre.textContent = texts[i];
+    const classList = document.getElementsByTagName('html')[0].classList;
+
+    let lastThemeWasLight = true;
+    for (const cssClass of classList) {
+        if (darkThemes.includes(cssClass)) {
+            lastThemeWasLight = false;
+            break;
         }
-        // Select a theme based on the mdBook theme, then rerender the diagrams.
-        const rootClasses = document.documentElement.classList;
-        mermaid.initialize({
-            startOnLoad: false,
-            theme: rootClasses.contains("light") || rootClasses.contains("rust") ? "default"
-                : rootClasses.contains("coal") || rootClasses.contains("navy") || rootClasses.contains("ayu") ? "dark"
-                : "default",
+    }
+
+    const theme = lastThemeWasLight ? 'default' : 'dark';
+    mermaid.initialize({ startOnLoad: true, theme });
+
+    // Simplest way to make mermaid re-render the diagrams in the new theme is via refreshing the page
+
+    for (const darkTheme of darkThemes) {
+        document.getElementById(darkTheme).addEventListener('click', () => {
+            if (lastThemeWasLight) {
+                window.location.reload();
+            }
         });
-        mermaid.run();
+    }
+
+    for (const lightTheme of lightThemes) {
+        document.getElementById(lightTheme).addEventListener('click', () => {
+            if (!lastThemeWasLight) {
+                window.location.reload();
+            }
+        });
     }
 })();
