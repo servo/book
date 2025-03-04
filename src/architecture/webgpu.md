@@ -34,7 +34,8 @@ flowchart LR
 
 DOM implementation lives in [`components/script/dom/webgpu`](https://github.com/servo/servo/tree/main/components/script/dom/webgpu), implementing JS interfaces defined in [WebGPU IDL](https://github.com/servo/servo/blob/main/components/script_bindings/webidls/WebGPU.webidl) that are exposed to the web platform.
 
-Here we only implemented logic that is [described in spec under content timeline](https://www.w3.org/TR/webgpu/#content-timeline), which is mostly just converting JS to wgpu-types descriptors that are sent to WGPU thread via IPC messages that are defined in <https://github.com/servo/servo/blob/main/components/webgpu/ipc_messages/recv.rs>
+Here we only implement logic that is described in the WebGPU spec under the [*content timeline*](https://www.w3.org/TR/webgpu/#content-timeline).
+This mostly involves converting JS types to wgpu-types descriptors that are sent to WGPU thread via IPC messages that are defined in <https://github.com/servo/servo/blob/main/components/webgpu/ipc_messages/recv.rs>.
 WebGPU is async by design, so there is no need to wait for WGPU thread operations to finish.
 This is done by storing ids in DOM WebGPU objects that link to WGPU objects that live in the WGPU thread (are provided by wgpu-core).
 More information about this design is available [in the wgpu repo](https://github.com/gfx-rs/wgpu/blob/2764e7a39920e23928d300e8856a672f1952da63/wgpu-core/src/hub.rs#L30).
@@ -53,21 +54,22 @@ WebGPU CTS expectations are enormous, so instead of `mach update-wpt` we use [a 
 
 To update expectations, you need to obtain the `wptreport` log for the run, either by triggering a full CTS run in CI (`mach try webgpu`) or by running specific tests locally:
 
----```sh (remove the dashes)
+```sh
 $ mach test-wpt -r --log-wptreport report.json [tests ...]
----``` (remove the dashes)
-Do note that expectations are set for release/productions build as debug builds are to slow.
+```
+
+Note that expectations are set for release/productions builds as debug builds are too slow.
 Then update expectations as follows:
 
----```sh (remove dashes)
+```sh
 $ moz-webgpu-cts --servo process-reports --preset set report.json
----``` (remove dashes)
+```
 
 You can also test Servo against [the live CTS](https://gpuweb.github.io/cts/standalone/):
 
----```sh (remove dashes)
+```sh
 $ mach run -r --pref dom.webgpu.enabled 'https://gpuweb.github.io/cts/standalone/?runnow=1&q=<test>'
----``` (remove dashes)
+```
 
 ## Working on upstream [gfx-rs/wgpu](https://github.com/gfx-rs/wgpu)
 
