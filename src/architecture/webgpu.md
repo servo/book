@@ -58,7 +58,7 @@ To update expectations, you need to obtain the `wptreport` log for the run, eith
 $ mach test-wpt -r --log-wptreport report.json [tests ...]
 ```
 
-Note that expectations are set for release/productions builds as debug builds are too slow.
+Note that expectations are set for release and production builds, as debug builds are too slow.
 Then update expectations as follows:
 
 ```sh
