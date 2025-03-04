@@ -37,6 +37,7 @@
 - [Layout\*](architecture/layout.md)
 - [Compositor\*](architecture/compositor.md)
 - [WebXR](architecture/webxr.md)
+- [WebGPU](architecture/webgpu.md)
 
 # Meta
 
