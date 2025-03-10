@@ -7,11 +7,11 @@ Servodriver is made of three main components—the web server inside Servo that 
 ## The wptrunner harness
 
 Wptrunner is the harness that uses an `executor` and `browser` combination to launch a supported product.
-The [browser](https://github.com/servo/servo/blob/main/tests/wpt/tests/tools/wptrunner/wptrunner/browsers/servodriver.py) defines python classes to instantiate and methods to invoke for supported configurations, as well as arguments to pass to the Servo binary when launching it.
+The [browser](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/tests/wpt/tests/tools/wptrunner/wptrunner/browsers/servodriver.py) defines python classes to instantiate and methods to invoke for supported configurations, as well as arguments to pass to the Servo binary when launching it.
 It delegates all webdriver-specific logic to the base [WebDriverBrowser class](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/tests/wpt/tests/tools/wptrunner/wptrunner/browsers/base.py#L294) that is common to all browsers that rely on WebDriver.
 
-The Servodriver [executor](https://github.com/servo/servo/blob/main/tests/wpt/tests/tools/wptrunner/wptrunner/executors/executorservodriver.py) defines Servo-specific test initialization/result processing and inter-test state management.
-For example, Servo defines [WebDriver extension methods](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/tests/wpt/tests/tools/wptrunner/wptrunner/executors/executorservodriver.py#L23-L42) for managing preferences, and these are [invoked](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/tests/wpt/tests/tools/wptrunner/wptrunner/executors/executorservodriver.py#L88-L92) in between tests to ensure that each test runs with our [intended](https://github.com/servo/servo/blob/main/tests/wpt/meta/webxr/__dir__.ini#L1) configuration.
+The Servodriver [executor](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/tests/wpt/tests/tools/wptrunner/wptrunner/executors/executorservodriver.py) defines Servo-specific test initialization/result processing and inter-test state management.
+For example, Servo defines [WebDriver extension methods](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/tests/wpt/tests/tools/wptrunner/wptrunner/executors/executorservodriver.py#L23-L42) for managing preferences, and these are [invoked](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/tests/wpt/tests/tools/wptrunner/wptrunner/executors/executorservodriver.py#L88-L92) in between tests to ensure that each test runs with our [intended](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/tests/wpt/meta/webxr/__dir__.ini#L1) configuration.
 
 Our Servodriver executor delegates a lot of logic to the common [WebDriverTestharnessExecutor](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/tests/wpt/tests/tools/wptrunner/wptrunner/executors/executorwebdriver.py#L948).
 This executor is responsible for executing scripts that ensure that the [testdriver harness executes](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/tests/wpt/tests/tools/wptrunner/wptrunner/executors/executorwebdriver.py#L840) and that the python harness is able to retrieve test results from the browser.
@@ -22,7 +22,7 @@ There are three main components to this implementation—the server handler, the
 
 ### Server handler
 
-When wptrunner connects to the [webdriver server](https://github.com/servo/servo/blob/main/components/webdriver_server/) in the new Servo instance, it creates a new [session](https://github.com/servo/servo/blob/main/components/webdriver_server/lib.rs#L132).
+When wptrunner connects to the [webdriver server](https://github.com/servo/servo/tree/3421185737deefe27e51e104708b02d9b3d4f4f3/components/webdriver_server/) in the new Servo instance, it creates a new [session](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/webdriver_server/lib.rs#L132).
 This session persists state between webdriver API calls.
 All API calls that interact with the browser are routed through the constellation as [ConstellationMsg::WebDriverCommand](https://doc.servo.org/script_traits/enum.WebDriverCommandMsg.html).
 Any API call that needs to interact directly with content inside a document is part of the [WebDriverScriptCommand](https://doc.servo.org/script_traits/webdriver_msg/enum.WebDriverScriptCommand.html) enum.
@@ -32,7 +32,7 @@ However, cases like navigation and executing async scripts have additional synch
 #### Navigation
 
 When a navigation is requested, the [constellation receives an IpcSender](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/webdriver_server/lib.rs#L677) that it stores.
-When a navigation completes, the constellation [checks if the pipeline matches](https://github.com/servo/servo/blob/main/components/constellation/constellation.rs#L3676) the navigation from webdriver and notifies the webdriver server using the original channel.
+When a navigation completes, the constellation [checks if the pipeline matches](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/constellation/constellation.rs#L3676) the navigation from webdriver and notifies the webdriver server using the original channel.
 
 #### Async scripts
 
@@ -42,22 +42,22 @@ The script is invoked as an [anonymous function](https://github.com/servo/servo/
 ### Script handler
 
 When a webdriver message is received that targets a specific browsing context, it is [handled](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/script/script_thread.rs#L2076) by the ScriptThread that contains that document.
-The logic for processing each command lives in [webdriver_handlers.rs](https://github.com/servo/servo/blob/main/components/script/webdriver_handlers.rs).
+The logic for processing each command lives in [webdriver_handlers.rs](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/script/webdriver_handlers.rs).
 Any command that returns a value derived from web content must [serialize JS values](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/script/webdriver_handlers.rs#L162) as values that the webdriver server can convert into [API value types](https://doc.servo.org/serde_json/value/enum.Value.html).
 
 We expose [two web-accessible methods](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/script/dom/window.rs#L1189-L1203) for communicating async results to the webdriver server, `Window.webdriverCallback` and `Window.webdriverTimeout`.
 
 ### Input handler
 
-When the webdriver server receives input action commands (eg. pointer or mouse inputs), it creates an action sequence and [dispatches them progressively](https://github.com/servo/servo/blob/main/components/webdriver_server/actions.rs#L110) to the compositor ([via the constellation](https://github.com/servo/servo/blob/main/components/constellation/constellation.rs#L4548-L4559)).
+When the webdriver server receives input action commands (eg. pointer or mouse inputs), it creates an action sequence and [dispatches them progressively](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/webdriver_server/actions.rs#L110) to the compositor ([via the constellation](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/constellation/constellation.rs#L4548-L4559)).
 The compositor then [handles these events](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/compositing/compositor.rs#L587-L601) the same as any input events received from the embedder (modulo [known bugs](https://github.com/servo/servo/issues/35394)).
 
 ## The test page scripts
 
 The testdriver harness works by incorporating all of these elements together.
-The executor [opens a new window](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/tests/wpt/tests/tools/wptrunner/wptrunner/executors/executorwebdriver.py#L850)  and invokes an async script that [sets up a testdriver callback](https://github.com/servo/servo/blob/main/tests/wpt/tests/tools/wptrunner/wptrunner/executors/testharness_webdriver_resume.js) (which is `Window.webdriverCallback`).
-This window creates [a message queue](https://github.com/servo/servo/blob/main/tests/wpt/tests/tools/wptrunner/wptrunner/executors/message-queue.js#L30) which is [read by the executor harness](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/tests/wpt/tests/tools/wptrunner/wptrunner/executors/executorwebdriver.py#L904-L905).
-Subsequently, each test that runs is opened as a new window—this allows them to use `opener.postMessage` to communicate with the original window, which allows the testdriver APIs to send messages that [represent webdriver API calls](https://github.com/servo/servo/blob/main/tests/wpt/tests/tools/wptrunner/wptrunner/testdriver-extra.js#L286-L296).
+The executor [opens a new window](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/tests/wpt/tests/tools/wptrunner/wptrunner/executors/executorwebdriver.py#L850)  and invokes an async script that [sets up a testdriver callback](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/tests/wpt/tests/tools/wptrunner/wptrunner/executors/testharness_webdriver_resume.js) (which is `Window.webdriverCallback`).
+This window creates [a message queue](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/tests/wpt/tests/tools/wptrunner/wptrunner/executors/message-queue.js#L30) which is [read by the executor harness](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/tests/wpt/tests/tools/wptrunner/wptrunner/executors/executorwebdriver.py#L904-L905).
+Subsequently, each test that runs is opened as a new window—this allows them to use `opener.postMessage` to communicate with the original window, which allows the testdriver APIs to send messages that [represent webdriver API calls](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/tests/wpt/tests/tools/wptrunner/wptrunner/testdriver-extra.js#L286-L296).
 
 ## Debugging hints
 
