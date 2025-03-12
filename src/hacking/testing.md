@@ -51,24 +51,26 @@ You'll then need to update the list of tests and the list of expected results:
 
 See the [debugging guide](./debugging.md) to get started in how to debug Servo.
 
-## Web tests (`tests/wpt`)
+## Web Platform Tests (`tests/wpt`)
 
-This folder contains the web platform tests and the code required to integrate them with Servo.
-To learn how to write tests, go [here](http://web-platform-tests.org/writing-tests/index.html).
+This folder contains the Web Platform Tests and the code required to integrate them with Servo.
+In addition, there are WebGPU and WebGL tests which are imported and converted into Web Platform Test style tests.
 
 ### Contents of `tests/wpt`
 
 In particular, this folder contains:
 
-* `config.ini`: some configuration for the web-platform-tests.
-* `include.ini`: the subset of web-platform-tests we currently run.
-* `tests`: copy of the web-platform-tests.
-* `meta`: expected failures for the web-platform-tests we run.
-* `mozilla`: web-platform-tests that cannot be upstreamed.
+* `config.ini`: some configuration for the Web Platform Tests
+* `include.ini`: the subset of Web Platform Tests we currently run
+* `tests`: In-tree copy of the Web Platform Tests
+* `meta`: expected failures for the Web Platform tests we run
+* `mozilla`: Web Platform Test-style tests that cannot be upstreamed
+* `webgl`: The imported WebGL tests
+* `webgpu`: The imported WebGPU tests
 
-## Running web tests
+## Running the Web Platform Tests
 
-The simplest way to run the web-platform-tests in Servo is `./mach test-wpt` in the root directory.
+The simplest way to run the Web Platform Tests in Servo is `./mach test-wpt` in the root directory.
 This will run the subset of JavaScript tests defined in `include.ini` and log the output to stdout.
 
 A subset of tests may be run by providing positional arguments to the mach command, either as filesystem paths or as test urls e.g.
@@ -86,7 +88,7 @@ There are also a large number of command line options accepted by the test harne
 Running the WPT tests with a debug build often results in timeouts.
 Instead, consider building with `mach build -r` and testing with `mach test-wpt -r`.
 
-### Running tests on your GitHub fork
+### Running Web Platform Tests on your GitHub fork
 
 Alternatively, you can execute the tests on GitHub-hosted runners using `mach try`.
 Usually, `mach try linux-wpt-2020` (all tests, linux, `layout-2020`) will be enough.
@@ -97,7 +99,7 @@ Unexpected results that are known-intermittent can likely be ignored.
 
 When opening a PR, you can include a link to the run. Otherwise, reviewers will run the tests again.
 
-### Running web tests with an external WPT server
+### Running the Web Platform Tests with an external server
 
 Normally wptrunner starts its own WPT server, but occasionally you might want to run multiple instances of `mach test-wpt`, such as when debugging one test while running the full suite in the background, or when running a single test many times in parallel (--processes only works across different tests).
 
@@ -123,7 +125,7 @@ To fix this:
 If you get unexpected TIMEOUT in testharness tests, then the custom testharnessreport.js may have been installed incorrectly (see [**Running web tests manually**](#running-web-tests-manually) for more details).
 
 
-### Running web tests manually
+### Running Web Platform Tests manually
 
 (See also [the relevant section of the upstream README][upstream-running].)
 
@@ -179,7 +181,7 @@ To prevent browser SSL warnings when running HTTPS tests locally, you will need 
 
 [upstream-running]: https://github.com/w3c/web-platform-tests#running-the-tests
 
-### Running web tests in Firefox
+### Running the Web Platform Tests in Firefox
 
 When working with tests, you may want to compare Servo's result with Firefox.
 You can supply `--product firefox` along with the path to a Firefox binary (as well as few more odds and ends) to run tests in Firefox from your Servo checkout:
@@ -188,7 +190,7 @@ You can supply `--product firefox` along with the path to a Firefox binary (as w
     GECKO_BINS="$GECKO/obj-firefox-release-artifact/dist/Nightly.app/Contents/MacOS"
     ./mach test-wpt dom --product firefox --binary $GECKO_BINS/firefox --certutil-binary $GECKO_BINS/certutil --prefs-root $GECKO/testing/profiles
 
-## Updating web test expectations
+## Updating Web Platform Test expectations
 
 When fixing a bug that causes the result of a test to change, the expected results for that test need to be changed.
 This can be done manually, by editing the `.ini` file under the `meta` folder that corresponds to the test.
@@ -208,43 +210,18 @@ For example, almost all tests for [SubtleCrypto](https://github.com/servo/servo/
 In this case you can run only these tests with `./mach test-wpt WebCryptoAPI`, followed by `./mach update-wpt` as described above.
 To ensure that other tests didn't break, do a [try run](#running-tests-on-your-github-fork) afterwards.
 
-## Writing new web tests
+## Modifying Web Platform Tests
 
-The simplest way to create a new test is to use the following command:
+Please see the Web Platform Test [Writing Tests guide](https://web-platform-tests.org/writing-tests/index.html) for how to write tests.
+In general, a good way to start is to follow these steps:
 
-    ./mach create-wpt tests/wpt/path/to/new/test.html
+1. Find the directory that tests the feature you want to test.
+2. Find a test in that directory that tests a similar behavior, make a copy of the test with an appropriate name, and make your modifications.
+3. If the test is a reference test, you should also copy the reference if it needs to change, following the naming pattern of the directory you are modifying.
+4. Run  `./mach update-manifest` to update the WPT manifest with the new tests.
 
-This will create test.html in the appropriate directory using the WPT template for JavaScript tests.
-Tests are written using [testharness.js](https://github.com/w3c/testharness.js/).
-Documentation can be found [here](http://testthewebforward.org/docs/testharness-library.html).
-To create a new reference test instead, use the following:
-
-    ./mach create-wpt --reftest tests/wpt/path/to/new/reftest.html --reference tests/wpt/path/to/reference.html
-
-`reference.html` will be created if it does not exist, and `reftest.html` will be created using the WPT reftest template.
-To know more about reftests, check [this](http://web-platform-tests.org/writing-tests/reftests.html).
-These new tests can then be run in the following manner like any other WPT test:
-
-    ./mach test-wpt tests/wpt/path/to/new/test.html
-    ./mach test-wpt tests/wpt/path/to/new/reftest.html
-
-### Editing web tests
-
-web-platform-tests may be edited in-place and the changes committed to the servo tree.
-These changes will be upstreamed when the tests are next synced.
-
-## Updating the upstream tests
-
-In order to update the tests from upstream use the same mach update commands.
-e.g. to update the web-platform-tests:
-
-```
-./mach update-wpt --sync
-./mach test-wpt --log-raw=update.log
-./mach update-wpt update.log
-```
-
-This should create two commits in your servo repository with the updated tests and updated metadata.
+You must also run `./mach update-manifest` whenever you modify a test, reference, or support file.
+All changes to our in-tree Web Platform Tests will be upstreamed automatically when your PR is merged.
 
 ## Servo-specific tests
 
