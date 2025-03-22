@@ -22,7 +22,7 @@ There are three main components to this implementation: the server handler, the 
 
 ### Server handler
 
-When wptrunner connects to the [webdriver server](https://github.com/servo/servo/tree/3421185737deefe27e51e104708b02d9b3d4f4f3/components/webdriver_server/) in the new Servo instance, it creates a new [session](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/webdriver_server/lib.rs#L132).
+When wptrunner connects to the [WebDriver server](https://github.com/servo/servo/tree/3421185737deefe27e51e104708b02d9b3d4f4f3/components/webdriver_server) in the new Servo instance, it creates a new [session](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/webdriver_server/lib.rs#L132).
 This session persists state between webdriver API calls.
 All API calls that interact with the browser are routed through the constellation as [ConstellationMsg::WebDriverCommand](https://doc.servo.org/script_traits/enum.WebDriverCommandMsg.html).
 Any API call that needs to interact directly with content inside a document is part of the [WebDriverScriptCommand](https://doc.servo.org/script_traits/webdriver_msg/enum.WebDriverScriptCommand.html) enum.
