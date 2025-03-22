@@ -35,7 +35,7 @@ When a navigation completes, the constellation [checks if the pipeline matches](
 
 #### Async scripts
 
-When an async script execution is initiated, the webdriver specification [provides a way](https://www.w3.org/TR/webdriver2/#execute-async-script) for scripts to communicate a result to the server.
+When an async script execution is initiated, the WebDriver specification [provides a way](https://www.w3.org/TR/webdriver2/#execute-async-script) for scripts to communicate a result to the server.
 The script is invoked as an [anonymous function](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/webdriver_server/lib.rs#L1532) with an [additional function argument](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/webdriver_server/lib.rs#L1524) that sends the response to the server.
 
 ### Script handler
