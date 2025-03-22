@@ -2,7 +2,7 @@
 
 Servodriver is a test harness built on top of the wptrunner framework and a WebDriver server.
 It is not yet enabled by default, but can be run with the `--product servodriver` argument appended to any `test-wpt` command.
-Servodriver is made of three main components—the web server inside Servo that implements the [WebDriver specification](https://www.w3.org/TR/webdriver2/), the python test harness that orchestrates the browser, and the scripts that are loaded inside the test pages.
+Servodriver is made of three main components: the web server inside Servo that implements the [WebDriver specification](https://www.w3.org/TR/webdriver2/), the Python test harness that orchestrates the browser, and the scripts that are loaded inside the test pages.
 
 ## The wptrunner harness
 
