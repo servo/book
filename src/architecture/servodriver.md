@@ -14,7 +14,7 @@ The Servodriver [executor](https://github.com/servo/servo/blob/3421185737deefe27
 For example, Servo defines [WebDriver extension methods](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/tests/wpt/tests/tools/wptrunner/wptrunner/executors/executorservodriver.py#L23-L42) for managing preferences, and these are [invoked](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/tests/wpt/tests/tools/wptrunner/wptrunner/executors/executorservodriver.py#L88-L92) between tests to ensure that each test runs with our [intended configuration](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/tests/wpt/meta/webxr/__dir__.ini#L1).
 
 Our Servodriver executor delegates a lot of logic to the common [WebDriverTestharnessExecutor](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/tests/wpt/tests/tools/wptrunner/wptrunner/executors/executorwebdriver.py#L948).
-This executor is responsible for executing scripts that ensure that the [testdriver harness executes](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/tests/wpt/tests/tools/wptrunner/wptrunner/executors/executorwebdriver.py#L840) and that the python harness is able to retrieve test results from the browser.
+This executor is responsible for executing scripts that ensure that the [testdriver.js harness executes](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/tests/wpt/tests/tools/wptrunner/wptrunner/executors/executorwebdriver.py#L840) and that the Python harness is able to retrieve test results from the browser.
 
 ## Servo’s WebDriver implementation
 
