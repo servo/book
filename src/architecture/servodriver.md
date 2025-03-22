@@ -25,7 +25,7 @@ There are three main components to this implementation: the server handler, the 
 When wptrunner connects to the [WebDriver server](https://github.com/servo/servo/tree/3421185737deefe27e51e104708b02d9b3d4f4f3/components/webdriver_server) in the new Servo instance, it creates a new [session](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/webdriver_server/lib.rs#L132).
 This session persists state between WebDriver API calls.
 API calls that interact with the browser are routed through the constellation as [ConstellationMsg::WebDriverCommand](https://doc.servo.org/embedder_traits/enum.WebDriverCommandMsg.html), and those that need to interact directly with content inside a document are part of the [WebDriverScriptCommand](https://doc.servo.org/embedder_traits/enum.WebDriverScriptCommand.html) enum.
-Many of these APIs require a synchronous response and include an `IpcSender` channel that Servo’s webdriver server will use to [wait for a response](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/webdriver_server/lib.rs#L911).
+Many of these APIs require a synchronous response, via an `IpcSender` channel that Servo’s WebDriver server uses to [wait for a response](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/webdriver_server/lib.rs#L911).
 However, cases like navigation and executing async scripts have additional synchronization:
 
 #### Navigation
