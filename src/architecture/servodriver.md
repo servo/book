@@ -49,7 +49,7 @@ We expose [two web-accessible methods](https://github.com/servo/servo/blob/34211
 ### Input handler
 
 When the WebDriver server receives input action commands (e.g. pointer or mouse inputs), it creates an action sequence and [progressively dispatches them](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/webdriver_server/actions.rs#L110) to the compositor [via the constellation](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/constellation/constellation.rs#L4548-L4559).
-The compositor then [handles these events](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/compositing/compositor.rs#L587-L601) the same as any input events received from the embedder (modulo [known bugs](https://github.com/servo/servo/issues/35394)).
+The compositor then [handles these events](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/compositing/compositor.rs#L587-L601) the same way as any input events received from the embedder (modulo [known bugs](https://github.com/servo/servo/issues/35394)).
 
 ## The test page scripts
 
