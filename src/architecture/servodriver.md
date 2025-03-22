@@ -18,7 +18,7 @@ This executor is responsible for executing scripts that ensure that the [testdri
 
 ## Servo’s webdriver implementation
 
-There are three main components to this implementation—the server handler, the script handler, and the input handler.
+There are three main components to this implementation: the server handler, the script handler, and the input handler.
 
 ### Server handler
 
