@@ -7,7 +7,7 @@ Servodriver is made of three main components: the web server inside Servo that i
 ## The wptrunner harness
 
 Wptrunner is the harness that uses an `executor` and `browser` combination to launch a supported product.
-The [browser](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/tests/wpt/tests/tools/wptrunner/wptrunner/browsers/servodriver.py) defines python classes to instantiate and methods to invoke for supported configurations, as well as arguments to pass to the Servo binary when launching it.
+The [browser](https://github.com/servo/servo/blob/main/tests/wpt/tests/tools/wptrunner/wptrunner/browsers/servodriver.py) defines Python classes to instantiate and methods to invoke for supported configurations, as well as arguments to pass to the Servo binary when launching it.
 It delegates all webdriver-specific logic to the base [WebDriverBrowser class](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/tests/wpt/tests/tools/wptrunner/wptrunner/browsers/base.py#L294) that is common to all browsers that rely on WebDriver.
 
 The Servodriver [executor](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/tests/wpt/tests/tools/wptrunner/wptrunner/executors/executorservodriver.py) defines Servo-specific test initialization/result processing and inter-test state management.
