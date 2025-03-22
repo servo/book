@@ -31,7 +31,7 @@ However, cases like navigation and executing async scripts involve additional sy
 #### Navigation
 
 When a navigation is requested, the [constellation receives an IpcSender](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/webdriver_server/lib.rs#L677) that it stores.
-When a navigation completes, the constellation [checks if the pipeline matches](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/constellation/constellation.rs#L3676) the navigation from webdriver and notifies the webdriver server using the original channel.
+When a navigation completes, the constellation [checks if the pipeline matches](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/constellation/constellation.rs#L3676) the navigation from WebDriver, and notifies the WebDriver server using the original channel.
 
 #### Async scripts
 
