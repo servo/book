@@ -42,7 +42,7 @@ The script is invoked as an [anonymous function](https://github.com/servo/servo/
 
 When a WebDriver message is received that targets a specific browsing context, it is [handled](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/script/script_thread.rs#L2076) by the ScriptThread that contains the active document.
 The logic for processing each command lives in [webdriver_handlers.rs](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/script/webdriver_handlers.rs).
-Any command that returns a value derived from web content must [serialize JS values](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/script/webdriver_handlers.rs#L162) as values that the webdriver server can convert into [API value types](https://doc.servo.org/serde_json/value/enum.Value.html).
+Any command that returns a value derived from web content must [serialize JS values](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/script/webdriver_handlers.rs#L162) as values that the WebDriver server can convert into [API value types](https://doc.servo.org/serde_json/value/enum.Value.html).
 
 We expose [two web-accessible methods](https://github.com/servo/servo/blob/3421185737deefe27e51e104708b02d9b3d4f4f3/components/script/dom/window.rs#L1189-L1203) for communicating async results to the WebDriver server: `Window.webdriverCallback` and `Window.webdriverTimeout`.
 
