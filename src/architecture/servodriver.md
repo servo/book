@@ -67,6 +67,6 @@ Always start with the following RUST_LOG:
 RUST_LOG=webdriver_server,webdriver,script::webdriver_handlers,constellation
 ```
 
-This usually makes clear if the expected API calls are being processed.
+This usually makes it clear if the expected API calls are being processed.
 
 When debugging input-related problems, add JS debugging lines that log the `getBoundingClientRect()` of whatever element is being clicked, then compare the coordinates received by the compositor when clicking manually vs. the coordinates received from the webdriver server.
