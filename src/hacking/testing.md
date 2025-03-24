@@ -91,7 +91,7 @@ Instead, consider building with `mach build -r` and testing with `mach test-wpt 
 ### Running Web Platform Tests on your GitHub fork
 
 Alternatively, you can execute the tests on GitHub-hosted runners using `mach try`.
-Usually, `mach try linux-wpt-2020` (all tests, linux, `layout-2020`) will be enough.
+Usually, `mach try linux-wpt` (all tests, linux) will be enough.
 
 You can view the run results in your fork under the "Actions" tab.
 Any failed tasks will include a list of stable unexpected results at the bottom of the log.

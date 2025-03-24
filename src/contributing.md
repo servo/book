@@ -49,8 +49,7 @@ If you do not have permission to add labels to your pull request, add a comment 
 | Label              | Runs unit tests on | Runs web tests on          |
 |--------------------|--------------------|----------------------------|
 | `T-full`           | All platforms      | Linux                      |
-| `T-linux-wpt-2013` | Linux              | Linux (only legacy layout) |
-| `T-linux-wpt-2020` | Linux              | Linux (skip legacy layout) |
+| `T-linux-wpt`      | Linux              | Linux                      |
 | `T-macos`          | macOS              | (none)                     |
 | `T-windows`        | Windows            | (none)                     |
 
