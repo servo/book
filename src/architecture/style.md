@@ -41,53 +41,6 @@ This structure is effectively created once per [pipeline][docs-pipeline], in the
 The [properties module][properties-module] is a mako template.
 Its complexity is derived from the code that stores properties, [`cascade` function][properties-cascade-fn] and computation logic of the returned value which is exposed in the main function.
 
-<a name="pseudo-elements"></a>
-## Pseudo-Element resolution
-
-Pseudo-elements are a tricky section of the style system.
-Not all pseudo-elements are very common, and so some of them might want to skip the cascade.
-
-Servo has, as of right now, five [pseudo-elements][servo-pseudo-elements]:
-
- * [`::before`][mdn-pseudo-before] and [`::after`][mdn-pseudo-after].
- * [`::selection`][mdn-pseudo-selection]: This one is only partially implemented, and only works for text inputs and textareas as of right now.
- * `::-servo-details-summary`: This pseudo-element represents the `<summary>` of a `<details>` element.
- * `::-servo-details-content`: This pseudo-element represents the contents of a `<details>` element.
-
-Both `::-servo-details-*` pseudo-elements are private (i.e. they are only parsed from User-Agent stylesheets).
-
-Servo has three different ways of cascading a pseudo-element, which are defined in [`PseudoElementCascadeType`][pseudo-cascade-type]:
-
-<a name="pe-cascading-eager"></a>
-### "Eager" cascading
-
-This mode computes the computed values of a given node's pseudo-element over the first pass of the style system.
-
-This is used for all public pseudo-elements, and is, as of right now, **the only way a public pseudo-element should be cascaded** (the explanation for this is below).
-
-<a name="pe-cascading-precomputed"></a>
-### "Precomputed" cascading
-
-Or, better said, no cascading at all.
-A pseudo-element marked as such is not cascaded.
-
-The only rules that apply to the styles of that pseudo-element are universal rules (rules with a `*|*` selector), and they are applied directly over the element's style if present.
-
-`::-servo-details-content` is an example of this kind of pseudo-element, all the rules in the UA stylesheet with the selector `*|*::-servo-details-content` (and only those) are evaluated over the element's style (except the `display` value, that is overwritten by layout).
-
-This should be the **preferred type for private pseudo-elements** (although some of them might need selectors, see below).
-
-<a name="pe-cascading-lazy"></a>
-### "Lazy" cascading
-
-Lazy cascading allows to compute pseudo-element styles lazily, that is, just when needed.
-
-Currently (for Servo, not that much for stylo), **selectors supported for this kind of pseudo-elements are only a subset of selectors that can be matched on the layout tree, which does not hold all data from the DOM tree**.
-
-This subset includes tags and attribute selectors, enough for making `::-servo-details-summary` a lazy pseudo-element (that only needs to know if it is in an `open` details element or not).
-
-Since no other selectors would apply to it, **this is (at least for now) not an acceptable type for public pseudo-elements, but should be considered for private pseudo-elements**.
-
 [style-doc]: https://doc.servo.org/style/index.html
 [wiki-styling-overview]: https://github.com/servo/servo/wiki/Styling-overview
 [selector-impl]: https://doc.servo.org/selectors/parser/trait.SelectorImpl.html
@@ -96,11 +49,6 @@ Since no other selectors would apply to it, **this is (at least for now) not an 
 [tree-structural-pseudo-classes]: https://www.w3.org/TR/selectors4/#structural-pseudos
 [style-dom-traits]: https://doc.servo.org/style/dom/index.html
 [layout-wrapper]: https://doc.servo.org/layout/wrapper/index.html
-[pseudo-cascade-type]: https://doc.servo.org/style/selector_parser/enum.PseudoElementCascadeType.html
-[servo-pseudo-elements]: https://doc.servo.org/style/selector_parser/enum.PseudoElement.html
-[mdn-pseudo-before]: https://developer.mozilla.org/en/docs/Web/CSS/::before
-[mdn-pseudo-after]: https://developer.mozilla.org/en/docs/Web/CSS/::after
-[mdn-pseudo-selection]: https://developer.mozilla.org/en/docs/Web/CSS/::selection
 [stylist]: https://doc.servo.org/style/stylist/struct.Stylist.html
 [selectors-selectormap]: https://doc.servo.org/style/selector_map/struct.SelectorMap.html
 [selectors-rule]: https://doc.servo.org/style/stylist/struct.Rule.html
