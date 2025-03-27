@@ -13,6 +13,8 @@ Current state of, and outlook on, Servo's integration of SpiderMonkey: [https://
 
 ## DOM Bindings
 
+- [How to work on a Web API](web_api.md)
+
 ## Script Thread
 
 - [Microtask queuing](microtask.md)
