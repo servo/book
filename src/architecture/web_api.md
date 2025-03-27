@@ -30,7 +30,7 @@
 1. For each methods of the bindings trait referred to at 3 in Part 1:
    - In general, follow the structure of the spec: if a method calls into another named algorithm, implement that named algorithm as a separate private method of your struct, that the trait methods calls into. If you later realize this private method can be used from other structs, make it `pub(crate)`. 
    - For each algorithm step in the spec:
-       - Copy the prose from the spec, but omit the step number(these change too often). 
+       - Copy the line from the spec. 
        - Implement the spec in code(which may take more than one line, and might require additional commenting).
 2. Note: there are certain things that are often needed to perform operation as part of an algorithm: 
    - `SafeJSContext`: can be obtained using `GlobalScope::get_cx()`.
