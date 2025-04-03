@@ -1,0 +1,80 @@
+flowchart LR
+    subgraph Content Process
+        subgraph Script Thread
+            Script[[Script]]
+            FontContext[FontContext]
+            FontCache[Font Cache]
+            ScriptSystemFontServiceProxy[System Font Service Proxy]
+            ImageCache[Image Cache]
+
+            Script-->ScriptSystemFontServiceProxy
+            Script-->FontContext
+            Script-->ImageCache
+            FontContext-->FontCache
+        end
+
+        subgraph Layout Thread
+            Layout[[Layout]]
+        end
+
+        Script-->Layout
+        Layout<-->ImageCache
+        Layout<-->FontCache
+
+    end
+
+    subgraph Main Process
+        subgraph Embedder or Main Thread
+            Embedder[[Embedder]]
+            Compositor[Compositor]
+            WebRender[WebRender]
+
+            Embedder<-->Compositor
+            Compositor-->WebRender
+        end
+
+        subgraph Constellation Thread
+            Constellation[[Constellation]]
+            ConstellationSystemFontServiceProxy[System Font Service Proxy]
+            ResourceManager[Resource Manager]
+
+            Constellation-->ConstellationSystemFontServiceProxy
+            Constellation-->ResourceManager
+        end
+
+        subgraph System Font Service Thread
+            SystemFontService[[System Font Service]]
+            FontStore@{ shape: bow-rect, label: "Font Store" }
+
+            subgraph Platforms
+                subgraph MacOS
+                    MacFontList[Font List]
+                end
+
+                subgraph Windows
+                    WinFontList[Font List]
+                end
+
+                subgraph Linux / Android / OpenHarmony
+                    LAOFontList[Font List]
+                end
+            end
+
+            SystemFontService<-->FontStore
+            SystemFontService-->MacFontList
+            SystemFontService-->WinFontList
+            SystemFontService-->LAOFontList
+        end
+
+
+        Embedder-->Constellation
+        Embedder-->SystemFontService
+        Constellation<-->Compositor
+        Constellation-->FontCache
+        Constellation-->ImageCache
+    end
+
+    Layout-->Compositor
+    ScriptSystemFontServiceProxy<-->SystemFontService
+    ConstellationSystemFontServiceProxy<-->SystemFontService
+    Constellation<-->Script

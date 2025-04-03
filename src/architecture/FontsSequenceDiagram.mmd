@@ -1,0 +1,52 @@
+sequenceDiagram
+    box rgb(255, 173, 173) main thread
+        participant Embedder
+        participant WebRender
+        participant Compositor
+    end
+
+    box rgb(255, 214, 165) DevTools thread
+        participant DevtoolsServer
+    end
+
+    box rgb(253, 255, 182) JSEngine thread
+        participant JSEngine
+    end
+
+    box rgb(202, 255, 191) Constellation thread
+    participant Constellation
+    end
+
+    box rgb(155, 246, 255) Bluetooth thread
+    participant Bluetooth
+    end
+
+    box rgb(160, 196, 255) ResourceManager thread
+    participant ResourceManager
+    end
+
+    box rgb(189, 178, 255) Fonts thread
+        participant SystemFontService
+    end
+
+    box rgb(255, 198, 255) Canvas Paint thread
+        participant CanvasPaintThread
+    end
+
+    box rgb(255, 255, 252) Webdriver thread
+        participant Webdriver
+    end
+
+
+    Embedder->>DevtoolsServer: devtools::start_server
+    Embedder->>WebRender: webrender::create_webrender_instance
+    alt opts.multiprocess == false
+        Embedder->>JSEngine: script::init
+    end
+    Embedder->>Constellation: create_constellation
+    Constellation->>Bluetooth: BluetoothThreadFactory::new
+    Constellation->>ResourceManager: new_resource_threads
+    Constellation->>SystemFontService: SystemFontService::spawn
+    Constellation->>CanvasPaintThread: CanvasPaintThread::start
+    Embedder->>Webdriver: webdriver
+    Embedder->>Compositor: IOCompositor::new
