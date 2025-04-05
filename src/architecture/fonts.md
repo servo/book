@@ -13,6 +13,7 @@
 ## Expanded servo architectural diagram
 I think the easiest way to understand any complicated process is to create mental map with clear separation of the components.
 On flowchart bellow I wanted to clarify interconnection between code objects and Threads & Processes to which they belong.
+
 ```mermaid
 flowchart LR
     subgraph Content Process
@@ -221,11 +222,11 @@ https://github.com/servo/servo/pull/35696
 
 But I don't know whether it will be accepted so I will explain important concepts here. First that everyone must understand, on first call `FontGroup` object is kinda empty. It contains only the names of fonts from `font-family` CSS property in the form of `SmallVec<[FontGroupFamily; 8]>`, `language_id` of current element and special `FontDescriptor` created from CSS-styles.
 
-Each `FontGroupFamily` represent `FontFamily` that may be represented on device as `single font file` or a set of font-files if we consider `segmented fonts`. Each `FontFamily` (`FontGroupFamily`) must have set of `FontDescriptor`s that allow to uniquely identify `FontFace` object within particular `font file`.
+Each `FontGroupFamily` represent `FontFamily` that may be represented on device as single font file or a set of font-files if we consider `segmented fonts`. Each `FontFamily` (`FontGroupFamily`) must have set of `FontDescriptor`s that allow to uniquely identify `FontFace` object within particular `font file`.
 
 That means that `FontGroup::FontDescriptor` represents some abstract `FontFace` that must be present in at least one of `FontFamily` objects. In case we will not be able to find it we will start `installed_font_fallback` procedure;
 
-`Language_id` is the new CSS4 feature that allow us to more accurately control visual representation. Lets say we have two `FontFamily` within specified list which have `FontFace` that will satisfy `FontGroup::FontDescriptor`. In that case old spec asked us to simply pick first one that satisfies the descriptor. CSS4 allows user to setup corresondance between language of the element an particular family that we want to use:
+`Language_id` is the new CSS4 feature that allow us to more accurately control visual representation. Lets say we have two `FontFamily` within specified list which have `FontFace` that will satisfy `FontGroup::FontDescriptor`. In that case old spec asked us to simply pick first one that satisfies the descriptor. CSS4 allows user to setup corresondance between language of the element and particular family that we want to use:
 ```html
 <!doctype html>
 <meta charset="utf-8">
