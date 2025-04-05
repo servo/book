@@ -100,8 +100,11 @@ Lets highlite several important architectural details:
  - To avoid data duplication fonts loaded only once and managed by separate thread. That reduces memory footprint of the program. Another reason is limitations that particular platform typesetting library stack imposes on servo(I.E threadsafety of function calls)
  - Special IPC mechanism that serve as middleman between Script and Compositor threads (processes) provided;
 
+One additional thing that is important to mention is that currently two approaches
+
 ## Fonts sequence diagram
 Lets also analyze how servo initializes cause it is important to understand when fonts is loaded in general pipeline. Sequence diagram bellom demonstrate how significant number of servo threads will be launched.
+
 ```mermaid
 sequenceDiagram
     box rgb(255, 173, 173) main thread
@@ -224,7 +227,7 @@ But I don't know whether it will be accepted so I will explain important concept
 
 Each `FontGroupFamily` represent `FontFamily` that may be represented on device as single font file or a set of font-files if we consider `segmented fonts`. Each `FontFamily` (`FontGroupFamily`) must have set of `FontDescriptor`s that allow to uniquely identify `FontFace` object within particular `font file`.
 
-That means that `FontGroup::FontDescriptor` represents some abstract `FontFace` that must be present in at least one of `FontFamily` objects. In case we will not be able to find it we will start `installed_font_fallback` procedure;
+That means that `FontGroup::FontDescriptor` represents some abstract `FontFace` that must be present in at least one `FontGroupFamily` object. In case we will not be able to find it we will start `installed_font_fallback` procedure;
 
 `Language_id` is the new CSS4 feature that allow us to more accurately control visual representation. Lets say we have two `FontFamily` within specified list which have `FontFace` that will satisfy `FontGroup::FontDescriptor`. In that case old spec asked us to simply pick first one that satisfies the descriptor. CSS4 allows user to setup corresondance between language of the element and particular family that we want to use:
 ```html
@@ -235,20 +238,29 @@ That means that `FontGroup::FontDescriptor` represents some abstract `FontFace` 
 <link rel="author" title="Richard Ishida, W3C" href="https://www.w3.org/International/questions/qa-css-lang">
 <link rel="author" title="Desiatkin Dmitrii" href="https://github.com/d-desiatkin">
 <style>
-body 		{font-family: "Times New Roman" "Kai", "KaiTi", "DFKai-SB", "BiauKai", serif;}
+body 		{font-family: "Times New Roman", "Scheherazade", "Kai", "KaiTi", "DFKai-SB", "BiauKai", "Doulos SIL", serif;}
+:lang(ar) 	{font-family: "Scheherazade",serif;
+                 font-size: 120%;}
 :lang(zh-Hant) 	{font-family: Kai,KaiTi,serif;}
 :lang(zh-Hans) 	{font-family: DFKai-SB,BiauKai,serif;}
+:lang(din) 	{font-family: "Doulos SIL",serif;}
 </style>
 <div>
 <p>It is polite to welcome people in their own language:</p>
 <ul>
-    <li>歡迎 欢迎 <span lang="zh-Hans">欢迎</span></li>
-    <li>欢迎 歡迎 <span lang="zh-Hant">歡迎<span></li>
+    <li>Καλοσωρίσατε <span lang="el">Καλοσωρίσατε</span></li>
+    <li>>اهلا وسهلا <span lang="ar">اهلا وسهلا</span></li>
+    <li>Добро пожаловать <span lang="ru">Добро пожаловать</span></li>
+    <li>Kudual <span lang="din">Kudual</span></li>
+    <li>欢迎 <span lang="zh-Hans">欢迎</span></li>
+    <li>歡迎 <span lang="zh-Hant">歡迎<span></li>
 </ul>
 </div>
 ```
 ![alt text](../images/font-lang-based-matching-demo.png)
-On pictures above you can see that body have several conflicting font-families all of them are capable to display particular character. Language allow us to additionaly precisely chose `FontGroupFamily` within `FontGroup`
+On pictures above you can see that `body` have several conflicting font-families all of them are capable to display particular character. Then we declare a list of elements where first wellcome string will use body font-family rules, and second wellcom declared inside `<span>` will use additional language hint for `font-family` style.
+
+So `language_id` allow us to additionaly precisely chose `FontGroupFamily` within `FontGroup`. Differences are easy to spot on arabic and Chinese language versions.
 
 So the task of `find_by_codepoint` is:
 1. Traverse all `font files` that represent particular `FontFamily` on device, and accumulate all possible `FontFace`s within family in question. Get `FontFace`s in form the of list of `FontDescriptor`s (load with help o OS / font third party libraries).
