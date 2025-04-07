@@ -193,7 +193,7 @@ As a result of this algorthm we must get the `FontFace` of particular font file 
 Most important places in code for us, is a piece of code text-segmentation algorithm that choses font, that could be found at:
 `components\layout_2020\flow\inline\text_run.rs` `TextRun::segment_and_shape` `TextRun::segment_text_by_font`
 
-The following function setup important concept of FontGroup. Each Font-group is associated with particular style of parent element, this is the optimization that allow to reuse determined fonts within the group to the elements with the same style that we can meet further down the processing of web-page. This allows to traverse less fonts per call of `find_by_codepoint` function that contains steps 1, 2, 3, 5, 6, 7, 8 of CSS Font Style Matching.
+The following function setup important concept of FontGroup. Each Font-group is associated with particular style of parent element, this is the optimization that allows servo to reuse determined fonts within the group to the elements with the same style that we can meet further down the processing of web-page. This allows to traverse less fonts per call of `find_by_codepoint` function that contains steps 1, 2, 3, 5, 6, 7, 8 of CSS Font Style Matching.
 
 ```rust
 fn segment_text_by_font(

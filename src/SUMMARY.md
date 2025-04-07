@@ -6,6 +6,7 @@
 - [Running servoshell](running-servoshell.md)
 - [Contributing to Servo\*](contributing.md)
   - [Requesting crate releases](hacking/requesting-crate-releases.md)
+  - [Contributing to this book](hacking/contributing-to-servo-book.md)
 
 # Hacking on Servo
 
