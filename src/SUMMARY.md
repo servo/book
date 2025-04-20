@@ -36,6 +36,7 @@
 - [Style\*](architecture/style.md)
 - [Layout\*](architecture/layout.md)
 - [Compositor\*](architecture/compositor.md)
+- [Canvas\*](architecture/canvas.md)
 - [WebXR](architecture/webxr.md)
 - [WebGPU](architecture/webgpu.md)
 - [servodriver test harness](architecture/servodriver.md)
