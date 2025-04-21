@@ -11,12 +11,12 @@ Each canvas context implements [`CanvasContext` trait](https://github.com/servo/
 that requires context to implement some common features in unified way:
 
 - `context_id`
-- `resize`
+- `resize` this method clears painters image by setting it to transparent alpha (all RGBA bytes are zero)
 - `get_image_data` used obtaining canvas image, usually by calling `toDataUrl`, `toBlob`, `createImageBitmap` on canvas or indirectly by drawing one canvas in another
 - `update_the_rendering` for triggering update of image (usually by swapping screen-buffer and back-buffer)
 - `canvas` to obtain connected canvas element (this can be `HTMLCanvasElement` or `OffscreenCanvas`, which can also be connected to `HTMLCanvasElement` with context set to `placeholder`)
 
-while also providing some good default implementations (`onscreen`, `origin_is_clean`, `size`, `mark_as_dirty`).
+while also providing some good default implementations (`onscreen`, `origin_is_clean`, `size`, `mark_as_dirty`). `mark_as_dirty` is called from functions that affect painters image and tells layout to rerender canvas element (by marking `HTMLCanvasElement` as dirty node).
 
 ## HTML event loop and Rendering
 
@@ -55,8 +55,8 @@ flowchart TB
 As part of HTML event loop, script thread first run some JS as part of [perform-a-microtask-checkpoint](https://html.spec.whatwg.org/multipage/#perform-a-microtask-checkpoint)
 (this runs all microtasks from queue; loading script or event callbacks are examples of such microtasks).
 After that [update-the-rendering](https://html.spec.whatwg.org/multipage/webappapis.html#update-the-rendering) is run,
-that updates the rendering of onscreen canvases by requesting new images from the painter threads
-and then it again performs a microtask checkpoint to [`run the animation frame callbacks`](https://html.spec.whatwg.org/multipage/imagebitmap-and-animations.html#run-the-animation-frame-callbacks).
+that updates the rendering of onscreen canvases by requesting generation of new images from the painter threads.
+Then it performs a microtask checkpoint again to [`run the animation frame callbacks`](https://html.spec.whatwg.org/multipage/imagebitmap-and-animations.html#run-the-animation-frame-callbacks).
 Lastly it calls reflow that triggers (re)layout, which computes all styles into `DisplayList`,
 that is sent to WebRender for rendering.
 
@@ -93,7 +93,9 @@ Each canvas context implements [`LayoutCanvasRenderingContextHelpers`](https://g
 that returns `ImageKey` (or `None` if canvas is cleared or otherwise not paintable due to large size)
 that will be embedded into `DisplayList` as part of layout.
 WebRender will read actual image data when rendering based on provided `ImageKey`.
-In webgl and webgpu painters this is done by implementing custom `WebrenderExternalImageApi`, that provides `lock`/`unlock` methods for WebRender to obtain actual image data, while in 2D canvas image data is directly inserted on `CreateImage` and `UpdateImage`.
+In WebGL and WebGPU painters this is done by implementing custom `WebrenderExternalImageApi`,
+that provides `lock`/`unlock` methods for WebRender to obtain actual image data,
+while in 2D canvas image data is directly inserted on `CreateImage` and `UpdateImage`.
 
 ## 2D canvas context
 
@@ -124,7 +126,9 @@ Both `CanvasRenderingContext2d` and `PaintRenderingContext2D` are implemented as
 flowchart LR
     HTMLCanvasElement --getContext('2d')--> CanvasRenderingContext2d
     CanvasRenderingContext2d --strokeRect--> CanvasState
-    CanvasState --IPC: strokeRect --> CanvasPaintThread
+    CanvasState --IPC
+    strokeRect--> CanvasPaintThread
+    CanvasPaintThread --Done--> CanvasState
 ```
 
 `CanvasState` implements actually logic of 2D drawing, or more exactly of setting appropriate state and sending IPC messages to Canvas Paint Thread (if needed as some commands that change state only get sent when there is actual stroke command).
@@ -182,7 +186,7 @@ sequenceDiagram
 
         Script-)WGPU:DestroyTexture
         deactivate Script
-        
+
     end
     loop rendering
         WebRender<<->>+WGPU: lock ExternalImage and read GPUPresentationBuffer
