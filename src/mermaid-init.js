@@ -1,3 +1,5 @@
+// NOTE: this is a custom version of mermaid-init.js written for the Servo book!
+// When updating mermaid, do not overwrite this file with the mdbook-mermaid version.
 (() => {
     // When the mdBook theme changes, rerender diagrams with a suitable Mermaid theme.
     const mermaids = [...document.querySelectorAll(".mermaid")];
