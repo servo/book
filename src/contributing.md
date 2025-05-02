@@ -26,6 +26,8 @@ See [Hacking on Servo](hacking/mach.md) for more information on how to start wor
 - Branch from the main branch and, if needed, rebase to the current main branch before submitting your pull request.
   If it doesn't merge cleanly with main you may be asked to rebase your changes.
 
+- Run `./mach fmt` and `./mach test-tidy` on your change.
+
 - Commits should be as small as possible, while ensuring that each commit is correct independently (i.e., each commit should compile and pass tests).
 
 - Commits should be accompanied by a [Developer Certificate of Origin](http://developercertificate.org) sign-off, which indicates that you (and your employer if applicable) agree to be bound by the terms of the [project license](https://github.com/servo/servo/blob/main/LICENSE).
