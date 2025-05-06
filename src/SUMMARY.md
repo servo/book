@@ -32,6 +32,7 @@
   - [Further reading\*](architecture/further-reading.md)
 - [Directory structure\*](architecture/directory-structure.md)
 - [Script\*](architecture/script.md)
+  - [How to work on a Web API](architecture/web_api.md)
   - [Microtasks\*](architecture/microtasks.md)
 - [Style\*](architecture/style.md)
 - [Layout\*](architecture/layout.md)
