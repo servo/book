@@ -138,17 +138,13 @@ Exact details is provided in servo [fonts module](./fonts.md)
 
 ### Text Segmentation & Shaping
 #### What is text shaping?
-Wikipedia provides following definition:
-> Text shaping is the process of converting text to glyph indices and positions as part of text rendering. It is complementary to font rendering as part of the text rendering process; font rendering is used to generate the glyphs, and text shaping decides which glyphs to render and where they should be put on the image plane. Unicode is generally used to specify the text to be rendered.
+Different sources create different terms: [Wikipedia definition](https://en.wikipedia.org/wiki/Text_shaping), [HarfBuzz definition](https://harfbuzz.github.io/what-is-harfbuzz.html)
 
-Microsoft have the following document that describe [Text layout](https://learn.microsoft.com/en-us/globalization/fonts-layout/text-layout). It have section devoted to [Text shaping](https://learn.microsoft.com/en-us/globalization/fonts-layout/text-layout#text-shaping), however clear and short definition is not provided, this section names four important subtasks that any text shping engine must solve:
+Microsoft have the following document [Text layout](https://learn.microsoft.com/en-us/globalization/fonts-layout/text-layout). It have section devoted to [Text shaping](https://learn.microsoft.com/en-us/globalization/fonts-layout/text-layout#text-shaping), however clear and short definition is not provided, this section names four important subtasks that any text shping engine must solve:
 - [correct processing of ligatures](https://learn.microsoft.com/en-us/globalization/fonts-layout/text-layout#ligatures)
 - [script-specific replacement of the characters that depends on context](https://learn.microsoft.com/en-us/globalization/fonts-layout/text-layout#contextual-shaping)
 - [combining special characters (i.e diacritics and tone marks) into single visual representation](https://learn.microsoft.com/en-us/globalization/fonts-layout/text-layout#combining-characters)
 - [script-specific (i.e Hindi, Devanagari) reordering of the characters](https://learn.microsoft.com/en-us/globalization/fonts-layout/text-layout#character-reordering)
-
-[HarfBuzz definition](https://harfbuzz.github.io/what-is-harfbuzz.html) of text shaping:
-> Text shaping is the process of translating a string of character codes (such as Unicode codepoints) into a properly arranged sequence of glyphs that can be rendered onto a screen or into final output form for inclusion in a document.
 
 #### What facts everyone must know about text shaping:
 
