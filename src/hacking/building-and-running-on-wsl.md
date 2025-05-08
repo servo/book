@@ -6,7 +6,7 @@ To run non-headless servo shell on WSL, you will most likely need to be on Windo
 
 Servo can be built on WSL as if you are building on any other Linux distribution.
 
-1. Setup WSL v2.  See [Microsoft's guideliens for setting up GUI apps in WSL](https://learn.microsoft.com/en-us/windows/wsl/tutorials/gui-apps).
+1. Setup WSL v2.  See [Microsoft's guidelines for setting up GUI apps in WSL](https://learn.microsoft.com/en-us/windows/wsl/tutorials/gui-apps).
 2. Setup the environment depending on the WSL distribution that you are using (e.g. Ubuntu, OpenSuse, etc)
 3. Build
 
