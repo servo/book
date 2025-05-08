@@ -148,10 +148,12 @@ Microsoft have the following document [Text layout](https://learn.microsoft.com/
 
 #### What facts everyone must know about text shaping:
 
-First, different shaping approaches exists. The two of which author is aware of is [SIL Graphite](https://graphite.sil.org/) and Opentype / TrueType shaping algorithms. Great writeup on both technologies provided by [article](https://graphite.sil.org/graphite_aboutOT.html) on the SIL Graphite website.
+First, different shaping approaches exists. The two of which author is aware of is [SIL Graphite](https://graphite.sil.org/) and Opentype / TrueType shaping algorithms. Great writeup on both technologies provided by [archived article](https://web.archive.org/web/20250328090408/https://graphite.sil.org/graphite_otcompare.html) on the SIL Graphite website.
 I also feel obliged to provide a link on [great repository](https://github.com/n8willis/opentype-shaping-documents) that contains a lot of documents regarding the OpenType / TrueType shaping.
 
 Second, w3c established [Web Font Working Group](https://www.w3.org/groups/wg/webfonts/). That group created [WOFF fonts](https://www.w3.org/TR/WOFF/) to improve and standartized loading of fonts from web resources, mostly it contains the standart of data compression and additional headers for web straming. If we look at uncompressed font format we will find that it follows simmilar structure and shaping model as OpenType fonts. That means that OpenType shaping models is currently standart one in the web domain. Rest of the information in the shaping section will be devoted to shaping operations specific to [OpenType / Truetype shaping models](https://harfbuzz.github.io/opentype-shaping-models.html).
+
+The last optional but highly recommended source is the information summarized by [Behdad Esfahbod](https://behdad.org/) (one of the pillars of font techologies) in his [2009](https://behdad.org/text/) and [2024](https://behdad.org/text2024/) articles.
 
 #### OpenType / Truetype shaping model
 It would be unreasonable to copy information about all different Opentype and Truetype shaping models here, so I will just provide the link to [awesome repository](https://github.com/n8willis/opentype-shaping-documents) about shaping again.
