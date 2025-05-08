@@ -1,74 +1,10 @@
 # Inline Layout
 ## Foreword
 Servo actually aims to provide the most up to date documentation along with the code, and Martin Robinson's comments to `components\layout_2020\flow\inline\mod.rs` file.
-```rust
-//! # Inline Formatting Context Layout
-//!
-//! Inline layout is divided into three phases:
-//!
-//! 1. Box Tree Construction
-//! 2. Box to Line Layout
-//! 3. Line to Fragment Layout
-//!
-//! The first phase happens during normal box tree constrution, while the second two phases happen
-//! during fragment tree construction (sometimes called just "layout").
-//!
-//! ## Box Tree Construction
-//!
-//! During box tree construction, DOM elements are transformed into a box tree. This phase collects
-//! all of the inline boxes, text, atomic inline elements (boxes with `display: inline-block` or
-//! `display: inline-table` as well as things like images and canvas), absolutely positioned blocks,
-//! and floated blocks.
-//!
-//! During the last part of this phase, whitespace is collapsed and text is segmented into
-//! [`TextRun`]s based on script, chosen font, and line breaking opportunities. In addition, default
-//! fonts are selected for every inline box. Each segment of text is shaped using HarfBuzz and
-//! turned into a series of glyphs, which all have a size and a position relative to the origin of
-//! the [`TextRun`] (calculated in later phases).
-//!
-//! The code for this phase is mainly in `construct.rs`, but text handling can also be found in
-//! `text_runs.rs.`
-//!
-//! ## Box to Line Layout
-//!
-//! During the first phase of fragment tree construction, box tree items are laid out into
-//! [`LineItem`]s and fragmented based on line boundaries. This is where line breaking happens. This
-//! part of layout fragments boxes and their contents across multiple lines while positioning floats
-//! and making sure non-floated contents flow around them. In addition, all atomic elements are laid
-//! out, which may descend into their respective trees and create fragments. Finally, absolutely
-//! positioned content is collected in order to later hoist it to the containing block for
-//! absolutes.
-//!
-//! Note that during this phase, layout does not know the final block position of content. Only
-//! during line to fragment layout, are the final block positions calculated based on the line's
-//! final content and its vertical alignment. Instead, positions and line heights are calculated
-//! relative to the line's final baseline which will be determined in the final phase.
-//!
-//! [`LineItem`]s represent a particular set of content on a line. Currently this is represented by
-//! a linear series of items that describe the line's hierarchy of inline boxes and content. The
-//! item types are:
-//!
-//!  - [`LineItem::InlineStartBoxPaddingBorderMargin`]
-//!  - [`LineItem::InlineEndBoxPaddingBorderMargin`]
-//!  - [`LineItem::TextRun`]
-//!  - [`LineItem::Atomic`]
-//!  - [`LineItem::AbsolutelyPositioned`]
-//!  - [`LineItem::Float`]
-//!
-//! The code for this can be found by looking for methods of the form `layout_into_line_item()`.
-//!
-//! ## Line to Fragment Layout
-//!
-//! During the second phase of fragment tree construction, the final block position of [`LineItem`]s
-//! is calculated and they are converted into [`Fragment`]s. After layout, the [`LineItem`]s are
-//! discarded and the new fragments are incorporated into the fragment tree. The final static
-//! position of absolutely positioned content is calculated and it is hoisted to its containing
-//! block via [`PositioningContext`].
-//!
-//! The code for this phase, can mainly be found in `line.rs`.
-//!
-```
-This documentation is already great but it misses some links to standards that actually responsible for the stage. Mostly Martin documentation explains module in the same way as [CSS Inline Layout Module Level 3, part 2, Inline Layout Model](https://www.w3.org/TR/css-inline-3/#model). It very conciese that is really helpfull for experienced developers, but on the same time may leave some questions in the minds of newcommers to web technologies domain. So in the text bellow I will try to expand documentation provided by authors of the module.
+You can also find this in the form of [online crate documentation](https://doc.servo.org/layout/flow/inline/)
+This writeup is already great but it misses some links to standards that actually responsible for the stage. Mostly Martin documentation explains module in the same way as [CSS Inline Layout Module Level 3, part 2, Inline Layout Model](https://www.w3.org/TR/css-inline-3/#model).
+For that reason more detailed explanation of some steps procvided bellow.
+
 ## Specification that governs inline layout:
 - [CSS Inline Layout Module Level 3](https://www.w3.org/TR/css-inline-3/)
 - [CSS Text Module Level 4](https://www.w3.org/TR/css-text-4/)
