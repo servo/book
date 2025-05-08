@@ -12,7 +12,7 @@ Servo can be built on WSL as if you are building on any other Linux distribution
 
 ## Running
 
-WSL v2 has the corresponding adaptors to display wayland and x11 applications, though it may not always work OOB with servo.
+WSL v2 has the corresponding adaptors to display Wayland and X11 applications, though it may not always work out of the box with Servo.
 
 ### Troubleshooting
 
