@@ -32,7 +32,7 @@ Servo book uses [Mermaid Diagramming and charting tool](https://mermaid.js.org/)
 You can find the example of such diagram in section [Architecture overview](architecture/overview.md). Sometimes you will want to use the newest syntax, and that tool is not automatically updated, so you may use the following steps to update the version within the project:
 ```bash
 mdbook-mermaid install .
-mv mermaid-init.js src/mermaid-init.js
+rm mermaid-init.js
 mv mermaid.min.js src/mermaid.min.js
 ```
 
