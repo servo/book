@@ -13,8 +13,7 @@ hdc shell aa start --help
 # Start servo from the commandline
 hdc shell aa start -a EntryAbility -b org.servo.servo
 # --ps=<arg> <value> can be used to pass arguments with values to servoshell.
-# The space between arg and value is mandatory when using `--ps`.
-# It is important that value with the `--ps` flag have a space after the value. `--ps=--log-filter warn` is
+# The space between arg and value is mandatory when using `--ps`, meaning `--ps=--log-filter warn` is
 # correct while `--ps=--log-filter=warn` is not.
 # For pure flags without a value use `--psn <flag>`
 hdc shell aa start -a EntryAbility -b org.servo.servo --ps=--log-filter "warn"
@@ -81,8 +80,9 @@ hdc shell hilog -p off
 ```
 
 ### Devtools and port forwards
-You can enable the devtools and connect with firefox remotely to them. It is easiest to do this with the command line via
+
+You can enable the devtools and connect to them remotely with Firefox. It is easiest to do this with the command line via
 `hdc shell aa start -a EntryAbility -b org.servo.servo --psn=--devtools=1234`
-To connect to servo running you have to forward the port with
+To connect to an instance of Servo you have to forward the port with
 `hdc fport tcp:1234 tcp:1234`. You should see a message that the forward succeeded. Now you can
-connect the devtools `localhost:1234`.
+connect to the devtools using `localhost:1234`.
