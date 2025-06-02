@@ -2,10 +2,83 @@
 
 ## Visual Studio Code
 
-By default, rust-analyzer tries to run `cargo` without `mach`, which will cause problems!
-For example, you might get errors in the rust-analyzer extension about build scripts:
+By default, rust-analyzer tries to run `cargo` without `mach`, which will cause issues due
+to the special configuration that Servo currently needs to build. It's recommend that you add
+the following to your project specific settings in `.vscode/settings.json`:
 
-> The style crate requires enabling one of its 'servo' or 'gecko' feature flags and, in the 'servo' case, one of 'servo-layout-2013' or 'servo-layout-2020'.
+```json
+{
+    "rust-analyzer.rustfmt.overrideCommand": [ "./mach", "fmt" ],
+    "rust-analyzer.check.overrideCommand": [
+        "./mach",
+        "clippy",
+        "--message-format=json",
+        "--target-dir",
+        "target/lsp" 
+        "--features",
+        "tracing,tracing-perfetto"
+    ],
+    "rust-analyzer.cargo.buildScripts.overrideCommand": [
+        "./mach",
+        "clippy",
+        "--message-format=json",
+        "--target-dir",
+        "target/lsp" 
+        "--features",
+        "tracing,tracing-perfetto"    ],
+}
+```
+
+Notes:
+
+- In the above excerpt, the language server is building into its own target directory, `target/lsp`, in order to avoid unwanted rebuilds.
+  If you would like to save disk space you can remove the `--target-dir` and `target/lsp` arguments and the default target directory will be used.
+- To enable [optional build settings](building-servo.md#optional-build-settings), simply add them to the build argument list in your configuration file.
+- **Windows*: If you are on Windows, you will need to use `./mach.bat` instead of just `./mach`.
+  If you do not, you may receive an error saying that the command executed is not a valid Win32 application.
+
+## Zed
+
+If you are using Zed, you must do something very similar to what is described for Visual Studio Code, but the Zed configuration file expects a slightly different syntax.
+In your `./zed/settings.json` file you need something like this:
+
+```json
+{
+  "lsp": {
+    "rust-analyzer": {
+      "initialization_options": {
+        "checkOnSave": true,
+        "check": {
+          "overrideCommand": [
+            "./mach",
+            "cargo-clippy",
+            "--message-format=json",
+            "--target-dir",
+            "--feature",
+            "tracing,tracing-perfetto"
+          ]
+        },
+        "cargo": {
+          "allTargets": false,
+          "buildScripts": {
+            "overrideCommand": [
+              "./mach",
+              "cargo-clippy",
+              "--message-format=json",
+              "--target-dir",
+              "target/lsp",
+              "--feature",
+              "tracing,tracing-perfetto"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+### NixOS
 
 If you are on NixOS, you might get errors about `pkg-config` or `crown`:
 
@@ -14,57 +87,11 @@ If you are on NixOS, you might get errors about `pkg-config` or `crown`:
 > [ERROR rust_analyzer::main_loop] FetchWorkspaceError: rust-analyzer failed to load workspace: Failed to load the project at /path/to/servo/Cargo.toml: Failed to read Cargo metadata from Cargo.toml file /path/to/servo/Cargo.toml, Some(Version { major: 1, minor: 74, patch: 1 }): Failed to run \`cd "/path/to/servo" && "cargo" "metadata" "--format-version" "1" "--manifest-path" "/path/to/servo/Cargo.toml" "--filter-platform" "x86_64-unknown-linux-gnu"\`: \`cargo metadata\` exited with an error: error: could not execute process \`crown -vV\` (never executed)
 
 `mach` passes different RUSTFLAGS to the Rust compiler than plain `cargo`, so if you try to build Servo with `cargo`, it will undo all the work done by `mach` (and vice versa).
-
 Because of this, and because Servo can currently only be built with `mach`, you need to configure the rust-analyzer extension to use `mach` in `.vscode/settings.json`:
 
-```
-{
-    "rust-analyzer.rustfmt.overrideCommand": [ "./mach", "fmt" ],
+#### Using `crown`
 
-    "rust-analyzer.check.overrideCommand": [
-        "./mach", "clippy", "--message-format=json" ],
-    "rust-analyzer.cargo.buildScripts.overrideCommand": [
-        "./mach", "clippy", "--message-format=json" ],
-}
-```
-
-If having your editor open still causes unwanted rebuilds on the command line, then you can try configuring the extension to use an alternate target directory.
-This will require more disk space.
-
-```
-{
-    "rust-analyzer.checkOnSave.overrideCommand": [
-        "./mach", "cargo-clippy", "--message-format=json", "--target-dir", "target/lsp" ],
-    "rust-analyzer.cargo.buildScripts.overrideCommand": [
-        "./mach", "cargo-clippy", "--message-format=json", "--target-dir", "target/lsp" ],
-}
-```
-
-To enable [optional build settings](building-servo.md#optional-build-settings), append each mach option separately:
-
-```
-{
-    "rust-analyzer.checkOnSave.overrideCommand": [
-        "./mach", "check", "--message-format=json", "--target-dir", "target/lsp",
-        "--debug-mozjs", "--use-crown" ],
-    "rust-analyzer.cargo.buildScripts.overrideCommand": [
-        "./mach", "check", "--message-format=json", "--target-dir", "target/lsp",
-        "--debug-mozjs", "--use-crown" ],
-}
-```
-
-### Windows users
-
-If you are on Windows, you will need to use `./mach.bat` instead of just `./mach`.
-Not doing so will cause rust-analyzer to throw an error, such as below:
-
-<pre><blockquote><samp>Failed to run the following command: "./mach" "cargo-clippy" "--message-format=json" error=%1 is not a valid Win32 application. (os error 193)</samp></blockquote></pre>
-
-This is due to the fact that `./mach` utilizes the shebang statement `#!/usr/bin/python3` to run as a Python script, which Windows does not support.
-
-### NixOS users
-
-If you are on NixOS and using `--use-crown`, you should also set CARGO_BUILD_RUSTC in `.vscode/settings.json` as follows, where `/nix/store/.../crown` is the output of `nix-shell --run 'command -v crown'`.
+If you are using `--use-crown`, you should also set CARGO_BUILD_RUSTC in `.vscode/settings.json` as follows, where `/nix/store/.../crown` is the output of `nix-shell --run 'command -v crown'`.
 
 ```
 {
@@ -75,6 +102,8 @@ If you are on NixOS and using `--use-crown`, you should also set CARGO_BUILD_RUS
 ```
 
 These settings should be enough to not need to run `code .` from within a `nix-shell`, but it wouldn’t hurt to try that if you still have problems.
+
+#### Problems with proc macros
 
 When enabling rust-analyzer’s proc macro support, you may start to see errors like
 
