@@ -4,6 +4,27 @@
 
 This is boring.
 But your PR won't get accepted without a test.
+
+There are three types of tests in servo.
+- Code formatting tests (`./mach test-tidy`).
+- Unit tests (`./mach test-unit`).
+- End to End tests (`./mach test-wpt`).
+
+The focus of this document will be on End 2 End tests but we want to mention the other tests first.
+
+Every submission has to confirm to the code formatting tests. Most of the formatting can be done
+automatically with `./mach fmt`.
+
+The unit tests are in various files throughout the code base in typical rust `#[(cfg(test))]` and
+with `#[test]` annotations. If you are debugging a test you can use cargo's feature to run only one test
+via `cargo test test_fn_name` and `cargo test test_fn_name -- --exact`, or if it is in a module
+`cargo test test_mod_name::test_fn_name -- --exact` (e.g., `cargo test -p net
+test_fetch_response_is_not_network_error`).
+Running the whole test-suite can be very memory intensive, you can dampen this behaviour somewhat with
+with restricting the amount of compiled crates with `./mach test-unit -j 4`.
+
+
+## End 2 End Tests
 Tests are located in the `tests` directory.
 You'll see that there are a lot of files in there, so finding the proper location for your test is not always obvious.
 
@@ -15,14 +36,6 @@ To run a test:
 
 ```
 ./mach test-wpt tests/wpt/yourtest
-```
-
-For your PR to get accepted, source code also has to satisfy certain tidiness requirements.
-
-To check code tidiness:
-
-```
-./mach test-tidy
 ```
 
 ## Updating a test
@@ -117,7 +130,7 @@ To fix this:
        for scheme, ports in ports.items():
   +        break
            assert len(ports) == {"http": 2, "https": 2}.get(scheme, 1)
-   
+
            # If trying to start HTTP/2.0 server, check compatibility
   ```
 3. Run `mach test-wpt` as many times as needed
