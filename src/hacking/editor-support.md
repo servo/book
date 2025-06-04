@@ -51,9 +51,10 @@ In your `./zed/settings.json` file you need something like this:
         "check": {
           "overrideCommand": [
             "./mach",
-            "cargo-clippy",
+            "clippy",
             "--message-format=json",
             "--target-dir",
+            "target/lsp",
             "--feature",
             "tracing,tracing-perfetto"
           ]
@@ -63,7 +64,7 @@ In your `./zed/settings.json` file you need something like this:
           "buildScripts": {
             "overrideCommand": [
               "./mach",
-              "cargo-clippy",
+              "clippy",
               "--message-format=json",
               "--target-dir",
               "target/lsp",
@@ -71,6 +72,18 @@ In your `./zed/settings.json` file you need something like this:
               "tracing,tracing-perfetto"
             ]
           }
+        },
+        "rustfmt": {
+          "extraArgs": [
+            "--config",
+            "unstable_features=true",
+            "--config",
+            "binop_separator=Back",
+            "--config",
+            "imports_granularity=Module",
+            "--config",
+            "group_imports=StdExternalCrate"
+          ]
         }
       }
     }
