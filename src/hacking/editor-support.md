@@ -14,7 +14,7 @@ the following to your project specific settings in `.vscode/settings.json`:
         "clippy",
         "--message-format=json",
         "--target-dir",
-        "target/lsp" ,
+        "target/lsp",
         "--features",
         "tracing,tracing-perfetto"
     ],
