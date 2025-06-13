@@ -34,9 +34,10 @@ Notes:
 - In the above excerpt, the language server is building into its own target directory, `target/lsp`, in order to avoid unwanted rebuilds.
   If you would like to save disk space you can remove the `--target-dir` and `target/lsp` arguments and the default target directory will be used.
 - To enable [optional build settings](building-servo.md#optional-build-settings), simply add them to the build argument list in your configuration file.
-- **Windows*: If you are on Windows, you will need to use `./mach.bat` instead of just `./mach`.
+- **Windows:** If you are on Windows, you will need to use `./mach.bat` instead of just `./mach`.
   If you do not, you may receive an error saying that the command executed is not a valid Win32 application.
-
+- **Cross-compilation:** If you are cross-compiling, you can override the target used for cargo by adding `"rust-analyzer.cargo.target": "aarch64-linux-android"`.
+  Note that some LSP features might not work in this configuration.
 ## Zed
 
 If you are using Zed, you must do something very similar to what is described for Visual Studio Code, but the Zed configuration file expects a slightly different syntax.
