@@ -37,6 +37,16 @@ Notes:
 - **Windows*: If you are on Windows, you will need to use `./mach.bat` instead of just `./mach`.
   If you do not, you may receive an error saying that the command executed is not a valid Win32 application.
 
+### Autocompletions for platform-specific code
+
+If you're cross-compiling, autocompletions and other LSP features might not work. This is because rust-analyzer is targeting the host platform by default.  
+
+To enable LSP features for Android-specific code, add the following bit to your `.vscode/settings.json`:
+
+```json
+  "rust-analyzer.cargo.target": "aarch64-linux-android"
+```
+
 ## Zed
 
 If you are using Zed, you must do something very similar to what is described for Visual Studio Code, but the Zed configuration file expects a slightly different syntax.
