@@ -13,9 +13,7 @@ Each canvas context implements [`CanvasContext` trait](https://github.com/servo/
 - `resize` this method clears painters image by setting it to transparent alpha (all bytes are zero)
 - `get_image_data` used obtaining canvas image, usually by calling `toDataUrl`, `toBlob`, `createImageBitmap` on canvas or indirectly by drawing one canvas in another
 - `update_the_rendering` for triggering update of image (usually by swapping screen-buffer and back-buffer)
-- `canvas` to obtain connected canvas element (this can be `HTMLCanvasElement` or `OffscreenCanvas`, which can also be connected to `HTMLCanvasElement` with context set to `placeholder`)
-
-while also providing some good default implementations (`onscreen`, `origin_is_clean`, `size`, `mark_as_dirty`). `mark_as_dirty` is called from functions that affect painters image and tells layout to rerender canvas element (by marking `HTMLCanvasElement` as dirty node).
+- `canvas` to obtain connected canvas element (this can be `HTMLCanvasElement` or `OffscreenCanvas`, which can also be connected to `HTMLCanvasElement` with context set to `placeholder`) while also providing some good default implementations (`onscreen`, `origin_is_clean`, `size`, `mark_as_dirty`). `mark_as_dirty` is called from functions that affect painters image and tells layout to rerender canvas element (by marking `HTMLCanvasElement` as dirty node).
 
 ## HTML event loop and rendering
 
@@ -142,11 +140,11 @@ flowchart LR
     end
 ```
 
-WebGL(2) canvas context is `WebGLRenderingContext` (or `WebGL2RenderingContext` which wraps and extends `WebGLRenderingContext`), that contain methods that stores state and sends IPC messages to WebGL thread, which executes actual OpenGL(ES) commands and return results via IPC. This is done in blocking manner (we await for WebGL thread to complete operation).
+WebGL(2) canvas contexts are `WebGLRenderingContext` or `WebGL2RenderingContext`, and in Servo `WebGL2RenderingContext` wraps and extends `WebGLRenderingContext`.
+These contexts store state and send IPC messages to the WebGL thread, which executes actual OpenGL (or OpenGL ES) commands and returns results via IPC.
+The script thread blocks on the WebGL thread, waiting for each operation to complete.
 
-All ["dirty" webgl canvases are stored in `Document`](https://github.com/servo/servo/blob/c915bf05fc9abcfba8a64cd4d50166a363a61109/components/script/dom/document.rs#L494) and are flushed on as part of reflow,
-by [sending one IPC message containing all dirty context ids](https://github.com/servo/servo/blob/c915bf05fc9abcfba8a64cd4d50166a363a61109/components/script/dom/document.rs#L3333),
-then blocking on WebGL thread until that is done.
+All ["dirty" WebGL canvases are stored in `Document`](https://github.com/servo/servo/blob/c915bf05fc9abcfba8a64cd4d50166a363a61109/components/script/dom/document.rs#L494) and are flushed on as part of reflow, by [sending one IPC message containing all dirty context ids](https://github.com/servo/servo/blob/c915bf05fc9abcfba8a64cd4d50166a363a61109/components/script/dom/document.rs#L3333), then blocking on the WebGL thread until all canvases are flushed.
 Flushing swaps framebuffer, where one is for presentation (that is read by WebRender) while other is used for drawing (is target of execution of GL commands).
 
 ## WebGPU canvas context
@@ -212,8 +210,8 @@ Both WebRender's `lock` and `get_image_data` will use content of the [active pre
 ## Resources
 
 - <https://medium.com/@polyglot_factotum/fixing-servos-event-loop-490c0fd74f8d>
-- <https://github.com/servo/servo/issues/35733>
-- <https://github.com/servo/servo/pull/33521>
-- <https://github.com/servo/servo/pull/34631>
-- <https://github.com/servo/servo/pull/33613>
-- <https://github.com/servo/servo/issues/33368>
+- [Update the rendering of canvas (#35733)](https://github.com/servo/servo/issues/35733)
+- [webgpu: renovate gpucanvascontext and webgpu presentation to match the spec (#33521)](https://github.com/servo/servo/pull/33521)
+- [webgpu: Fix HTML event loop integration (#34631)](https://github.com/servo/servo/pull/34631)
+- [webgpu: Introduce PresentationId to ensure updates with newer presentation (#33613)](https://github.com/servo/servo/pull/33613)
+- [webgpu: Make uploading data to wr with less copies (#33368)](https://github.com/servo/servo/issues/33368)
