@@ -49,11 +49,14 @@ flowchart TB
     layout--DisplayList (contains ImageKey)-->WR
 ```
 
-As part of HTML event loop, script thread first run some JS as part of [perform-a-microtask-checkpoint](https://html.spec.whatwg.org/multipage/#perform-a-microtask-checkpoint)
-(this runs all microtasks from queue such as loading script, event, callbacks).
-Next it [updates the rendering](https://html.spec.whatwg.org/multipage/webappapis.html#update-the-rendering), which for onscreen canvases requests generation of new images from the painter threads.
-Then it performs a microtask checkpoint again, to [run the animation frame callbacks](https://html.spec.whatwg.org/multipage/imagebitmap-and-animations.html#run-the-animation-frame-callbacks).
-Finally it triggers reflow (layout), which takes the DOM and its styles, builds a `DisplayList`, and sends that to WebRender for rendering.
+As part of HTML event loop, script thread runs a task (parsing, script evaluating, callbacks, events, ...) and after that it [performs a microtask checkpoint](https://html.spec.whatwg.org/multipage/#perform-a-microtask-checkpoint) that drains microtasks queue.
+In [window event loop](https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model:window-event-loop-3) we queue a global task to [updates the rendering](https://html.spec.whatwg.org/multipage/webappapis.html#update-the-rendering) if there is an [rendering opportunity](https://html.spec.whatwg.org/multipage/webappapis.html#rendering-opportunity) (usually driven by compositor based on hardware refresh rate).
+In servo we do not actually queue a task, but instead we [run updates the rendering on any IPC messages in the ScriptThread](https://github.com/servo/servo/blob/d970584332a3761009f672f975bfffa917513b85/components/script/script_thread.rs#L1418) and [then perform a microtask checkpoint to as event loop would done after a task is completed](https://github.com/servo/servo/blob/d970584332a3761009f672f975bfffa917513b85/components/script/script_thread.rs#L1371).
+[Updates the rendering](https://github.com/servo/servo/blob/d970584332a3761009f672f975bfffa917513b85/components/script/script_thread.rs#L1201) does various resize, scroll and animations steps (which also includes performing a microtask checkpoint; to resolve promises) and then [run the animation frame callbacks](https://html.spec.whatwg.org/multipage/imagebitmap-and-animations.html#run-the-animation-frame-callbacks) (callbacks added with [`requestAnimationFrame`](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame)).
+Here draw commands are issued to painters to create new frame of animation.
+Then we update the rendering of those that do not require a reflow (animated images and WebGPU).
+Finally we triggers reflow (layout), which takes the DOM and its styles, builds a `DisplayList`, and sends that to WebRender for rendering.
+Dirty WebGL and 2D canvases are flushed as part of a reflow.
 
 ```mermaid
 sequenceDiagram
