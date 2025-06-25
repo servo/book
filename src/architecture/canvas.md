@@ -13,7 +13,7 @@ Each canvas context implements [`CanvasContext` trait](https://github.com/servo/
 - `resize` this method clears the painter's image by setting it to transparent alpha (all bytes are zero)
 - `get_image_data` used when obtaining the canvas image, usually by calling `toDataUrl`, `toBlob`, `createImageBitmap` on canvas or indirectly by drawing one canvas in another
 - `update_the_rendering` for triggering update of image (usually by swapping screen-buffer and back-buffer)
-- `canvas` to obtain connected canvas element (this can be `HTMLCanvasElement` or `OffscreenCanvas`, which can also be connected to `HTMLCanvasElement` with context set to `placeholder`) while also providing some good default implementations (`onscreen`, `origin_is_clean`, `size`, `mark_as_dirty`). `mark_as_dirty` is called from functions that affect painters image and tells layout to rerender canvas element (by marking `HTMLCanvasElement` as dirty node).
+- `canvas` to obtain connected canvas element (this can be `HTMLCanvasElement` or `OffscreenCanvas`, which can also be connected to `HTMLCanvasElement` with context set to `placeholder`) while also providing some good default implementations (`onscreen`, `origin_is_clean`, `size`, `mark_as_dirty`). `mark_as_dirty` is called from functions that affect the painter's image and tells layout to rerender the canvas element (by marking `HTMLCanvasElement` as dirty node).
 
 ## HTML event loop and rendering
 
