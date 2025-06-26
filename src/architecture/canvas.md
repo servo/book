@@ -54,9 +54,7 @@ In [window event loop](https://html.spec.whatwg.org/multipage/webappapis.html#ev
 In servo we do not actually queue a task, but instead we [run updates the rendering on any IPC messages in the ScriptThread](https://github.com/servo/servo/blob/d970584332a3761009f672f975bfffa917513b85/components/script/script_thread.rs#L1418) and [then perform a microtask checkpoint to as event loop would done after a task is completed](https://github.com/servo/servo/blob/d970584332a3761009f672f975bfffa917513b85/components/script/script_thread.rs#L1371).
 [Updates the rendering](https://github.com/servo/servo/blob/d970584332a3761009f672f975bfffa917513b85/components/script/script_thread.rs#L1201) does various resize, scroll and animations steps (which also includes performing a microtask checkpoint; to resolve promises) and then [run the animation frame callbacks](https://html.spec.whatwg.org/multipage/imagebitmap-and-animations.html#run-the-animation-frame-callbacks) (callbacks added with [`requestAnimationFrame`](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame)).
 Here draw commands are issued to painters to create new frame of animation.
-Then we update the rendering of those that do not require a reflow (animated images and WebGPU).
-Finally we triggers reflow (layout), which takes the DOM and its styles, builds a `DisplayList`, and sends that to WebRender for rendering.
-Dirty WebGL and 2D canvases are flushed as part of a reflow.
+Finally we triggers reflow (layout), which firstly updates the rendering of canvases (by flushing dirty canvases) and animated images which takes the DOM and its styles, builds a `DisplayList`, and sends that to WebRender for rendering.
 
 ```mermaid
 sequenceDiagram
