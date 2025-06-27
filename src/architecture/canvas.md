@@ -21,32 +21,34 @@ Each canvas context implements [`CanvasContext` trait](https://github.com/servo/
 flowchart TB
     subgraph Content Process
         subgraph Script flow
-            JS-->utr[Update the rendering]-->layout
+            JS-->utr[Update the rendering]-->Layout
         end
     end
 
     subgraph Main Process
-        subgraph painters
+        subgraph Painters
             WGPU[WGPU thread]
             WEBGL[WebGL thread]
             CPT[Canvas Paint Thread]
         end
 
         %% actual update in painters
-        painters--CreateImage-->WR
-        painters--UpdateImage-->WR
+        Painters--CreateImage-->Compositor
+        Painters--UpdateImage-->Compositor
 
-        WR[WebRender]
+        Compositor-->WR
+
+        WR[WebRender]--lock,unlock-->Painters
     end
 
     %% init canvas
-    JS--create context-->painters--ImageKey-->JS
+    JS--create context-->Painters--ImageKey, CanvasId-->JS
 
     %% update canvas rendering
-    utr<--Update rendering-->painters
+    utr<--Update rendering-->Painters
 
     %% rendering
-    layout--DisplayList (contains ImageKey)-->WR
+    Layout--DisplayList (contains ImageKey)-->Compositor
 ```
 
 As part of HTML event loop, script thread runs a task (parsing, script evaluating, callbacks, events, ...) and after that it [performs a microtask checkpoint](https://html.spec.whatwg.org/multipage/#perform-a-microtask-checkpoint) that drains microtasks queue.
@@ -58,24 +60,39 @@ Finally we triggers reflow (layout), which firstly updates the rendering of canv
 
 ```mermaid
 sequenceDiagram
-    loop Context Creation
+    alt Context Creation
         Script->>Painter: Crete Context
-        Painter->>WebRender: CreateImage
-        WebRender->>Painter: ImageKey
-        Painter->>Script: ImageKey
+        Painter->>Compositor: GenerateImageKey
+        Compositor->>WebRender: GenerateImageKey
+
+        opt
+            Painter->>Compositor: Create ExternalImage
+            Compositor->>Painter: ExternalImage
+        end
+
+        WebRender->>Compositor: ImageKey
+        Compositor->>Painter: ImageKey
+        Painter->>Script: ImageKey, CanvasId
+
+        Painter->>Compositor: CreateImage
+        Compositor->>WebRender: CreateImage
+        
     end
 
-    loop Update The Rendering
+    alt Update The Rendering
         Script->>Painter:Update rendering
-        Painter->>WebRender: UpdateImage
+        Painter->>Compositor: UpdateImage
+        Compositor->>WebRender: UpdateImage
         opt
             Painter->>Script: Done
         end
     end
 
-    loop Layout
-        Script->>WebRender: DisplayList
+    alt Layout
+        Script->>Compositor: DisplayList
+        Compositor->>WebRender: DisplayList
         opt
+            Compositor<<->>WebRender: Query ExternalImage Registery
             WebRender->>+Painter: lock ExternalImage
             WebRender->>Painter: unlock ExternalImage
             deactivate Painter
