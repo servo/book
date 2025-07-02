@@ -22,6 +22,11 @@
   - **profile** — Memory and time profilers.
   - **profile_traits** — APIs to the profile crate for crates that don't want to depend on the profile crate for build speed reasons.
   - **script** — Implementation of the DOM (native Rust code and bindings to SpiderMonkey).
+  - **script_bindings** - Support code and bindings generated from WebIDL files.
+    The bindings consist of traits representing WebIDL interfaces and glue code for the
+  SpiderMonkey JavaScript engine.
+    The actual trait implementations are located in the `script` crate.
+    These are split into two crates in order to improve the speed of incremental builds.
   - **script_layout_interface** — The API the script crate provides for the layout crate.
   - **script_traits** — APIs to the script crate for crates that don't want to depend on the script crate for build speed reasons.
   - **selectors** — CSS selector matching.
