@@ -45,3 +45,8 @@ SpiderMonkey (mozjs) requires [8.3 filenames](https://en.wikipedia.org/wiki/8.3_
 - Open a command prompt or PowerShell as administrator (Win+X, A)
 - Enable 8.3 filename generation: `fsutil behavior set disable8dot3 0`
 - Uninstall and reinstall whatever contains the failing paths, such as Visual Studio or the Windows SDK — this is easier than adding 8.3 filenames by hand
+
+<pre><span class="_blockquote_title">(on <strong>Windows</strong>)</span><blockquote><samp>= note: lld-link: error: undefined symbol: __std_search_1
+>>> referenced by D:\a\mozjs\mozjs\mozjs-sys\mozjs\intl\components\src\NumberFormatterSkeleton.cpp:157</samp></blockquote></pre>
+
+Similar issues can occur when mozjs is upgraded, as the update may depend on newer MSVC (remember we require "Latest" in [set up your environment](setting-up-your-environment.md#tools-for-windows)!).  To resolve it, launch the Visual Studio Installer and apply all available updates.
