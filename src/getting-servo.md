@@ -12,10 +12,5 @@ $ git clone https://github.com/servo/servo.git
 $ cd servo
 ```
 
-<div class="warning">
-
-**Windows users:** you will need to clone the Servo repo into the same drive as your [CARGO_HOME](https://doc.rust-lang.org/cargo/guide/cargo-home.html) folder ([#28530](https://github.com/servo/servo/issues/28530)).
-</div>
-
 Servo’s main repo is pretty big!
 If you have an unreliable network connection or limited disk space, consider [making a shallow clone](https://github.blog/2020-12-21-get-up-to-speed-with-partial-clone-and-shallow-clone/).
