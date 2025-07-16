@@ -5,6 +5,15 @@
 See the [style guide](../style-guide.md#error-messages) for how to format error messages.
 </div>
 
+<pre><span class="_blockquote_title">(on <strong>Linux</strong>)</span><blockquote>
+build: /lib/x86_64-linux-gnu/libc.so.6: version GLIBC_2.39' not found
+</span></blockquote></pre>
+
+This workaround is applicable when building Servo using `nix` in Linux distributions other than NixOS.
+The error indicates that the version of glibc included in the distribution is older than the one in nixpkgs.
+
+At the end of the `shell.nix`, change the line `if ! [ -e /etc/NIXOS ]; then` to `if false; then` to disable the support in shell.nix for producing binary artifacts that don't depend on the nix store.
+
 <pre><span class="_blockquote_title">(on <strong>Linux</strong>)</span><blockquote><samp>error: <a href="https://github.com/NixOS/nix/blob/e3fa7c38d7af8f34de0c24766b2e8cf1cd1330f0/src/libutil/file-system.cc#L164-L184">getting status of</a> /nix/var/nix/daemon-socket/socket: Permission denied</samp></blockquote></pre>
 
 If you get this error and you’ve installed Nix with your system package manager:
