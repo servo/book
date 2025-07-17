@@ -5,9 +5,7 @@
 See the [style guide](../style-guide.md#error-messages) for how to format error messages.
 </div>
 
-<pre><span class="_blockquote_title">(on <strong>Linux</strong>)</span><blockquote>
-build: /lib/x86_64-linux-gnu/libc.so.6: version GLIBC_2.39' not found
-</span></blockquote></pre>
+<pre><span class="_blockquote_title">(on <strong>Linux</strong>)</span><blockquote><samp>build: /lib/x86_64-linux-gnu/libc.so.6: version GLIBC_2.39' not found</samp></blockquote></pre>
 
 This workaround is applicable when building Servo using `nix` in Linux distributions other than NixOS.
 The error indicates that the version of glibc included in the distribution is older than the one in nixpkgs.
