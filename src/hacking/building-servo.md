@@ -8,10 +8,10 @@
 To build servoshell for your machine:
 
 ```sh
-$ ./mach build -d
+$ ./mach build
 ```
 
-To build servoshell for Android (armv7):
+To build servoshell for Android (aarch64 by default):
 
 ```sh
 $ ./mach build --android
@@ -36,7 +36,7 @@ If you have problems building Servo that you can’t solve, you can always ask f
 
 There are three main build profiles, which you can build and use independently of one another:
 
-- debug builds, which allow you to use a debugger (lldb)
+- debug builds, which allow you to use a debugger (lldb) (selected by default if no profile is passed)
 - release builds, which are slower to build but more performant
 - production builds, which are used for official releases only
 
@@ -115,3 +115,5 @@ Some build settings can only be enabled manually:
 - **AddressSanitizer builds** are enabled with `./mach build --with-asan`
 - **crown linting** is recommended when hacking on DOM code, and is enabled with `./mach build --use-crown`
 - **SpiderMonkey debug builds** are enabled with `./mach build --debug-mozjs`, or `[build] debug-mozjs = true` in your servobuild file
+
+A full list of arguments can be seen by running `./mach build --help`.
