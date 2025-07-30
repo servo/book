@@ -4,23 +4,17 @@
 
 - **components**
   - **bluetooth** — Implementation of the bluetooth thread.
-  - **bluetooth_traits** — APIs to the bluetooth crate for crates that don't want to depend on the bluetooth crate for build speed reasons.
   - **canvas** — Implementation of painting threads for 2D and WebGL canvases.
-  - **canvas_traits** — APIs to the canvas crate for crates that don't want to depend on the canvas crate for build speed reasons.
   - **compositing** — Integration with OS windowing/rendering and event loop.
   - **constellation** — Management of resources for a top-level browsing context (ie. tab).
   - **devtools** — In-process server to allow manipulating browser instances via a remote Firefox developer tools client.
-  - **devtools_traits** — APIs to the devtools crate for crates that don't want to depend on the devtools crate for build speed reasons.
   * **fonts** — Code for dealing with fonts and text shaping.
-  * **fonts_traits** — APIs to the fonts crate for crates that don't want to depend on the fonts crate for build speed reasons.
   - **layout** — Converts page content into positioned, styled boxes and passes the result to the renderer.
   - **layout_thread** — Runs the threads for layout, communicates with the script thread, and calls into the layout crate to do the layout.
   - **msg** — Shared APIs for communicating between specific threads and crates.
   - **net** — Network protocol implementations, and state and resource management (caching, cookies, etc.).
-  - **net_traits** — APIs to the net crate for crates that don't want to depend on the net crate for build speed reasons.
   - **plugins** — Syntax extensions, custom attributes, and lints.
   - **profile** — Memory and time profilers.
-  - **profile_traits** — APIs to the profile crate for crates that don't want to depend on the profile crate for build speed reasons.
   - **script** — Implementation of the DOM (native Rust code and bindings to SpiderMonkey).
   - **script_bindings** - Support code and bindings generated from WebIDL files.
     The bindings consist of traits representing WebIDL interfaces and glue code for the
@@ -28,19 +22,18 @@
     The actual trait implementations are located in the `script` crate.
     These are split into two crates in order to improve the speed of incremental builds.
   - **script_layout_interface** — The API the script crate provides for the layout crate.
-  - **script_traits** — APIs to the script crate for crates that don't want to depend on the script crate for build speed reasons.
   - **selectors** — CSS selector matching.
   - **servo** — Entry points for the servo application and libservo embedding library.
+  - **shared** — Shared traits/code used by multiple components that don't want to depend on the main crate for build speed reasons.
   - **style** — APIs for parsing CSS and interacting with stylesheets and styled elements.
-  - **style_traits** — APIs to the style crate for crates that don't want to depend on the style crate for build speed reasons.
   - **util** — Assorted utility methods and types that are commonly used throughout the project.
   - **webdriver_server** — In-process server to allow manipulating browser instances via a WebDriver client.
   - **webgpu** — Implementation of threads for the WebGPU API.
 - **etc** — Useful tools and scripts for developers.
-- **mach** — A command-line tool to help with developer tasks.
 - **ports**
-  - **winit** — Embedding implementation for the `winit` windowing library.
+  - **servoshell** — The example browser than uses servo.
 - **python**
+  - **mach** — A command-line tool to help with developer tasks.
   - **servo** — Implementations of servo-specific mach commands.
   - **tidy** — Python package of code lints that are automatically run before merging changes.
 - **resources** — Files used at run time.
@@ -60,11 +53,9 @@
   - **unit** — Unit tests using rustc’s built-in test harness.
   - **wpt** — W3C web-platform-tests and csswg-tests along with tools to run them and expected failures.
 
-*TODO: Update foo_traits and ports/winit.*
-
 # Major dependencies
 
-* <https://github.com/servo/rust-mozjs>, <https://github.com/servo/mozjs>: bindings to SpiderMonkey
+* <https://github.com/servo/mozjs>: bindings to SpiderMonkey
 * <https://github.com/hyperium/hyper>: an HTTP implementation
 * <https://github.com/servo/html5ever>: an HTML5 parser
 * <https://github.com/servo/ipc-channel>: an IPC implementation
