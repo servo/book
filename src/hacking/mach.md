@@ -2,7 +2,7 @@
 
 `mach` is a Python program that does plenty of things to make working on Servo easier, like building and running Servo, running tests, and updating dependencies.
 
-**Windows users:** you will need to replace `./mach` with `.\mach` in the commands in this book.
+**Windows users:** you will need to replace `./mach` with `.\mach` in the commands in this book if you are using cmd.
 
 Use `--help` to list the subcommands, or get help with a specific subcommand:
 
