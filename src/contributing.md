@@ -39,8 +39,6 @@ See [Hacking on Servo](hacking/mach.md) for more information on how to start wor
   For a DOM change this will usually be a web platform test; for layout, a reftest.
   See our [testing guide](https://github.com/servo/servo/wiki/Testing) for more information.
 
-For specific git instructions, see [GitHub workflow 101](https://github.com/servo/servo/wiki/Github-workflow).
-
 ## Running tests in pull requests
 
 When you push to a pull request, GitHub automatically checks that your changes have no compilation, lint, or tidy errors.
