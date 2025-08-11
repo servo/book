@@ -53,7 +53,7 @@ Include this commit in your pull request.
 
 ## Add a new test
 
-If you need to create a new test file, it should be located in `tests/wpt/mozilla/tests` or in `tests/wpt/web-platform-tests` if it's something that doesn't depend on servo-only features.
+If you need to create a new test file, it should be located in `tests/wpt/mozilla/tests` or in `tests/wpt/tests` if it's something that doesn't depend on servo-only features.
 You'll then need to update the list of tests and the list of expected results:
 
 ```
