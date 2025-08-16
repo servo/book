@@ -36,7 +36,7 @@
    - `SafeJSContext`: can be obtained using `GlobalScope::get_cx()`.
    - `GlobalScope`: can be obtained using `self.global()` on a `dom_struct`, or `GlobalScope::from_safe_context`
    - `InRealm`: can be obtained as an argument to the generated trait method, using [this configuration file](https://github.com/servo/servo/blob/4a5ff01e060293721d10289ec56dbd4c58a0969e/components/script_bindings/codegen/Bindings.conf)
-   - `CanGc`: same as for `InRealm`.
+   - `CanGc`: same as for `InRealm` using the same configuration file. When working with `RefCall::borrow_mut` int methods that take a `CanGc` argument, please avoid mutable borrow hazard, using the implementation similar to [this example](https://github.com/servo/servo/blob/f19b2f6e848ad2b4b5fde8969958e37e76844faa/components/script/dom/response.rs#L455). 
    -  It is best to access them as early as possible, say at the top of the trait method implementation, and to pass them down(as ref for `GlobalScope`) as arguments, in the order described above(with any other needed argument coming in between `&GlobalScope` and `InRealm`). 
 2. This should give you a complete first draft. 
 
