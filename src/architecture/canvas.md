@@ -58,52 +58,52 @@ In servo we do not actually queue a task, but instead we [run updates the render
 Here draw commands are issued to painters to create new frame of animation.
 Finally we triggers reflow (layout), which firstly updates the rendering of canvases (by flushing dirty canvases) and animated images which takes the DOM and its styles, builds a `DisplayList`, and sends that to WebRender for rendering.
 
+When canvas context creation is requested (`canvas.getContext('2d')`), the script thread blocks on the painter thread, which initializes and creates a new WebRender image (`CreateImage`), then sends the associated `ImageKey` back to script.
+
 ```mermaid
 sequenceDiagram
-    alt Context Creation
-        Script->>Painter: Crete Context
-        Painter->>Compositor: GenerateImageKey
-        Compositor->>WebRender: GenerateImageKey
+    Script->>Constellation: Crete Context
+    Constellation->>Painter: Crete Context
 
-        opt
-            Painter->>Compositor: Create ExternalImage
-            Compositor->>Painter: ExternalImage
-        end
+    Painter->>Compositor: GenerateImageKey
+    Compositor->>WebRender: GenerateImageKey
 
-        WebRender->>Compositor: ImageKey
-        Compositor->>Painter: ImageKey
-        Painter->>Script: ImageKey, CanvasId
-
-        Painter->>Compositor: CreateImage
-        Compositor->>WebRender: CreateImage
-        
+    opt 
+        Painter<<->>Compositor: ExternalImageId
     end
 
-    alt Update The Rendering
-        Script->>Painter:Update rendering
-        Painter->>Compositor: UpdateImage
-        Compositor->>WebRender: UpdateImage
-        opt
-            Painter->>Script: Done
-        end
-    end
+    WebRender->>Compositor: ImageKey
+    Compositor->>Painter: ImageKey
 
-    alt Layout
-        Script->>Compositor: DisplayList
-        Compositor->>WebRender: DisplayList
-        opt
-            Compositor<<->>WebRender: Query ExternalImage Registery
-            WebRender->>+Painter: lock ExternalImage
-            WebRender->>Painter: unlock ExternalImage
-            deactivate Painter
-        end
-    end
+    Painter->>Compositor: CreateImage
+    Compositor->>WebRender: CreateImage
+
+    Painter->>Script: PainterIPCSender, ImageKey, CanvasId
 ```
 
-When canvas context creation is requested (`canvas.getContext('2d')`), the script thread blocks on the painter thread, which initializes and creates a new WebRender image (`CreateImage`), then sends the associated `ImageKey` back to script.
 Each canvas context implements [`LayoutCanvasRenderingContextHelpers`](https://github.com/servo/servo/blob/4f8d816385a5837844a3986cda392bb6c0464fe6/components/script/canvas_context.rs#L17), which returns the `ImageKey` that layout will use in its `DisplayList`, or `None` if the canvas is cleared or otherwise not paintable due to its size.
 WebRender will read the resultant image data when rendering, based on the provided `ImageKey`.
 In WebGL and WebGPU painters, this is done by implementing a custom `WebrenderExternalImageApi` that provides `lock` and `unlock` methods for WebRender to obtain the actual image data, while for 2D canvases, image data is directly provided via `CreateImage` and `UpdateImage`.
+
+```mermaid
+sequenceDiagram
+    Script->>Painter:Update rendering (flush)
+    Painter->>Compositor:UpdateImage
+    Compositor->>WebRender: UpdateImage
+    opt
+        Painter->>Script: Done
+    end
+    
+    Note over Script: Layout
+    Script->>Compositor: DisplayList
+    Compositor->>WebRender: DisplayList
+    opt
+        Compositor<<->>WebRender: Query ExternalImage Registery
+        WebRender->>+Painter: lock ExternalImage
+        WebRender->>Painter: unlock ExternalImage
+        deactivate Painter
+    end
+```
 
 ## 2D canvas context
 
