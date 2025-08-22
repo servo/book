@@ -2,7 +2,7 @@
 
 # Layout
 
-Servo's current layout system is known as Layout 2020. It [supersedes](https://github.com/servo/servo/wiki/Servo-Layout-Engines-Report) the now-removed original layout system.
+Servo's current layout system is also known as Layout 2020. It replaced the [original layout system] (https://github.com/servo/servo/wiki/Servo-Layout-Engines-Report) which was also known as Layout 2013.
 
 Layout happens in three phases: box tree construction, fragment tree construction, and display list construction.
 Once a display list is generated, it is sent to [WebRender](https://github.com/servo/webrender) for rendering.
