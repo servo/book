@@ -2,4 +2,4 @@
 
 # Compositor
 
-TODO: See https://github.com/servo/servo/blob/master/components/compositing/compositor.rs
+TODO: See https://github.com/servo/servo/blob/main/components/compositing/compositor.rs

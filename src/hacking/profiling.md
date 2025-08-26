@@ -86,7 +86,7 @@ All other code is in the `components/profile/` directory.
 
 ## Sampling profiler
 
-Servo includes a sampling profiler which generates profiles that can be opened in the [Gecko profiling tools](https://perf-html.io/).
+Servo includes a sampling profiler which generates profiles that can be opened in the [Gecko profiling tools](https://profiler.firefox.com/).
 To use them:
 
 1. Run Servo, loading the page you wish to profile
@@ -94,7 +94,7 @@ To use them:
 3. Press Ctrl+P (or Cmd+P on macOS) to stop the profiler (the console should show "Stopping profiler")
 4. Keep Servo running until the symbol resolution is complete (the console should show a final "Resolving N/N")
 5. Run `python etc/profilicate.py samples.json >gecko_samples.json` to transform the profile into a format that the Gecko profiler understands
-6. Load `gecko_samples.json` into https://perf-html.io/
+6. Load `gecko_samples.json` into https://profiler.firefox.com/
 
 To control the output filename, set the `PROFILE_OUTPUT` environment variable.
 To control the sampling rate (default 10ms), set the `SAMPLING_RATE` environment variable.

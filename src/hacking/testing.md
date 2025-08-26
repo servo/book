@@ -120,7 +120,7 @@ This would lead to a “Failed to start HTTP server” errors, because you can o
 To fix this:
 
 1. Follow the steps in [**Running web tests manually**](#running-web-tests-manually)
-2. Add a `break` to [start_servers in serve.py](https://github.com/servo/servo/blob/ce92b7bfbd5855aac18cb4f8a8ec59048041712e/tests/wpt/web-platform-tests/tools/serve/serve.py#L745-L783) as follows:
+2. Add a `break` to [start_servers in serve.py](https://github.com/servo/servo/blob/01a9b317d4a6710547b8b0c0c476cc3b82251044/tests/wpt/tests/tools/serve/serve.py#L979-L1017) as follows:
   ```
   --- a/tests/wpt/tests/tools/serve/serve.py
   +++ b/tests/wpt/tests/tools/serve/serve.py
@@ -174,7 +174,7 @@ To fix this:
   }]}
   ```
 
-[environment]: https://github.com/servo/servo/blob/ce92b7bfbd5855aac18cb4f8a8ec59048041712e/tests/wpt/web-platform-tests/tools/wptrunner/wptrunner/environment.py#L231-L237
+[environment]: https://github.com/servo/servo/blob/01a9b317d4a6710547b8b0c0c476cc3b82251044/tests/wpt/tests/tools/wptrunner/wptrunner/environment.py#L249-L257
 
 Then start the server with `./wpt serve`.
 To check if `testharnessreport.js` was installed correctly:
@@ -186,8 +186,8 @@ To check if `testharnessreport.js` was installed correctly:
     * `TEST DONE`
     * `ALERT: RESULT:`
 
-[testharnessreport-servo.js]: https://github.com/servo/servo/blob/ce92b7bfbd5855aac18cb4f8a8ec59048041712e/tests/wpt/web-platform-tests/tools/wptrunner/wptrunner/testharnessreport-servo.js
-[the default testharnessreport.js]: https://github.com/servo/servo/blob/ce92b7bfbd5855aac18cb4f8a8ec59048041712e/tests/wpt/web-platform-tests/resources/testharnessreport.js
+[testharnessreport-servo.js]: https://github.com/servo/servo/blob/01a9b317d4a6710547b8b0c0c476cc3b82251044/tests/wpt/tests/tools/wptrunner/wptrunner/testharnessreport-servo.js
+[the default testharnessreport.js]: https://github.com/servo/servo/blob/01a9b317d4a6710547b8b0c0c476cc3b82251044/tests/wpt/tests/tools/wptrunner/wptrunner/testharnessreport.js
 [testharness test]: http://web-platform-tests.org/writing-tests/testharness.html
 
 To prevent browser SSL warnings when running HTTPS tests locally, you will need to run Servo with `--certificate-path resources/cert-wpt-only`.
@@ -250,6 +250,7 @@ To generate this run with the `--log-raw` option e.g.
 ./mach test-wpt --log-raw wpt.log
 ```
 
+<!-- TODO: reftest analyzer link is dead -->
 This file can then be fed into the [reftest analyzer](https://hg.mozilla.org/mozilla-central/raw-file/tip/layout/tools/reftest/reftest-analyzer-structured.xhtml) which will show all failing tests (not just those with unexpected results).
 Note that this ingests logs in a different format to [original version of the tool](https://hg.mozilla.org/mozilla-central/raw-file/tip/layout/tools/reftest/reftest-analyzer.xhtml) written for gecko reftests.
 

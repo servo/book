@@ -97,7 +97,7 @@ Since no other selectors would apply to it, **this is (at least for now) not an 
 [style-dom-traits]: https://doc.servo.org/style/dom/index.html
 [layout-wrapper]: https://doc.servo.org/layout/wrapper/index.html
 [pseudo-cascade-type]: https://doc.servo.org/style/selector_parser/enum.PseudoElementCascadeType.html
-[servo-pseudo-elements]: https://doc.servo.org/style/selector_parser/enum.PseudoElement.html
+[servo-pseudo-elements]: https://doc.servo.org/style/servo/selector_parser/enum.PseudoElement.html
 [mdn-pseudo-before]: https://developer.mozilla.org/en/docs/Web/CSS/::before
 [mdn-pseudo-after]: https://developer.mozilla.org/en/docs/Web/CSS/::after
 [mdn-pseudo-selection]: https://developer.mozilla.org/en/docs/Web/CSS/::selection
@@ -106,6 +106,6 @@ Since no other selectors would apply to it, **this is (at least for now) not an 
 [selectors-rule]: https://doc.servo.org/style/stylist/struct.Rule.html
 [per-pseudo-selectormap]: https://doc.servo.org/style/selector_parser/struct.PerPseudoElementMap.html
 [per-origin-selectormap]: https://doc.servo.org/style/stylist/struct.PerOriginSelectorMap.html
-[docs-pipeline]: https://github.com/servo/servo/blob/main/docs/glossary.md#pipeline
+[docs-pipeline]: https://book.servo.org/old/glossary.html#pipeline
 [properties-module]: https://doc.servo.org/style/properties/index.html
-[properties-cascade-fn]: https://doc.servo.org/style/properties/fn.cascade.html
+[properties-cascade-fn]: https://doc.servo.org/style/properties/cascade/fn.cascade.html
