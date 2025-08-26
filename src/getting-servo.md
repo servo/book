@@ -1,6 +1,6 @@
 # Getting Servo
 
-You can download the latest prebuilt version of servoshell from the [Downloads section](https://servo.org/#downloads) on our website.
+You can download the latest prebuilt version of servoshell from the [Downloads section](https://servo.org/download) on our website.
 [Older nightly releases](https://github.com/servo/servo-nightly-builds/releases) are available in the [servo/servo-nightly-builds](https://github.com/servo/servo-nightly-builds) repo.
 
 ## Downloading the source

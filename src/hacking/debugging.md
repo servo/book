@@ -68,7 +68,7 @@ In the **compositor** ([more details](https://github.com/servo/servo/blob/bccbc8
 - to trace all events except for Forwarded events:
   <br>`RUST_LOG=compositor<,compositor<constellation@Forwarded=off`
 
-In **servoshell** ([more details](https://github.com/servo/servo/blob/bccbc87db7b986cae31c8f14f0a130336f8417b2/ports/servoshell/tracing.rs)):
+In **servoshell** ([more details](https://github.com/servo/servo/blob/01a9b317d4a6710547b8b0c0c476cc3b82251044/ports/servoshell/desktop/tracing.rs)):
 
 - to trace only events from servo:
   <br>`RUST_LOG='servoshell<=off,servoshell>=off,servoshell<servo@'`
@@ -179,7 +179,7 @@ Other commands for gdb or lldb include:
 (gdb) print varname         # Print a variable in the current scope.
 ```
 
-See [this gdb tutorial](http://www.unknownroad.com/rtfm/gdbtut/gdbtoc.html) or [this lldb tutorial](https://lldb.llvm.org/tutorial.html) more details.
+See [this gdb tutorial](http://www.unknownroad.com/rtfm/gdbtut/gdbtoc.html) or [this lldb tutorial](https://lldb.llvm.org/use/tutorial.html) more details.
 
 To inspect variables in lldb, you can also type `gui`, then use the arrow keys to expand variables:
 
