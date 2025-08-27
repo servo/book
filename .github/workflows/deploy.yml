@@ -17,6 +17,24 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Optimize images
+        run: |
+          export IFS=
+          git diff --name-only ${{ github.event.before }} ${{ github.event.after }} | while read -r file;
+            do
+            if [ "$(xdg-mime query filetype $file)" == "image/png" ]; then
+              which oxipng || cargo install oxipng
+              oxipng -o max -a -s "$file"
+              oxipng -o max --zopfli -a -s "$file"
+            fi
+          done
+      - name: Commit and push optimized images
+        run: |-
+          git config user.name "[bot]"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit --amend --no-edit || exit 0
+          git push --force
       - name: Configure PATH
         run: |
           mkdir -p opt/mdbook
