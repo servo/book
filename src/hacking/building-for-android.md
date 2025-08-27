@@ -171,11 +171,6 @@ The x86 emulator will need to support GLES v3 (use AVS from Android Studio v3+).
 - ./mach install --release --android
 - ./mach run --android https://threejs.org/examples/#webxr_vr_rollercoaster (warning: the first run loads the default url sometimes after a clean APK install)
 
-## PandaBoard
-
-If you are using a PandaBoard, Servo is known to run on Android with the instructions above using the following build of Android for PandaBoard:
-http://releases.linaro.org/12.10/android/leb-panda
-
 ## Important Notices.
 
 Different from Linux or Mac, on Android, Servo's program entry is in the library, not executable.
