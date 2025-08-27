@@ -61,7 +61,7 @@
 * <https://github.com/servo/ipc-channel>: an IPC implementation
 * <https://github.com/image-rs/image>: image decoders
 * <https://github.com/rust-windowing/winit>: cross-platform windowing and input
-* <https://github.com/jrmuizel/raqote>: a pure Rust 2D graphics library
+* <https://github.com/linebender/vello>: a pure Rust 2D graphics library
 * <https://github.com/servo/rust-cssparser>: a CSS parser
 * <https://github.com/housleyjk/ws-rs>: a WebSocket protocol implementation
 * <https://github.com/servo/rust-url>: an implementation of the URL specification
