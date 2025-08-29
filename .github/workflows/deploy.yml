@@ -17,6 +17,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Generate link list
+        run: |
+          grep -Rin --include="*.md" -E -o "https?://[a-zA-Z0-9./?#=_%:-]*" src >> src/links.txt
       - name: Configure PATH
         run: |
           mkdir -p opt/mdbook
