@@ -91,7 +91,6 @@ Since no other selectors would apply to it, **this is (at least for now) not an 
 [style-doc]: https://doc.servo.org/style/index.html
 [wiki-styling-overview]: https://github.com/servo/servo/wiki/Styling-overview
 [selector-impl]: https://doc.servo.org/selectors/parser/trait.SelectorImpl.html
-[selector-impl-ext]: https://doc.servo.org/style/selector_parser/trait.SelectorImplExt.html
 [servo-selector-impl]: https://doc.servo.org/style/servo/selector_parser/struct.SelectorImpl.html
 [tree-structural-pseudo-classes]: https://www.w3.org/TR/selectors4/#structural-pseudos
 [style-dom-traits]: https://doc.servo.org/style/dom/index.html
