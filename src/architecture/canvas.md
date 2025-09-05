@@ -83,7 +83,8 @@ sequenceDiagram
 
 Each canvas context implements [`LayoutCanvasRenderingContextHelpers`](https://github.com/servo/servo/blob/4f8d816385a5837844a3986cda392bb6c0464fe6/components/script/canvas_context.rs#L17), which returns the `ImageKey` that layout will use in its `DisplayList`, or `None` if the canvas is cleared or otherwise not paintable due to its size.
 WebRender will read the resultant image data when rendering, based on the provided `ImageKey`.
-In WebGL and WebGPU painters, this is done by implementing a custom `WebrenderExternalImageApi` that provides `lock` and `unlock` methods for WebRender to obtain the actual image data, while for 2D canvases, image data is directly provided via `CreateImage` and `UpdateImage`.
+In WebGL and WebGPU painters this is done by implementing a custom `WebrenderExternalImageApi`; this provides `lock` and `unlock` methods for WebRender to obtain the actual image data.
+For 2D canvases, image data is directly provided via `CreateImage` and `UpdateImage` IPC messages.
 
 ```mermaid
 sequenceDiagram
