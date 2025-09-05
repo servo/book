@@ -62,8 +62,8 @@ When canvas context creation is requested (`canvas.getContext('2d')`), the scrip
 
 ```mermaid
 sequenceDiagram
-    Script->>Constellation: Crete Context
-    Constellation->>Painter: Crete Context
+    Script->>Constellation: Create Context
+    Constellation->>Painter: Create Context
 
     Painter->>Compositor: GenerateImageKey
     Compositor->>WebRender: GenerateImageKey
