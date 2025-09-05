@@ -164,7 +164,7 @@ These contexts store state and send IPC messages to the WebGL thread, which exec
 The script thread blocks on the WebGL thread, waiting for each operation to complete.
 
 All "dirty" WebGL canvases are [stored in `Document`](https://github.com/servo/servo/blob/c915bf05fc9abcfba8a64cd4d50166a363a61109/components/script/dom/document.rs#L494) and are flushed as part of reflow, by [sending one IPC message](https://github.com/servo/servo/blob/c915bf05fc9abcfba8a64cd4d50166a363a61109/components/script/dom/document.rs#L3333) containing all dirty context ids, then blocking on the WebGL thread until all canvases are flushed.
-Flushing swaps the framebuffer, where one is for presentation (that is read by WebRender) while other is used for drawing (is target of execution of GL commands).
+Flushing swaps the framebuffer, where one is for presentation (that is read by WebRender) while the other is used for drawing as the target of GL commands.
 
 ## WebGPU canvas context
 
