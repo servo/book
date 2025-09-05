@@ -1,8 +1,6 @@
-<!-- TODO: needs copyediting -->
-
 # Contributing to Servo
 
-Servo welcomes contribution from everyone.
+Servo welcomes contributions from everyone.
 Here are the guidelines if you are thinking of helping us:
 
 
@@ -12,18 +10,22 @@ Contributions to Servo or its dependencies should be made in the form of GitHub 
 Each pull request will be reviewed by a core contributor (someone with permission to land patches) and either landed in the main tree or given feedback for changes that would be required.
 All contributions should follow this format, even those from core contributors.
 
-Should you wish to work on an issue, please claim it first by commenting on the GitHub issue that you want to work on it.
+Should you wish to work on an issue, please claim the issue by commenting on the GitHub issue.
 This is to prevent duplicated efforts from contributors on the same issue.
 
+Sending the message "@servo-highfive assign me" will assign the issue to you.
+
 Head over to [Servo Starters](https://starters.servo.org/) to find good tasks to start with.
-If you come across words or jargon that do not make sense, please check [the glossary](old/glossary.md) first.
+If you find any unfamiliar words or jargon, please check the [the glossary](old/glossary.md) first.
 If there's no matching entry, please make a pull request to add one with the content `TODO` so we can correct that!
 
 See [Hacking on Servo](hacking/mach.md) for more information on how to start working on Servo.
 
+Contributions should adhere to the [style guide](style-guide.md).
+
 ## Pull request checklist
 
-- Branch from the main branch and, if needed, rebase to the current main branch before submitting your pull request.
+- Branch from the main branch and, if necessary, rebase your branch to main before submitting your pull request.
   If it doesn't merge cleanly with main you may be asked to rebase your changes.
 
 - Run `./mach fmt` and `./mach test-tidy` on your change.
