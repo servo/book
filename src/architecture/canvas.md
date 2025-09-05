@@ -58,7 +58,7 @@ In Servo we do not actually queue a task, but instead we [run `update the render
 At this point draw commands are issued to painters to create a new frame of animation.
 Finally we trigger reflow (layout), which first updates the rendering of canvases (by flushing dirty canvases) and animated images, then traverses the DOM and its styles, builds a `DisplayList`, and sends that to WebRender for rendering.
 
-When canvas context creation is requested (`canvas.getContext('2d')`), the script thread blocks on the painter thread, which initializes and creates a new WebRender image (`CreateImage`), then sends the associated `ImageKey` back to script.
+When canvas context creation is requested (`canvas.getContext('2d')`), the script thread blocks on the painter thread as it initializes and creates a new WebRender image (`CreateImage`), finally sending the associated `ImageKey` back to script.
 
 ```mermaid
 sequenceDiagram
