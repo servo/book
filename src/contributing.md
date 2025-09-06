@@ -10,7 +10,7 @@ Contributions to Servo or its dependencies should be made in the form of GitHub 
 Each pull request will be reviewed by a core contributor (someone with permission to land patches) and either landed in the main tree or given feedback for changes that would be required.
 All contributions should follow this format, even those from core contributors.
 
-Should you wish to work on an issue, please claim the issue by commenting on the GitHub issue.
+Should you wish to work on an issue, please leave a comment on it in order to claim the issue.
 This is to prevent duplicated efforts from contributors on the same issue.
 
 Sending the message "@servo-highfive assign me" will assign the issue to you.
