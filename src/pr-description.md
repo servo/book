@@ -33,4 +33,4 @@ It asks:
 * If not, what prevents adding at least one new test?
 
 If you don't know the answer, please write that down!
-It can always be rewritten later based on the reviewer's feedback.
+It can always be rewritten later based on the reviewer feedback.

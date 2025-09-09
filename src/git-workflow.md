@@ -3,10 +3,12 @@
 Please follow this recommended workflow when making changes to Servo:
 
 ## Setup
-Clone _your_ fork of Servo. This is your `origin` remote. Next, create a new remote named `upstream` that points at `servo/servo`.
+Clone _your_ fork of Servo, and throw away most of Servo's commit history for better performance.
+This is your `origin` remote.
+Next, create a new remote named `upstream` that points at `servo/servo`.
 
 ```
-git clone git@github.com:<username>/servo.git
+git clone --depth 10 https://github.com/<username>/servo.git
 git remote add upstream https://github.com/servo/servo.git
 ```
 
@@ -78,9 +80,8 @@ Please do not press the "Update branch" button on the pull request; this perform
 Instead, first update your local main branch, then rebase your feature branch on top of the main branch, then force push the changes.
 
 ```
-git checkout main
-git pull upstream main
-git rebase main issue-12345
+git checkout issue-12345
+git pull --rebase upstream main
 git push -f origin issue-12345
 ```
 
