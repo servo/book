@@ -35,6 +35,9 @@ jobs:
           git add -A
           git commit --amend --no-edit || exit 0
           git push --force
+      - name: Generate link list
+        run: |
+          grep -Rin --include="*.md" -E -o "https?://[a-zA-Z0-9./?#=_%:-]*" src >> src/links.txt
       - name: Configure PATH
         run: |
           mkdir -p opt/mdbook
