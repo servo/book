@@ -54,7 +54,7 @@ remote:      https://github.com/jdm/servo/pull/new/issue-12345
 remote:
 ```
 
-[!Screenshot of a GitHub UI button that says "Compare & pull request"][images/github-open-pr.png]
+[!Screenshot of a GitHub UI button that says "Compare & pull request"](images/github-open-pr.png)
 
 Please see the page on [writing a useful pull request](pr-description.md) for which details to include in your new pull request!
 
@@ -73,7 +73,7 @@ git push origin issue-12345
 When a pull request has merge conflicts, the two most common ways to address them are merging and rebasing.
 Please do not press the "Update branch" button on the pull request; this performs a merge and will prevent some Servo CI functionality from working correctly.
 
-[!Screenshot of a GitHub UI button that says "Update branch"][images/github-update-branch.png]
+[!Screenshot of a GitHub UI button that says "Update branch"](images/github-update-branch.png)
 
 Instead, first update your local main branch, then rebase your feature branch on top of the main branch, then force push the changes.
 
