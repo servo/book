@@ -5,6 +5,8 @@
 - [Getting Servo](getting-servo.md)
 - [Running servoshell](running-servoshell.md)
 - [Contributing to Servo](contributing.md)
+  - [Git workflow](git-workflow.md)
+  - [How to write a pull request](pr-description.md)
   - [Requesting crate releases](hacking/requesting-crate-releases.md)
 
 # Hacking on Servo
