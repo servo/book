@@ -35,10 +35,10 @@ flowchart LR
 DOM implementation lives in [`components/script/dom/webgpu`](https://github.com/servo/servo/tree/main/components/script/dom/webgpu), implementing JS interfaces defined in [WebGPU IDL](https://github.com/servo/servo/blob/main/components/script_bindings/webidls/WebGPU.webidl) that are exposed to the web platform.
 
 Here we only implement logic that is described in the WebGPU spec under the [*content timeline*](https://www.w3.org/TR/webgpu/#content-timeline).
-This mostly involves converting JS types to wgpu-types descriptors that are sent to WGPU thread via IPC messages that are defined in <https://github.com/servo/servo/blob/main/components/webgpu/ipc_messages/recv.rs>.
+This mostly involves converting JS types to wgpu-types descriptors that are sent to WGPU thread via IPC messages that are defined in <https://github.com/servo/servo/blob/main/components/shared/webgpu/messages/recv.rs>.
 WebGPU is async by design, so there is no need to wait for WGPU thread operations to finish.
 This is done by storing ids in DOM WebGPU objects that link to WGPU objects that live in the WGPU thread (are provided by wgpu-core).
-More information about this design is available [in the wgpu repo](https://github.com/gfx-rs/wgpu/blob/2764e7a39920e23928d300e8856a672f1952da63/wgpu-core/src/hub.rs#L30).
+More information about this design is available [in the wgpu repo](https://github.com/gfx-rs/wgpu/blob/9a8dbfb85cc01d3ede7a94fe248f4e9c28b580eb/wgpu-core/src/hub.rs#L30).
 
 ### WGPU implementation
 

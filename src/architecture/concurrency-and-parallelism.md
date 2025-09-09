@@ -76,7 +76,7 @@ Traditionally, browsers have been single-threaded, performing I/O on the "main t
 This leads to latency problems.
 In Servo there is no "main thread" and the loading of all external resources is handled by a single [resource manager] task.
 
-[resource manager]: https://github.com/servo/servo/blob/master/components/net/resource_thread.rs
+[resource manager]: https://github.com/servo/servo/blob/main/components/net/resource_thread.rs
 
 Browsers have many caches, and Servo's task-based architecture means that it will probably have more than extant browser engines (e.g. we might have both a global task-based cache and a task-local cache that stores results from the global cache to save the round trip through the scheduler).
 Servo should have a unified caching story, with tunable caches that work well in low-memory environments.

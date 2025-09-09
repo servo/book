@@ -40,12 +40,12 @@ Note that `curl` will already be installed on Windows 1804 or newer.
 
 - Download and install `uv` [from the uv website](https://docs.astral.sh/uv/getting-started/installation/#standalone-installer)
 - Download and install `choco` [from the Chocolatey website](https://chocolatey.org/install#individual)
-- **If you already have `rustup`,** download the [Community edition of Visual Studio 2022](https://visualstudio.microsoft.com/downloads/)
+- **If you already have `rustup`,** download the [Build Tools for Visual Studio 2022](https://aka.ms/vs/17/release/vs_BuildTools.exe)
 - **If you don’t have `rustup`,** download and run the `rustup` installer: [`rustup-init.exe`](https://win.rustup.rs/)
   - Be sure to select *Quick install via the Visual Studio Community installer*
 - In the Visual Studio installer, ensure the following components are installed:
-  - **Windows 10 SDK (10.0.19041.0)**<br>
-    (`Microsoft.VisualStudio.Component.Windows10SDK.19041`)
+  - **Windows 10 SDK (anything >= 10.0.19041.0)**<br>
+    (`Microsoft.VisualStudio.Component.Windows10SDK.{>=19041}`)
   - **MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)**<br>
     (`Microsoft.VisualStudio.Component.VC.Tools.x86.x64`)
   - **C++ ATL for latest v143 build tools (x86 & x64)**<br>

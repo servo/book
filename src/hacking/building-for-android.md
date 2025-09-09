@@ -6,7 +6,7 @@
 
 ## Get Android tools
 
-After cloning the repository and [installing dependencies common to all targets](https://github.com/servo/servo#setting-up-your-environment), you should obtain the Android SDK, either using the [Android Studio IDE](https://developer.android.com/studio) or via the `sdkmanager` CLI (which requires Java 17 or greater to be installed separately).
+After cloning the repository and [installing dependencies common to all targets](https://book.servo.org/hacking/setting-up-your-environment.html), you should obtain the Android SDK, either using the [Android Studio IDE](https://developer.android.com/studio) or via the `sdkmanager` CLI (which requires Java 17 or greater to be installed separately).
 
 To install the NDK and SDK using Android Studio, refer to the guidelines on the website.
 For the SDK, install the Android 33 platform.
@@ -50,7 +50,7 @@ For running in an emulator however, you’ll likely want to build for Android x8
 
 ## Installing and running on-device
 
-To install Servo on a hardware device, first [set up your device for development](https://developer.android.com/tools/device.html).
+To install Servo on a hardware device, first [set up your device for development](https://developer.android.com/studio/run/device).
 
 Run this command to install the Servo package on your device.
 Replace `--release` with `--dev` if you are building in debug mode.
@@ -83,10 +83,10 @@ adb uninstall org.servo.servoshell
 ## Profiling
 
 We are currently using a Nexus 9 for profiling, because it has an NVidia chipset and supports the NVidia System Profiler.
-First, install the [profiler](https://developer.nvidia.com/tegra-system-profiler).
+First, install the [profiler](https://developer.nvidia.com/nsight-systems).
 
 You will then need to root your Nexus 9.
-There are a variety of options, but I found the [CF-Auto-Root](http://forum.xda-developers.com/showthread.php?t=1980683) version the easiest.
+There are a variety of options, but I found the [CF-Auto-Root](https://xdaforums.com/t/central-cf-auto-root.1980683/) version the easiest.
 Just follow the instructions on that page (download, do the OEM unlock, `adb reboot bootloader`, `fastboot boot image/CF-Auto-Root-flounder-volantis-nexus9.img`) and you should end up with a rooted device.
 
 If you want reasonable stack backtraces, you should add the flags `-fno-omit-frame-pointer -marm -funwind-tables` to the `CFLAGS` (simplest place to do so is in the mach python scripts that set up the env for Android).
@@ -169,13 +169,7 @@ The x86 emulator will need to support GLES v3 (use AVS from Android Studio v3+).
 - ./mach build --release --android --features googlevr
 - ./mach package --release --android --flavor googlevr
 - ./mach install --release --android
-- ./mach run --android https://threejs.org/examples/webvr_rollercoaster.html (warning: the first run loads the default url sometimes after a clean APK install)
-
-## PandaBoard
-
-If you are using a PandaBoard, Servo is known to run on Android with the instructions above using the following build of Android for PandaBoard:
-http://releases.linaro.org/12.10/android/leb-panda
-
+- ./mach run --android https://threejs.org/examples/#webxr_vr_rollercoaster (warning: the first run loads the default url sometimes after a clean APK install)
 
 ## Important Notices.
 

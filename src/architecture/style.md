@@ -44,7 +44,6 @@ Its complexity is derived from the code that stores properties, [`cascade` funct
 [style-doc]: https://doc.servo.org/style/index.html
 [wiki-styling-overview]: https://github.com/servo/servo/wiki/Styling-overview
 [selector-impl]: https://doc.servo.org/selectors/parser/trait.SelectorImpl.html
-[selector-impl-ext]: https://doc.servo.org/style/selector_parser/trait.SelectorImplExt.html
 [servo-selector-impl]: https://doc.servo.org/style/servo/selector_parser/struct.SelectorImpl.html
 [tree-structural-pseudo-classes]: https://www.w3.org/TR/selectors4/#structural-pseudos
 [style-dom-traits]: https://doc.servo.org/style/dom/index.html
@@ -54,6 +53,6 @@ Its complexity is derived from the code that stores properties, [`cascade` funct
 [selectors-rule]: https://doc.servo.org/style/stylist/struct.Rule.html
 [per-pseudo-selectormap]: https://doc.servo.org/style/selector_parser/struct.PerPseudoElementMap.html
 [per-origin-selectormap]: https://doc.servo.org/style/stylist/struct.PerOriginSelectorMap.html
-[docs-pipeline]: https://github.com/servo/servo/blob/main/docs/glossary.md#pipeline
+[docs-pipeline]: https://book.servo.org/old/glossary.html#pipeline
 [properties-module]: https://doc.servo.org/style/properties/index.html
-[properties-cascade-fn]: https://doc.servo.org/style/properties/fn.cascade.html
+[properties-cascade-fn]: https://doc.servo.org/style/properties/cascade/fn.cascade.html

@@ -17,7 +17,7 @@ Additionally, there are a number of WebXR-specific concepts:
 
 Finally, there are graphics-specific concepts that are important for the low-level details of rendering with WebXR:
 
-* [Surfman](https://github.com/servo/webxr/blob/main/webxr/glwindow/mod.rs#L448-L452) is a crate that abstracts away platform-specific details of OpenGL hardware-accelerated rendering.
+* [Surfman](https://github.com/servo/servo/blob/8683f97fcc75b3ce12d9068e8b16b1da7e6abe78/components/webxr/glwindow/mod.rs#L466-L470) is a crate that abstracts away platform-specific details of OpenGL hardware-accelerated rendering.
 * A [surface](https://doc.servo.org/surfman/platform/unix/default/surface/type.Surface.html) is a hardware buffer that is tied to a specific OpenGL context.
 * A [surface texture](https://doc.servo.org/surfman/platform/unix/default/surface/type.SurfaceTexture.html) is an OpenGL texture that wraps a surface.
   Surface textures can be shared between OpenGL contexts.
@@ -26,49 +26,49 @@ Finally, there are graphics-specific concepts that are important for the low-lev
 
 ## How Servo's compositor starts
 
-The embedder is responsible for creating a window and [triggering the rendering context creation](https://github.com/servo/servo/blob/c6a6319502c3df4bf401d394a27854aa1f267658/ports/servoshell/desktop/headed_window.rs#L134) appropriately.
-Servo creates the rendering context by [creating a surfman context](https://github.com/servo/servo/blob/c6a6319502c3df4bf401d394a27854aa1f267658/components/shared/webrender/rendering_context.rs#L48-L58) which will be [used by the compositor](https://github.com/servo/servo/blob/c6a6319502c3df4bf401d394a27854aa1f267658/components/servo/lib.rs#L474) for all [web content rendering operations](https://github.com/servo/servo/blob/c6a6319502c3df4bf401d394a27854aa1f267658/components/servo/lib.rs#L266-L278).
+The embedder is responsible for creating a window and [triggering the rendering context creation](https://github.com/servo/servo/blob/8683f97fcc75b3ce12d9068e8b16b1da7e6abe78/ports/servoshell/desktop/headed_window.rs#L147) appropriately.
+Servo creates the rendering context by [creating a surfman context](https://github.com/servo/servo/blob/8683f97fcc75b3ce12d9068e8b16b1da7e6abe78/components/shared/compositing/rendering_context.rs#L108-L120) which will be [used by the compositor](https://github.com/servo/servo/blob/8683f97fcc75b3ce12d9068e8b16b1da7e6abe78/components/servo/lib.rs#L479) for all [web content rendering operations](https://github.com/servo/servo/blob/8683f97fcc75b3ce12d9068e8b16b1da7e6abe78/components/servo/lib.rs#L278-L285).
 
 ## How a session starts
 
-When a webpage invokes `navigator.xr.requestSession(..)` through JS, this corresponds to the [XrSystem::RequestSession](https://github.com/servo/servo/blob/c6a6319502c3df4bf401d394a27854aa1f267658/components/script/dom/xrsystem.rs#L158) method in Servo.
-This method [sends a message](https://github.com/servo/webxr/blob/5587c9236bac0a8b7b87b3a95b22882400461b46/webxr-api/registry.rs#L103-L108) to the [WebXR message handler](https://github.com/servo/webxr/blob/5587c9236bac0a8b7b87b3a95b22882400461b46/webxr-api/registry.rs#L193-L195) that lives on the main thread, under the [control of the compositor](https://github.com/servo/servo/blob/c6a6319502c3df4bf401d394a27854aa1f267658/components/compositing/compositor.rs#L2416).
+When a webpage invokes `navigator.xr.requestSession(..)` through JS, this corresponds to the [XrSystem::RequestSession](https://github.com/servo/servo/blob/8683f97fcc75b3ce12d9068e8b16b1da7e6abe78/components/script/dom/webxr/xrsystem.rs#L158) method in Servo.
+This method [sends a message](https://github.com/servo/servo/blob/3f6e2679dcc3c142750e17b4e152e4e0660542a2/components/shared/webxr/registry.rs#L80-L85) to the [WebXR message handler](https://github.com/servo/servo/blob/3f6e2679dcc3c142750e17b4e152e4e0660542a2/components/shared/webxr/registry.rs#L170-L172) that lives on the main thread, under the [control of the compositor](https://github.com/servo/servo/blob/3f6e2679dcc3c142750e17b4e152e4e0660542a2/components/compositing/compositor.rs#L1420).
 
-The WebXR message handler iterates over all known discovery objects and attempts to [request a session](https://github.com/servo/webxr/blob/5587c9236bac0a8b7b87b3a95b22882400461b46/webxr-api/registry.rs#L217-L231) from each of them.
+The WebXR message handler iterates over all known discovery objects and attempts to [request a session](https://github.com/servo/servo/blob/3f6e2679dcc3c142750e17b4e152e4e0660542a2/components/shared/webxr/registry.rs#L194-L209) from each of them.
 The discovery objects encapsulate creating a session for each supported backend.
 
 As of July 19, 2024, there are three WebXR backends:
 
-* [headless](https://github.com/servo/webxr/tree/main/webxr/headless) - supports a window-less, device-less device for automated tests
-* [glwindow](https://github.com/servo/webxr/tree/main/webxr/glwindow) - supports a GL-based window for manual testing in desktop environments without real devices
-* [openxr](https://github.com/servo/webxr/tree/main/webxr/openxr) - supports devices that implement the OpenXR standard
+* [headless](https://github.com/servo/servo/tree/main/components/webxr/headless) - supports a window-less, device-less device for automated tests
+* [glwindow](https://github.com/servo/servo/tree/main/components/webxr/glwindow) - supports a GL-based window for manual testing in desktop environments without real devices
+* [openxr](https://github.com/servo/servo/tree/main/components/webxr/openxr) - supports devices that implement the OpenXR standard
 
-WebXR sessions need to [create a layer manager](https://github.com/servo/webxr/blob/main/webxr/glwindow/mod.rs#L448-L452)
+WebXR sessions need to [create a layer manager](https://github.com/servo/servo/blob/8683f97fcc75b3ce12d9068e8b16b1da7e6abe78/components/webxr/glwindow/mod.rs#L466-L470)
 at some point in order to be able to create and render to WebXR layers.
 This happens in several steps:
 
 1. Some initialization happens on the main thread
-2. The main thread [sends a synchronous message](https://github.com/servo/servo/blob/c6a6319502c3df4bf401d394a27854aa1f267658/components/canvas/webgl_thread.rs#L3176-L3181) to the WebGL thread
-3. The WebGL thread [receives the message](https://github.com/servo/servo/blob/c6a6319502c3df4bf401d394a27854aa1f267658/components/canvas/webgl_thread.rs#L390-L394)
+2. The main thread [sends a synchronous message](https://github.com/servo/servo/blob/3f6e2679dcc3c142750e17b4e152e4e0660542a2/components/webgl/webxr.rs#L186-L191) to the WebGL thread
+3. The WebGL thread [receives the message](https://github.com/servo/servo/blob/442eec2d5fed10572ea8f5f3dccfa49218988e5e/components/webgl/webgl_thread.rs#L415-L420)
 4. Some backend-specific, graphics-specific initialization happens on the WebGL thread, hidden behind the [layer manager factory](https://doc.servo.org/webxr_api/struct.LayerManagerFactory.html) abstraction
-5. The new layer manager is [stored in the WebGL thread](https://github.com/servo/servo/blob/c6a6319502c3df4bf401d394a27854aa1f267658/components/canvas/webgl_thread.rs#L3051-L3054)
-6. The main thread [receives a unique identifier](https://github.com/servo/servo/blob/c6a6319502c3df4bf401d394a27854aa1f267658/components/canvas/webgl_thread.rs#L3183-L3191) representing the new layer manager
+5. The new layer manager is [stored in the WebGL thread](https://github.com/servo/servo/blob/442eec2d5fed10572ea8f5f3dccfa49218988e5e/components/webgl/webxr.rs#L58-L64)
+6. The main thread [receives a unique identifier](https://github.com/servo/servo/blob/442eec2d5fed10572ea8f5f3dccfa49218988e5e/components/webgl/webxr.rs#L193-L201) representing the new layer manager
 
 This cross-thread dance is important because the device performing the rendering often has strict requirements for the compatibility of any WebGL context that is used for rendering, and most GL state is only observable on the thread that created it.
 
 ## How an OpenXR session is created
 
-The OpenXR discovery process starts at [OpenXrDiscovery::request_session](https://github.com/servo/webxr/blob/5587c9236bac0a8b7b87b3a95b22882400461b46/webxr/openxr/mod.rs#L311).
+The OpenXR discovery process starts at [OpenXrDiscovery::request_session](https://github.com/servo/servo/blob/442eec2d5fed10572ea8f5f3dccfa49218988e5e/components/webxr/openxr/mod.rs#L277).
 The discovery object only has access to whatever state was passed in its constructor, as well as a [SessionBuilder](https://doc.servo.org/webxr_api/struct.SessionBuilder.html) object that contains values required to create a new session.
 
-Creating an OpenXR session first [creates an OpenXR instance](https://github.com/servo/webxr/blob/5587c9236bac0a8b7b87b3a95b22882400461b46/webxr/openxr/mod.rs#L227), which allows configuring which extensions are in use.
-There are different extensions used to initialize OpenXR on different platforms; for Windows the [XR_KHR_D3D11_enable extension](https://github.com/servo/webxr/blob/5587c9236bac0a8b7b87b3a95b22882400461b46/webxr/openxr/graphics_d3d11.rs#L28) is used since Servo relies on ANGLE for its OpenGL implementation.
+Creating an OpenXR session first [creates an OpenXR instance](https://github.com/servo/servo/blob/442eec2d5fed10572ea8f5f3dccfa49218988e5e/components/webxr/openxr/mod.rs#L193), which allows configuring which extensions are in use.
+There are different extensions used to initialize OpenXR on different platforms; for Windows the [XR_KHR_D3D11_enable extension](https://github.com/servo/servo/blob/442eec2d5fed10572ea8f5f3dccfa49218988e5e/components/webxr/openxr/graphics_d3d11.rs#L31) is used since Servo relies on ANGLE for its OpenGL implementation.
 
-Once an OpenXR instance exists, the session builder is used to create a new WebXR session that [runs in its own thread](https://github.com/servo/webxr/blob/5587c9236bac0a8b7b87b3a95b22882400461b46/webxr/openxr/mod.rs#L339).
-All WebXR sessions can either [run in a thread](https://github.com/servo/webxr/blob/5587c9236bac0a8b7b87b3a95b22882400461b46/webxr-api/session.rs#L491-L516) or have Servo [run them on the main thread](https://github.com/servo/webxr/blob/5587c9236bac0a8b7b87b3a95b22882400461b46/webxr-api/session.rs#L518-L531).
+Once an OpenXR instance exists, the session builder is used to create a new WebXR session that [runs in its own thread](https://github.com/servo/servo/blob/442eec2d5fed10572ea8f5f3dccfa49218988e5e/components/webxr/openxr/mod.rs#L305).
+All WebXR sessions can either [run in a thread](https://github.com/servo/servo/blob/442eec2d5fed10572ea8f5f3dccfa49218988e5e/components/shared/webxr/session.rs#L467-L492) or have Servo [run them on the main thread](https://github.com/servo/servo/blob/442eec2d5fed10572ea8f5f3dccfa49218988e5e/components/shared/webxr/session.rs#L494-L507).
 This choice has implications for how the graphics for the WebXR session can be set up, based on what GL state must be available for sharing.
 
-OpenXR's new session thread [initializes an OpenXR device](https://github.com/servo/webxr/blob/5587c9236bac0a8b7b87b3a95b22882400461b46/webxr/openxr/mod.rs#L340-L344), which is responsible for creating the actual OpenXR session.
-This session object is [created on the WebGL thread](https://github.com/servo/webxr/blob/5587c9236bac0a8b7b87b3a95b22882400461b46/webxr/openxr/mod.rs#L879-L909) as part of creating the OpenXR layer manager, since it relies on [sharing the underlying GPU device](https://github.com/servo/webxr/blob/5587c9236bac0a8b7b87b3a95b22882400461b46/webxr/openxr/graphics_d3d11.rs#L55-L77) that the WebGL thread uses.
+OpenXR's new session thread [initializes an OpenXR device](https://github.com/servo/servo/blob/442eec2d5fed10572ea8f5f3dccfa49218988e5e/components/webxr/openxr/mod.rs#L306-L311), which is responsible for creating the actual OpenXR session.
+This session object is [created on the WebGL thread](https://github.com/servo/servo/blob/442eec2d5fed10572ea8f5f3dccfa49218988e5e/components/webxr/openxr/mod.rs#L847-L877) as part of creating the OpenXR layer manager, since it relies on [sharing the underlying GPU device](https://github.com/servo/servo/blob/442eec2d5fed10572ea8f5f3dccfa49218988e5e/components/webxr/openxr/graphics_d3d11.rs#L58-L80) that the WebGL thread uses.
 
-Once the session object has been created, the main thread can [obtain a copy](https://github.com/servo/webxr/blob/5587c9236bac0a8b7b87b3a95b22882400461b46/webxr/openxr/mod.rs#L909) and resume initializing the [remaining properties](https://github.com/servo/webxr/blob/5587c9236bac0a8b7b87b3a95b22882400461b46/webxr/openxr/mod.rs#L913-L1064) of the new device.
+Once the session object has been created, the main thread can [obtain a copy](https://github.com/servo/servo/blob/442eec2d5fed10572ea8f5f3dccfa49218988e5e/components/webxr/openxr/mod.rs#L877) and resume initializing the [remaining properties](https://github.com/servo/servo/blob/442eec2d5fed10572ea8f5f3dccfa49218988e5e/components/webxr/openxr/mod.rs#L881-L1032) of the new device.
