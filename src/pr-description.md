@@ -23,3 +23,14 @@ The commit description should:
 * Explain any caveats with the change, such as newly failing tests, performance degradation, or uncovered edge cases.
   Discuss how these can be addressed in the future.
 * Be written in multiple sentence paragraphs of text with either consistent wrapping (80 characters or less) or no wrapping at all (as GitHub will do this automatically).
+
+The default pull request template includes several prompts; please fill them out by replacing the original instructions.
+
+The "Testing" prompt is particularly important, since it helps streamline the review process.
+It asks:
+* Are there already automated tests that cover the code that is being changed?
+* If not, does this pull request include new automated tests?
+* If not, what prevents adding at least one new test?
+
+If you don't know the answer, please write that down!
+It can always be rewritten later based on the reviewer's feedback.
