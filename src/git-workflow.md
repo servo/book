@@ -63,7 +63,7 @@ Please see the page on [writing a useful pull request](pr-description.md) for wh
 ## Addressing review comments
 
 Prefer appending new commits to your branch over amending existing commits.
-This makes it easier to for Servo reviewers to only look at the changes, which helps pull requests get reviewed more quickly.
+This makes it easier for Servo reviewers to only look at the changes, which helps pull requests get reviewed more quickly.
 
 ```
 git commit -s -m "script: Fix deadlock with cross-origin iframes."
