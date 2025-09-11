@@ -8,14 +8,22 @@
 To build servoshell for your machine:
 
 ```sh
-$ ./mach build
+$ ./mach build [profile]
 ```
+<div class="warning _note">
 
-To build servoshell for Android (aarch64 by default):
+There are multiple [profiles](#build-profiles) available for build. **debug** is default profile if no profile is passed.
+</div>
+
+To build servoshell for cross-compilation target:
 
 ```sh
-$ ./mach build --android
+$ ./mach build [--android/--ohos] [profile]
 ```
+<div class="warning _note">
+
+Refer the extra setup required for [Android](building-for-android.md) and [OpenHarmony](building-for-openharmony.md) builds.
+</div>
 
 To check your code for compile errors, without a full build:
 
@@ -50,9 +58,9 @@ There are three main build profiles, which you can build and use independently o
 <tbody>
     <tr>
         <th>mach option
-        <td><code>-d</code>
-        <td><code>-r</code>
-        <td><code>--prod</code>
+        <td><code>-d<br>--debug</code>
+        <td><code>-r<br>--release</code>
+        <td><code>--prod<br>--production</code>
     <tr>
         <th>optimised?
         <td><a href="https://doc.rust-lang.org/cargo/reference/profiles.html#dev">no</a>
