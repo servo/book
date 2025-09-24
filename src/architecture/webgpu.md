@@ -71,6 +71,9 @@ You can also test Servo against [the live CTS](https://gpuweb.github.io/cts/stan
 $ mach run -r --pref dom.webgpu.enabled 'https://gpuweb.github.io/cts/standalone/?runnow=1&q=<test>'
 ```
 
+Currently, we have several flaky tasks with `webgpu:shader,execution,expression` which is tracked in [#31397](github.com/servo/servo/issues/31397).
+They can be ignored if they appear in unexpected result of your try runs.
+
 ## Working on upstream [gfx-rs/wgpu](https://github.com/gfx-rs/wgpu)
 
 Servo can be used to test wgpu changes against the [WebGPU CTS](https://gpuweb.github.io/cts/) as follows:
