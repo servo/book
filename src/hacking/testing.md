@@ -66,7 +66,7 @@ In particular, this folder contains:
 * `meta`: expected failures for the Web Platform tests we run
 * `mozilla`: Web Platform Test-style tests that cannot be upstreamed
 * `webgl`: The imported WebGL tests
-* `webgpu`: The imported WebGPU tests
+* `webgpu`: The imported WebGPU tests (See [WebGPU](../architecture/webgpu.md) chapter for more information)
 
 ## Running the Web Platform Tests
 
@@ -209,6 +209,8 @@ Usually you will have a rough idea where tests for your changes are.
 For example, almost all tests for [SubtleCrypto](https://github.com/servo/servo/blob/63793ccbb7c0768af3f31c274df70625abacb508/components/script/dom/subtlecrypto.rs) code are in the [`WebCryptoAPI`](https://github.com/web-platform-tests/wpt/tree/550fb109615cf434b03b30b76aa0dea6bfb0ebe1/WebCryptoAPI) directory.
 In this case you can run only these tests with `./mach test-wpt WebCryptoAPI`, followed by `./mach update-wpt` as described above.
 To ensure that other tests didn't break, do a [try run](#running-web-platform-tests-on-your-github-fork) afterwards.
+
+For updating WebGPU expectations, please see [WebGPU](../architecture/webgpu.md#updating-webgpu-cts-expectations) chapter for more information.
 
 ## Modifying Web Platform Tests
 
