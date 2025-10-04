@@ -19,7 +19,7 @@ The minimum version of SDK that Servo currently supports is v5.0.2 (API-14).
 #### Downloading via DevEco Studio
 
 [DevEco Studio] is an IDE for developing applications for HarmonyOS NEXT and OpenHarmony.
-It supports Windows and MacOS.
+It supports Windows and macOS.
 You can manage installed OpenHarmony SDKs by clicking File->Settings and selecting "OpenHarmony SDK".
 After setting a suitable installation path, you can select the components you want to install for each available API version.
 DevEco Studio will automatically download and install the components for you.
@@ -80,7 +80,7 @@ care to install the hvigor version matching the requirements of your project.
    For HarmonyOS NEXT Node 18 is shipped. Ensure that the `node` binary is in PATH.
 2. Install Java using the recommended installation method for your OS.
    The build steps are known to work with OpenJDK v17, v21 and v23.
-   On MacOS, if you install Homebrew's [OpenJDK formula], the following additional command may need to be run after the installation:
+   On macOS, if you install Homebrew's [OpenJDK formula], the following additional command may need to be run after the installation:
    ```
    # For the system Java wrappers to find this JDK, symlink it with
    sudo ln -sfn $HOMEBREW_PREFIX/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk

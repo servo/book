@@ -41,7 +41,7 @@ From left to right:
 - The **extra column** contains more helpful tools:
   - **Layout** contains information about the box model properties of the element.
     Note that flex and grid do not work yet.
-  - **Computed**, which contains all of the CSS [computed values](https://drafts.csswg.org/css-cascade/#computed) after resolving things like relative units.
+  - **Computed**, which contains all the CSS [computed values](https://drafts.csswg.org/css-cascade/#computed) after resolving things like relative units.
 
 ![Inspector](../images/devtools-inspector.png)
 
@@ -63,7 +63,7 @@ location.reload()
 
 A lot of work to improve developer tool support in Servo requires reverse-engineering the working implementation in Firefox.
 One of the most efficient ways to do this is to observe a successful session in Firefox and record the bidirectional protocol traffic between the server and the client.
-To capture a log of the trafic in a Firefox devtools session that does not involve Servo, follow these steps:
+To capture a log of the traffic in a Firefox devtools session that does not involve Servo, follow these steps:
 
 1. Open a terminal window. This window will eventually contain the protocol logs.
 1. Launch Firefox from the terminal: `firefox --new-instance --profile devtools-testing` (on macOS you may need `/Applications/Firefox.app/Contents/MacOS/firefox`)
