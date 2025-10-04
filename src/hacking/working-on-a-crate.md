@@ -19,7 +19,7 @@ This is how my projects are laid out:
 ~/my-projects/cocoa-rs/
 ```
 
-Both folder are git repositories.
+Both folders are git repositories.
 
 To make it so that servo uses `~/my-projects/cocoa-rs/`, first ascertain which version of the crate Servo is using and whether it is a git dependency or one from crates.io.
 

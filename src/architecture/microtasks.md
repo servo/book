@@ -3,8 +3,8 @@
 # Microtasks
 
 According the HTML spec, a microtask is: "a colloquial way of referring to a task that was created via the queue a microtask algorithm"([source](https://html.spec.whatwg.org/multipage/#microtask-queue)).
-Each [event-loop](https://html.spec.whatwg.org/multipage/webappapis.html#event-loop)--meaning window, worker, or worklet--has it's own microtask queue.
-The tasks queued on it are run as part of the [perform a microtask checkpoint](https://html.spec.whatwg.org/multipage/#perform-a-microtask-checkpoint) algorithm, which is called into from various places, the main one being [after running a task](https://html.spec.whatwg.org/multipage/#event-loop-processing-model:perform-a-microtask-checkpoint) from an task queue that isn't the microtask queue, and each call to this algorithm drains the microtask queue--running all tasks that have been enqueued up to that point([without re-entrancy](https://html.spec.whatwg.org/multipage/#performing-a-microtask-checkpoint)).
+Each [event-loop](https://html.spec.whatwg.org/multipage/webappapis.html#event-loop)--meaning window, worker, or worklet--has its own microtask queue.
+The tasks queued on it are run as part of the [perform a microtask checkpoint](https://html.spec.whatwg.org/multipage/#perform-a-microtask-checkpoint) algorithm, which is called into from various places, the main one being [after running a task](https://html.spec.whatwg.org/multipage/#event-loop-processing-model:perform-a-microtask-checkpoint) from a task queue that isn't the microtask queue, and each call to this algorithm drains the microtask queue--running all tasks that have been enqueued up to that point([without re-entrancy](https://html.spec.whatwg.org/multipage/#performing-a-microtask-checkpoint)).
 
 ## The microtask queue in Servo
 
@@ -18,7 +18,7 @@ Dedicated workers [use a child runtime](https://github.com/servo/servo/blob/4357
 A task can be enqueued on the microtask queue from both Rust, and from the JS engine.
 
 - From JS: the JS engine will call into [`enqueue_promise_job`](https://github.com/servo/servo/blob/7eac599aa1d6bcf8858c51d90763373f0dd5f289/components/script/script_runtime.rs#L196) whenever it needs to queue a microtask to call into promise handlers.
-  This callback mechanism is setup [once per runtime](https://github.com/servo/servo/blob/7eac599aa1d6bcf8858c51d90763373f0dd5f289/components/script/script_runtime.rs#L520).
+  This callback mechanism is set up [once per runtime](https://github.com/servo/servo/blob/7eac599aa1d6bcf8858c51d90763373f0dd5f289/components/script/script_runtime.rs#L520).
   This means that resolving a promise, either [from Rust](https://github.com/servo/servo/blob/7eac599aa1d6bcf8858c51d90763373f0dd5f289/components/script/dom/promise.rs#L173) or from JS, will result in this callback being called into, and a microtask being enqueued.
   Strictly speaking, the microtask is [still enqueued from Rust](https://github.com/servo/servo/blob/7eac599aa1d6bcf8858c51d90763373f0dd5f289/components/script/script_runtime.rs#L222).
 - From Rust, there are various places from which microtask are explicitly enqueued by "native" Rust:

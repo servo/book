@@ -25,7 +25,7 @@ set -o nounset
 set -o pipefail
 ```
 
-Rememeber to quote all variables, using the full form: `"${SOME_VARIABLE}"`.
+Remember to quote all variables, using the full form: `"${SOME_VARIABLE}"`.
 
 Use `"$(some-command)"` instead of backticks for command substitution.
 Note that these should be quoted as well.

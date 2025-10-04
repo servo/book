@@ -16,7 +16,7 @@ This is to prevent duplicated efforts from contributors on the same issue.
 Sending the message "@servo-highfive assign me" will assign the issue to you.
 
 Head over to [Servo Starters](https://starters.servo.org/) to find good tasks to start with.
-If you find any unfamiliar words or jargon, please check the [the glossary](old/glossary.md) first.
+If you find any unfamiliar words or jargon, please check [the glossary](old/glossary.md) first.
 If there's no matching entry, please make a pull request to add one with the content `TODO` so we can correct that!
 
 See [Hacking on Servo](hacking/mach.md) for more information on how to start working on Servo.
@@ -35,7 +35,7 @@ Contributions should adhere to the [style guide](style-guide.md).
 - Commits should be accompanied by a [Developer Certificate of Origin](http://developercertificate.org) sign-off, which indicates that you (and your employer if applicable) agree to be bound by the terms of the [project license](https://github.com/servo/servo/blob/main/LICENSE).
   In git, this is the `-s` option to `git commit`.
 
-- If your patch is not getting reviewed or you need a specific person to review it, you can @-reply a reviewer asking for a review in the pull request or a comment, or you can ask for a review in [the Servo chat](https://servo.zulipchat.com/).
+- If your patch is not getting reviewed, or you need a specific person to review it, you can @-reply a reviewer asking for a review in the pull request or a comment, or you can ask for a review in [the Servo chat](https://servo.zulipchat.com/).
 
 - Add tests relevant to the fixed bug or new feature.
   For a DOM change this will usually be a web platform test; for layout, a reftest.

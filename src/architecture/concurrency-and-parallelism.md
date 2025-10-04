@@ -34,7 +34,7 @@ Here are some ways that we take advantage of both:
   Decoding multiple images in parallel is straightforward.
 * _Decoding of other resources_.
   This is probably less important than image decoding, but anything that needs to be loaded by a page can be done in parallel, e.g. parsing entire style sheets or decoding videos.
-* _GC JS concurrent with layout_ - Under most any design with concurrent JS and layout, JS is going to be waiting to query layout sometimes, perhaps often.
+* _GC JS concurrent with layout_ - Under almost any design with concurrent JS and layout, JS is going to be waiting to query layout sometimes, perhaps often.
   This will be the most opportune time to run the GC.
 
 For information on the design of WebXR see the [in-tree documentation](./webxr.md).
@@ -42,7 +42,7 @@ For information on the design of WebXR see the [in-tree documentation](./webxr.m
 ## Challenges
 
 * _Parallel-hostile libraries_.
-  Some third-party libraries we need don't play well in multi-threaded environments.
+  Some third-party libraries we need don't play well in multithreaded environments.
   Fonts in particular have been difficult.
   Even if libraries are technically thread-safe, often thread safety is achieved through a library-wide mutex lock, harming our opportunities for parallelism.
 * _Too many threads_.

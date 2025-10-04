@@ -50,7 +50,7 @@ Whether log statements are visible depends on multiple conditions:
 2. The runtime `log` global filter per module filters set in servoshell. Since environment variables aren't an
   option to customize the log level, `servoshell` has the `--log-filter` option on ohos targets, which allows
   customizing the log filter of the `log` crate.
-  By default servoshell sets a log filter which hides log statements from many crates, so you likely will need to
+  By default, servoshell sets a log filter which hides log statements from many crates, so you likely will need to
   set a custom log-filter if you aren't seeing the logs from the crate you are debugging.
 3. The `hilog` base log filter. `hdc shell hilog --base-level=<log_level>`. Can be combined with `--domain` and `--tag`
   options to customize **which logs are saved**.

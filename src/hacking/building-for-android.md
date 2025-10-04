@@ -26,7 +26,7 @@ ANDROID_NDK_ROOT="/path/to/ndk"
 PATH=$PATH:$ANDROID_SDK/platform-tools
 ```
 
-NOTE: If you are using Nix, you don't need to install the tools or setup the ANDROID_* environment variables manually.
+NOTE: If you are using Nix, you don't need to install the tools or set up the ANDROID_* environment variables manually.
 Simply enable the Android build support running:
 ```
 export SERVO_ANDROID_BUILD=1
@@ -160,7 +160,7 @@ You will be able to catch your breakpoints during execution.
 
 ## x86 build
 
-To build a x86 version, follow the above instructions, but replace `--android` with `--target=i686-linux-android`.
+To build an x86 version, follow the above instructions, but replace `--android` with `--target=i686-linux-android`.
 The x86 emulator will need to support GLES v3 (use AVS from Android Studio v3+).
 
 ## WebVR support
