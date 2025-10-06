@@ -31,7 +31,7 @@
   - **webgpu** — Implementation of threads for the WebGPU API.
 - **etc** — Useful tools and scripts for developers.
 - **ports**
-  - **servoshell** — The example browser than uses servo.
+  - **servoshell** — The example browser that uses servo.
 - **python**
   - **mach** — A command-line tool to help with developer tasks.
   - **servo** — Implementations of servo-specific mach commands.
