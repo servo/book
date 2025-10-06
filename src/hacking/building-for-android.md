@@ -10,12 +10,12 @@ After cloning the repository and [installing dependencies common to all targets]
 
 To install the NDK and SDK using Android Studio, refer to the guidelines on the website.
 For the SDK, install the Android 33 platform.
-The NDK must be version r26c.
+The NDK must be version r28c.
 Versions before and after change the layout of the NDK and add or remove files.
 
 If you are using the `sdkmanager` tool, you can do:
 ```sh
-tools/bin/sdkmanager platform-tools "platforms;android-33" "build-tools;34.0.0" "ndk;26.2.11394342"
+tools/bin/sdkmanager platform-tools "platforms;android-33" "build-tools;34.0.0" "ndk;28.2.13676358"
 ```
 
 Set the following environment variables while building.
