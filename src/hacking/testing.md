@@ -16,10 +16,15 @@ Every submission has to confirm to the code formatting tests. Most of the format
 automatically with `./mach fmt`.
 
 The unit tests are in various files throughout the code base in typical rust `#[cfg(test)]` and
-with `#[test]` annotations. If you are debugging a test you can use cargo's feature to run only one test
-via `cargo test test_fn_name` and `cargo test test_fn_name -- --exact`, or if it is in a module
-`cargo test test_mod_name::test_fn_name -- --exact` (e.g., `cargo test -p net
-test_fetch_response_is_not_network_error`).
+with `#[test]` annotations. You can run unit tests with `./mach test-unit`. Example calls:
+
+```
+# Run all unit tests in the net crate
+./mach test-unit -p net
+# Run a specific unit test in the net crate
+./mach test-unit -p net test_fetch_response_is_not_network_error
+```
+
 Running the whole test-suite can be very memory intensive, you can dampen this behaviour somewhat with
 with restricting the amount of compiled crates with `./mach test-unit -j 4`.
 
