@@ -6,7 +6,9 @@
 
 [_Servo_](https://servo.org) is a web browser engine written in the Rust programming language, and currently developed on 64-bit Linux, 64-bit macOS, 64-bit Windows, and Android.
 
-Work is still ongoing to make Servo consumable as a webview library, so for now, the only supported way to use Servo is via _servoshell_, our [winit](https://crates.io/crates/winit)- and [egui](https://crates.io/crates/egui)-based example browser.
+Work is still ongoing to make Servo consumable as a webview library.
+Currently, the recommended way to run Servo as a browser is via [_servoshell_](https://servo.org/download/), our [winit](https://crates.io/crates/winit) and [egui](https://crates.io/crates/egui)-based demo browser.
+If you’d like to embed Servo in your own application, consider using [tauri-runtime-verso](https://github.com/versotile-org/tauri-runtime-verso), a custom [Tauri](https://tauri.app/) runtime, or [servo-gtk](https://github.com/nacho/servo-gtk), a GTK4-based web browser widget.
 
 ![Screenshot of servoshell](images/servoshell.png)
 
