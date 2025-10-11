@@ -15,7 +15,7 @@
 - [Building Servo](hacking/building-servo.md)
   - [Setting up your environment](hacking/setting-up-your-environment.md)
   - [Troubleshooting your build](hacking/troubleshooting-your-build.md)
-  - [Building for Android\*](hacking/building-for-android.md)
+  - [Building for Android](hacking/building-for-android.md)
   - [Building for OpenHarmony](hacking/building-for-openharmony.md)
   - [Building and running on WSL](hacking/building-and-running-on-wsl.md)
 - [Some basic Rust\*](hacking/some-basic-rust.md)
