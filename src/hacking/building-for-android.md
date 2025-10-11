@@ -69,7 +69,7 @@ in the shell session before invoking ./mach commands
    ./mach run --android https://www.servo.org/
    ```
 
-You can request a force-top of Servo by running:
+You can request a force-stop of Servo by running:
 ```
 adb shell am force-stop org.servo.servoshell/org.servo.servoshell.MainActivity
 ```
