@@ -39,7 +39,7 @@ in the shell session before invoking ./mach commands
 
 1. Create a new AVD image to run Servo:
     ```
-    $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/avdmanager avdmanager create avd 
+    $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/avdmanager create avd \
         --name "Servo" \
         --device "pixel" \
         --package "system-images;android-33;google_apis;arm64-v8a" \
