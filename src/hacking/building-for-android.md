@@ -49,15 +49,17 @@ in the shell session before invoking ./mach commands
         --tag "google_apis" \
         --abi "arm64-v8a
     ```
-2. Launch the emulator
+2. Enable the hardware keyboard.
+   Open `~/.android/avd/Servo.avd/config.ini` and change `hw.keyboard = no` to `hw.keyboard = yes`.
+3. Launch the emulator
    ```
    $ANDROID_SDK_ROOT/emulator/emulator -avd servo -netdelay none -no-snapshot
    ```
-3. Install Servo on the emulator:
+4. Install Servo on the emulator:
    ```
     ./mach install -r
    ```
-4. Start Servo by tapping the Servo icon on your launcher screen.
+5. Start Servo by tapping the Servo icon on your launcher screen.
 
 ## Installing on a physical device
 
