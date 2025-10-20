@@ -26,6 +26,9 @@ In order to build Servo for other Android targets, ensure that you install the a
 **Note**: It's also possible to use an installation from [Android Studio](https://developer.android.com/studio).
 Just ensure that the `ANDROID_SDK_ROOT` and `ANDROID_NDK_ROOT` variables are set properly.
 
+**Note**: If you are not using Android Studio on macOS, you will need to install a JDK.
+Use `brew install opendjdk@21` to install a usable version; newer versions cause `java.lang.IllegalArgumentException: 25` when running the gradle build step during the Servo build.
+
 **Note**: If you are using Nix, you don't need to install the tools or set up the ANDROID_* environment variables manually.
 Simply enable the Android build support running:
 
