@@ -59,7 +59,7 @@ in the shell session before invoking ./mach commands
    ```
     ./mach install -r
    ```
-6. Start Servo by tapping the Servo icon on your launcher screen.
+5. Start Servo by tapping the Servo icon on your launcher screen.
 
 ## Installing on a physical device
 
