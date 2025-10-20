@@ -55,7 +55,7 @@ in the shell session before invoking ./mach commands
    ```
    $ANDROID_SDK_ROOT/emulator/emulator -avd servo -netdelay none -no-snapshot
    ```
-5. Install Servo on the emulator:
+4. Install Servo on the emulator:
    ```
     ./mach install -r
    ```
