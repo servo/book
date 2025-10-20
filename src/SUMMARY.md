@@ -45,6 +45,7 @@
 - [WebXR](architecture/webxr.md)
 - [WebGPU](architecture/webgpu.md)
 - [servodriver test harness](architecture/servodriver.md)
+- [Android app](architecture/android.md)
 
 # Meta
 
