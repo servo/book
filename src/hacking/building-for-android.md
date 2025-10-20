@@ -51,7 +51,7 @@ in the shell session before invoking ./mach commands
     ```
 2. Enable the hardware keyboard.
    Open `~/.android/avd/Servo.avd/config.ini` and change `hw.keyboard = no` to `hw.keyboard = yes`.
-4. Launch the emulator
+3. Launch the emulator
    ```
    $ANDROID_SDK_ROOT/emulator/emulator -avd servo -netdelay none -no-snapshot
    ```
