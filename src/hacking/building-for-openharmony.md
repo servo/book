@@ -214,9 +214,9 @@ The following command can be used to install previously built servoshell applica
 ./mach install --ohos --release [--flavor=harmonyos]
 ```
 
-### Install from Github release or official website(Only for HarmonyOS Device)
+### Installing the nightly release on an HarmonyOS device
 
-If you have downloaded the prebuild `hap` file from [Github release page](https://github.com/servo/servo/releases) or [official website](https://servo.org/download/) and want to install it in HarmonyOS5 or later(Not OpenHarmony), you must self-sign it at first. Then using `hdc` to install it.
+The official nightly releases on [GitHub](https://github.com/servo/servo/releases) or [servo.org](https://servo.org/download/) are suitable for installation on OpenHarmony devices without additional steps. It is possible to install them on an HarmonyOS5 (or later) device, but the `hap` must self-signed first using the `hdc` tool.
 
 ## Further reading
 
