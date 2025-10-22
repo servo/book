@@ -30,4 +30,4 @@ The Servo component exposes a `Client` interface for the UI thread actions, enab
 # JNI integration
 
 Every `native` member of the `JNIServo` class is implemented in the `android.rs` file as a `#[unsafe(no_mangle)]` function with a matching name.
-The `jni-rs` crate [documentation](https://docs.rs/jni/latest/jni/) has more information on this ingration.
+The `jni-rs` crate [documentation](https://docs.rs/jni/latest/jni/) has more information on this integration.
