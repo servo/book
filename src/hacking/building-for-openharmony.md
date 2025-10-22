@@ -214,6 +214,10 @@ The following command can be used to install previously built servoshell applica
 ./mach install --ohos --release [--flavor=harmonyos]
 ```
 
+### Install from Github release or official website
+
+If you have downloaded the prebuild `hap` file from [Github release page](https://github.com/servo/servo/releases) or [official website](https://servo.org/download/) and want to install it, you must self-sign it at first. Then using `hdc` to install it.
+
 ## Further reading
 
 [OpenHarmony Glossary](https://gitee.com/openharmony/docs/tree/master/en/glossary.md)
