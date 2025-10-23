@@ -42,9 +42,9 @@ jobs:
         run: |
           tag=$(curl 'https://api.github.com/repos/badboy/mdbook-mermaid/releases/latest' | jq -r '.tag_name')
           case "$tag" in
-            (v0.15.*) ;;
+            (v0.16.*) ;;
             (*)
-              >&2 echo 'Error: latest version of mdbook-mermaid is no longer ^0.15'
+              >&2 echo 'Error: latest version of mdbook-mermaid is no longer ^0.16'
               exit 1
               ;;
           esac
