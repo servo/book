@@ -47,7 +47,7 @@ in the shell session before invoking ./mach commands
         --device "pixel" \
         --package "system-images;android-33;google_apis;arm64-v8a" \
         --tag "google_apis" \
-        --abi "arm64-v8a
+        --abi "arm64-v8a"
     ```
 2. Enable the hardware keyboard.
    Open `~/.android/avd/Servo.avd/config.ini` and change `hw.keyboard = no` to `hw.keyboard = yes`.
@@ -57,7 +57,7 @@ in the shell session before invoking ./mach commands
    ```
 4. Install Servo on the emulator:
    ```
-    ./mach install -r
+    ./mach install -r --android
    ```
 5. Start Servo by tapping the Servo icon on your launcher screen.
 
@@ -67,7 +67,7 @@ in the shell session before invoking ./mach commands
 2. Build Servo as described above, ensuring that you are building for the appropriate target for your device.
 3. Install Servo to your device by running:
    ```
-   ./mach install --release --android
+   ./mach install -r --android
    ```
 4. Start Servo by tapping the Servo icon on your launcher screen or run:
    ```
