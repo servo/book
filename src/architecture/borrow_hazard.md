@@ -2,8 +2,10 @@
 
 There is a subtle interaction between Servo's integration with SpiderMonkey's garbage collector and Rust's model for shared ownership.
 Since DOM objects in Servo are not uniquely owned, we must use `RefCell`/`DomRefCell` for members that can be mutated.
+
 When a garbage collection (GC) operation is triggered from SpiderMonkey, every DOM object is traced to find any reachable JS value.
 This tracing is implemented by the `JSTraceable` derive, which calls `JSTraceable::trace` on each member of the DOM object (unless it is annotated with `#[no_trace]`).
+
 Since the `JSTraceable` implementation for `RefCell` borrows the cell, this means that any mutable borrow of a DOM object's member will trigger a panic if a GC occurs while the borrow is still active.
 We often refer to this in Servo as a **borrow hazard**.
 
@@ -26,9 +28,11 @@ To learn more, see the [original issue](https://github.com/servo/servo/issues/33
 ## Verifying borrow hazards
 
 To verify that a particular mutable borrow can trigger be triggered when a GC occurs, we need 1) deterministic garbage collection, 2) a way to run the suspicious code.
+
 To make garbage collection deterministic, you first need to build Servo with `--debug-mozjs`, then run it with `--pref js_mem_gc_zeal_level=2 --pref js_mem_gc_zeal_frequency=1`.
 This enables a mode where the garbage collector runs any time a JS allocation occurs, and is guaranteed to trigger any latent borrow hazards.
 It is also very slow, so minimizing your testcase will save you time.
+
 If you are unsure of exactly how to trigger the suspicious code, add a panic to it and run WPT tests from the appropriate directory until you find a test file that panics.
 
 ## Patterns for fixing borrow hazards
