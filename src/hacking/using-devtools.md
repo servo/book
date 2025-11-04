@@ -66,13 +66,17 @@ One of the most efficient ways to do this is to observe a successful session in 
 To capture a log of the traffic in a Firefox devtools session that does not involve Servo, follow these steps:
 
 1. Open a terminal window. This window will eventually contain the protocol logs.
-1. Launch Firefox from the terminal: `firefox --new-instance --profile devtools-testing` (on macOS you may need `/Applications/Firefox.app/Contents/MacOS/firefox`)
-1. Open about:config
-1. Set `browser.dom.window.dump.enabled` to true
-1. Set `devtools.debugger.log` to true
-1. Set `devtools.debugger.log.verbose` to true
-1. Load a page that is relevant to your developer tools feature
-1. Interact with the developer tools feature
-1. Close Firefox
+1. Launch Firefox from the terminal: `firefox --new-instance -P devtools-testing` (on macOS you may need `/Applications/Firefox.app/Contents/MacOS/firefox`).
+1. On your first run:
+    1. If the profile doesn't exist a window will open listing available profiles. Click on "Create Profile...".
+    1. Follow the wizard steps to create a profile named `devtools-testing`.
+    1. To avoid using the devtools profile as a default, select your current profile and click "Start Firefox". Then, close the browser and launch Firefox again with `firefox --new-instance -P devtools-testing`. The profile selection window should not show up again.
+    1. Open about:config and click on "Accept the Risk and Continue".
+    1. Set `browser.dom.window.dump.enabled` to true.
+    1. Set `devtools.debugger.log` to true.
+    1. Set `devtools.debugger.log.verbose` to true.
+1. Load a page that is relevant to your developer tools feature.
+1. Visit `about:debugging` and interact with the developer tools feature using the "This Firefox" tab.
+1. Close Firefox.
 
 The terminal window now contains full debug server logs; copy them to somewhere for further analysis.
