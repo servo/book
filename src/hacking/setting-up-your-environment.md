@@ -91,7 +91,7 @@ On **NixOS**, type `nix-shell` to enter a shell with all of the necessary tools 
 <!-- https://archlinux.org/packages/ -->
 - `sudo pacman -S --needed curl`
 
-- `sudo pacman -S --needed base-devel git mesa cmake libxmu pkg-config ttf-fira-sans harfbuzz ccache llvm clang autoconf2.13 gstreamer gstreamer-vaapi gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly vulkan-icd-loader`
+- `sudo pacman -S --needed base-devel git mesa cmake libxmu pkg-config ttf-fira-sans harfbuzz ccache llvm clang autoconf2.13 gstreamer gstreamer-vaapi gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly vulkan-icd-loader wireshark-cli`
 
 ## Dependencies for Debian { #dependencies-for-debian }
 **(including elementary OS, KDE neon, Linux Mint, Pop!_OS, Raspbian, TUXEDO OS, Ubuntu)**
