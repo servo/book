@@ -30,9 +30,9 @@ jobs:
         run: |
           tag=$(curl 'https://api.github.com/repos/rust-lang/mdbook/releases/latest' | jq -r '.tag_name')
           case "$tag" in
-            (v0.4.*) ;;
+            (v0.5.*) ;;
             (*)
-              >&2 echo 'Error: latest version of mdbook is no longer ^0.4'
+              >&2 echo 'Error: latest version of mdbook is no longer ^0.5'
               exit 1
               ;;
           esac
