@@ -8,11 +8,15 @@ Servo can be built on WSL as if you are building on any other Linux distribution
 
 1. Setup WSL v2.  See [Microsoft's guidelines for setting up GUI apps in WSL](https://learn.microsoft.com/en-us/windows/wsl/tutorials/gui-apps).
 2. Set up the environment depending on the WSL distribution that you are using (e.g. Ubuntu, OpenSuse, etc.)
-3. Build
+3. Build `./mach build`
 
 ## Running
 
 WSL v2 has the corresponding adaptors to display Wayland and X11 applications, though it may not always work out of the box with Servo.
+
+```
+./mach run
+```
 
 ### Troubleshooting
 
@@ -40,4 +44,16 @@ export WAYLAND_DISPLAY=''
 # or
 
 WAYLAND_DISPLAY='' ./mach run
+
+# optionally save the variable long term to your .bashrc profile
+
+echo 'export WAYLAND_DISPLAY=""' >> ~/.bashrc
+```
+
+** Library libxkbcommon-x11.so could not be loaded **
+
+This may happen because your distro have not installed the required library. Run the following command (assuming you are using WSL Debian/Ubuntu, adjust accordingly if you use other distro):
+
+```
+sudo apt install libxkbcommon-x11-0
 ```
