@@ -28,26 +28,12 @@ jobs:
           echo "$(pwd)/opt/mdbook-mermaid" >> $GITHUB_PATH
       - name: Install latest mdbook
         run: |
-          tag=$(curl 'https://api.github.com/repos/rust-lang/mdbook/releases/latest' | jq -r '.tag_name')
-          case "$tag" in
-            (v0.4.*) ;;
-            (*)
-              >&2 echo 'Error: latest version of mdbook is no longer ^0.4'
-              exit 1
-              ;;
-          esac
+          tag=0.4.52
           url="https://github.com/rust-lang/mdbook/releases/download/$tag/mdbook-$tag-x86_64-unknown-linux-gnu.tar.gz"
           curl -sSL "$url" | tar -xz --directory=./opt/mdbook
       - name: Install latest mdbook-mermaid
         run: |
-          tag=$(curl 'https://api.github.com/repos/badboy/mdbook-mermaid/releases/latest' | jq -r '.tag_name')
-          case "$tag" in
-            (v0.16.*) ;;
-            (*)
-              >&2 echo 'Error: latest version of mdbook-mermaid is no longer ^0.16'
-              exit 1
-              ;;
-          esac
+          tag=0.16.2
           url="https://github.com/badboy/mdbook-mermaid/releases/download/$tag/mdbook-mermaid-$tag-x86_64-unknown-linux-gnu.tar.gz"
           curl -sSL "$url" | tar -xz --directory=./opt/mdbook-mermaid
       - name: Build book
