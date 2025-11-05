@@ -28,11 +28,11 @@ jobs:
           echo "$(pwd)/opt/mdbook-mermaid" >> $GITHUB_PATH
       - name: Install latest mdbook
         run: |
-          tag=$(curl 'https://api.github.com/repos/rust-lang/mdbook/releases/latest' | jq -r '.tag_name')
+          tag=$(curl 'https://api.github.com/repos/rust-lang/mdbook/releases' | jq -r '.[].tag_name' | fgrep -v -- -)
           case "$tag" in
-            (v0.5.*) ;;
+            (v0.4.*) ;;
             (*)
-              >&2 echo 'Error: latest version of mdbook is no longer ^0.5'
+              >&2 echo 'Error: latest stable version of mdbook is no longer ^0.4'
               exit 1
               ;;
           esac
