@@ -24,6 +24,7 @@
 - [Editor support](hacking/editor-support.md)
 - [Debugging](hacking/debugging.md)
   - [Using DevTools](hacking/using-devtools.md)
+  - [Developing DevTools\*](hacking/developing-devtools.md)
   - [Debugging on OpenHarmony](hacking/debugging-on-openharmony.md)
 - [Automated testing\*](hacking/testing.md)
 - [Profiling\*](hacking/profiling.md)
