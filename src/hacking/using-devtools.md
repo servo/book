@@ -63,14 +63,14 @@ location.reload()
 
 A lot of work to improve developer tool support in Servo requires reverse-engineering the working implementation in Firefox.
 One of the most efficient ways to do this is to observe a successful session in Firefox and record the bidirectional protocol traffic between the server and the client.
-To capture a log of the traffic in a Firefox devtools session that does not involve Servo, follow these steps:
+To capture a log of the traffic in a Firefox DevTools session that does not involve Servo, follow these steps:
 
 1. Open a terminal window. This window will eventually contain the protocol logs.
 1. Launch Firefox from the terminal: `firefox --new-instance -P devtools-testing` (on macOS you may need `/Applications/Firefox.app/Contents/MacOS/firefox`).
 1. On your first run:
     1. If the profile doesn't exist a window will open listing available profiles. Click on "Create Profile...".
     1. Follow the wizard steps to create a profile named `devtools-testing`.
-    1. To avoid using the devtools profile as a default, select your current profile and click "Start Firefox". Then, close the browser and launch Firefox again with `firefox --new-instance -P devtools-testing`. The profile selection window should not show up again.
+    1. To avoid using this profile as a default, select your current profile and click "Start Firefox". Then, close the browser and launch Firefox again with `firefox --new-instance -P devtools-testing`. The profile selection window should not show up again.
     1. Open about:config and click on "Accept the Risk and Continue".
     1. Set `browser.dom.window.dump.enabled` to true.
     1. Set `devtools.debugger.log` to true.

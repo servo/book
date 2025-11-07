@@ -22,7 +22,7 @@ For example, to run our [Conway’s Game of Life demo](https://demo.servo.org/ex
 $ ./servo --pref dom_webgpu_enabled https://demo.servo.org/experiments/webgpu-game-of-life/
 ```
 
-Use `--devtools=6080` to enable support for [debugging pages with Firefox devtools](hacking/using-devtools.md):
+Use `--devtools=6080` to enable support for [debugging pages with Firefox DevTools](hacking/using-devtools.md):
 
 ```sh
 $ ./servo --devtools=6080
