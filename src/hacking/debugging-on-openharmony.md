@@ -81,7 +81,7 @@ hdc shell hilog -p off
 
 ### DevTools and port forwards
 
-You can enable the DevTools server and connect to them remotely with Firefox. It is easiest to do this with the command line via
+You can enable the DevTools server and connect to it remotely with Firefox. It is easiest to do this with the command line via
 `hdc shell aa start -a EntryAbility -b org.servo.servo --psn=--devtools=6080`
 To connect to an instance of Servo you have to forward the port with
 `hdc fport tcp:6080 tcp:6080`. You should see a message that the forward succeeded. Now you can

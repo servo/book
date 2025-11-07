@@ -7,7 +7,7 @@ Read the complete [protocol description](https://firefox-source-docs.mozilla.org
 - **Client:** Frontend that contains different tooling panels (Inspector, Debugger, Console, ...) and sends requests to the server.
   At the moment this is the `about:debugging` page in Firefox.
 - **Server:** Browser that is being inspected by the client. Receives messages and delivers them to the appropiate actor so it can reply.
-- **Actor:** Code on the server that can exchange message with the client.
+- **Actor:** Code on the server that can exchange messages with the client.
 - **Message:** JSON packet that is exchanged between the server and the client.
   - Messages from the client must include a `to` field with the name of the actor they are directed to, and a `type` field specifying what sort of packet it is.
   - Messages from the server must include a `from` field with the name of the actor that sends them.
@@ -27,7 +27,7 @@ sequenceDiagram
 
 <div class="warning _note">
 
-Jump to the [Capturing and processing protocol traffic](https://book.servo.org/hacking/developing-devtools.html#capturing-and-processing-protocol-traffic) section for a more useful tool for log analysis.
+Jump to the [Capturing and processing protocol traffic](#capturing-and-processing-protocol-traffic) section for a more useful tool for log analysis.
 </div>
 
 ### Servo ↔ Firefox
@@ -94,13 +94,14 @@ We have seen a simple way of obtaining message logs from Servo and Firefox.
 However, this soon turns complex when wanting to compare logs between the two due to the different formats or performing queries on them.
 There is a small script to make this process easier: [`etc/devtools_parser.py`](https://github.com/servo/servo/blob/main/etc/devtools_parser.py).
 
-It is based on [Wireshark](https://www.wireshark.org/), a powerful network packet analyzer; more specifically it's cli, `tshark`.
-It is configured to log packets send in your local network on the port that the devtools server is running, so it can read the payloads from them which contain the JSON packets from the DevTools protocol.
+It is based on [Wireshark](https://www.wireshark.org/), a powerful network packet analyzer; more specifically its cli, `tshark`.
+It is configured to log packets sent on your local network on the port that the DevTools server is running
+It can read the payloads from these packets, which are small bits of the JSON DevTools protocol.
 
 **`tshark` needs to be installed** for the script to work.
-On [Setting up your environment](https://book.servo.org/hacking/setting-up-your-environment.html) the dependencies for many distros already include this, but check [the official install guide](https://tshark.dev/setup/install) if you are missing the package.
+In [Setting up your environment](setting-up-your-environment.md) the dependencies for many distros already include this, but check [the official install guide](https://tshark.dev/setup/install) if you are missing the package.
 
-Additionally, make sure to [set up a Firefox profile for debugging](https://book.servo.org/hacking/developing-devtools.html#on-the-first-run).
+Additionally, make sure to [set up a Firefox profile for debugging](#on-the-first-run).
 
 ### Capture a session
 
@@ -117,17 +118,19 @@ firefox --new-instance --start-debugger-server 6080 -P devtools-testing
 ./etc/devtools_parser.py -p 6080 -w capture.pcap
 ```
 
-3. Connect from `about:debugging` following [the same steps](https://book.servo.org/hacking/using-devtools.html#connecting-to-servo).
+3. Connect from `about:debugging` following [the same steps](using-devtools.md#connecting-to-servo).
 4. Perform any actions you want to record.
 5. Press `Ctrl-C` in the terminal running the parser to stop the recording. This will do two things:
-    - Save a `.pcap` file where specified by the `-w` flag. This is a binary file format for Wireshark, but we can read it later with the same tool.
-    - Print the message log. There are two modes: the regular one, where it prints the messages in a friendly way, and `--json`, which emits newline-separated JSON with each message.
+    - Save the results to a `.pcap` file specified by the `-w` flag. 
+      This is a binary file format for Wireshark, but we can read it later with the same tool.
+    - Print the message log. 
+      There are two modes: the regular one, where it prints the messages in a friendly way, and `--json`, which emits newline-separated JSON with each message.
 6. You can now close Servo or Firefox.
 
 ### Read a capture
 
 It is useful to save multiple captures and compare them later.
-While `tshark` saves them by default in the `.pcap` format, we can use the same script to get a better output from them.
+While `tshark` saves them by default in the `.pcap` format, we can use the same script to get better output from them.
 Here the `--json` option is very useful, as it makes it possible to use tools like [`jq`](https://jqlang.org/) or [`nushell`](https://www.nushell.sh/) to query and manipulate data from them.
 
 ```sh
