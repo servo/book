@@ -79,10 +79,10 @@ If you encounter this issue when viewing C/C++ logs, you can temporarily turn of
 hdc shell hilog -p off
 ```
 
-### Devtools and port forwards
+### DevTools and port forwards
 
-You can enable the devtools and connect to them remotely with Firefox. It is easiest to do this with the command line via
-`hdc shell aa start -a EntryAbility -b org.servo.servo --psn=--devtools=1234`
+You can enable the DevTools server and connect to it remotely with Firefox. It is easiest to do this with the command line via
+`hdc shell aa start -a EntryAbility -b org.servo.servo --psn=--devtools=6080`
 To connect to an instance of Servo you have to forward the port with
-`hdc fport tcp:1234 tcp:1234`. You should see a message that the forward succeeded. Now you can
-connect to the devtools using `localhost:1234`.
+`hdc fport tcp:6080 tcp:6080`. You should see a message that the forward succeeded. Now you can
+connect to the DevTools server using `localhost:6080`.
