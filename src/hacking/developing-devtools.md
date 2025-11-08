@@ -95,13 +95,28 @@ However, this soon turns complex when wanting to compare logs between the two du
 There is a small script to make this process easier: [`etc/devtools_parser.py`](https://github.com/servo/servo/blob/main/etc/devtools_parser.py).
 
 It is based on [Wireshark](https://www.wireshark.org/), a powerful network packet analyzer; more specifically its cli, `tshark`.
-It is configured to log packets sent on your local network on the port that the DevTools server is running
+It is configured to log packets sent on your local network on the port that the DevTools server is running.
 It can read the payloads from these packets, which are small bits of the JSON DevTools protocol.
 
 **`tshark` needs to be installed** for the script to work.
-In [Setting up your environment](setting-up-your-environment.md) the dependencies for many distros already include this, but check [the official install guide](https://tshark.dev/setup/install) if you are missing the package.
+Install it with your package manager or get the full Wireshark release from [the official website](https://www.wireshark.org/download.html).
 
-Additionally, make sure to [set up a Firefox profile for debugging](#on-the-first-run).
+```sh
+# Linux (Debian based)
+sudo apt install tshark
+# Linux (Arch based)
+sudo pacman -S wireshark-cli
+# Linux (Fedora)
+sudo dnf install wireshark-cli
+# MacOS (With homebrew):
+brew install --cask wireshark
+# Windows (With chocolatey):
+choco install wireshark
+```
+
+You may need to add your user to the wireshark group to allow for rootless captures. Use `usermod -a -G wireshark $USER`.
+
+Finally, make sure to [set up a Firefox profile for debugging](#on-the-first-run).
 
 ### Capture a session
 
