@@ -50,10 +50,41 @@ WAYLAND_DISPLAY='' ./mach run
 echo 'export WAYLAND_DISPLAY=""' >> ~/.bashrc
 ```
 
-** Library libxkbcommon-x11.so could not be loaded **
+**Library libxkbcommon-x11.so could not be loaded**:
 
 This may happen because your distro have not installed the required library. Run the following command (assuming you are using WSL Debian/Ubuntu, adjust accordingly if you use other distro):
 
 ```
 sudo apt install libxkbcommon-x11-0
+```
+
+**Error while running `./mach build`**:
+
+if you encounter an error like below while running `./mach build` on WSL, it is possibly caused by out of memory (OOM) error because your WSL does not have enough RAM to build servo. You will need to increase memory usage limit and swapfile on WSL, or by upgrading your ram to fix it.
+```shell
+yourusername@PC:~/servo$ ./mach build
+No build type specified so assuming `--dev`.
+Building `debug` build with crown disabled (no JS garbage collection linting).
+   ...
+   Compiling script v0.0.1 (/home/yourusername/servo/components/script)
+
+error: failed to run build command...
+
+Caused by:
+  process didn't exit successfully: `/home/yourusername/.rustup/toolchains/1.91.0-x86_64-unknown-linux-gnu/bin/rustc --crate-name script --edition=2024 components/script/lib.rs...
+  ...
+warning: build failed, waiting for other jobs to finish...
+```
+
+Create `C:/user/yourusername/.wslconfig` then insert the following:
+```
+[wsl2]
+memory=6GB
+swap=16GB
+swapfile=C:\\Users\\yourusername\\swapfile.vhdx
+```
+
+Save the file and restart WSL on powershell:
+```
+wsl --shutdown
 ```
