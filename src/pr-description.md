@@ -1,6 +1,6 @@
 # Guidelines for writing useful pull requests
 
-In Servo, commits in pull requests are squashed and the pull request title and description are used to create the final commit message ([example](https://github.com/servo/servo/commit/9f4f598f44518d6883257f04f2ed11a8edd732c0)].
+In Servo, commits in pull requests are squashed and the pull request title and description are used to create the final commit message ([example](https://github.com/servo/servo/commit/9f4f598f44518d6883257f04f2ed11a8edd732c0)).
 It's important that the information in both the title and description fully describes the change, as it makes the commit useful for those looking at the repository history and makes Servo a healthier project as a whole.
 
 The title should succinctly describe what a change does. Some tips:
