@@ -39,13 +39,28 @@ You may find that you still need to escape some Markdown with `\`, to avoid rend
 
 <table>
 <thead>
-<tr>
-<th>Error message
-<th>Markdown
+  <tr>
+    <th>Error message</th>
+    <th>Markdown</th>
+  </tr>
+</thead>
 <tbody>
-<tr>
-<td><pre><samp>thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: "Could not run `PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=\"1\" PKG_CONFIG_ALLOW_SYSTEM_LIBS=\"1\" \"pkg-config\" \"--libs\" \"--cflags\" \"fontconfig\"`</samp></pre>
-<td><pre style="white-space: pre-wrap; word-break: break-all;"><code class="language-html">&lt;pre>&lt;samp>thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: "Could not run `PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=\"1\" PKG_CONFIG_ALLOW_SYSTEM_LIBS=\"1\" \"pkg-config\" \"--libs\" \"--cflags\" \"fontconfig\"`&lt;/samp>&lt;/pre></code></pre>
+  <tr>
+    <td>
+      <pre><samp>thread 'main' panicked at 'called `Result::unwrap()` on an
+        `Err` value: "Could not run `PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=\"1\"
+        PKG_CONFIG_ALLOW_SYSTEM_LIBS=\"1\" \"pkg-config\" \"--libs\" \"--cflags\" \"fontconfig\"`</samp>
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <pre style="white-space: pre-wrap; word-break: break-all;">
+      <code class="language-html">&lt;pre>&lt;samp>thread 'main' panicked at 'called `Result::unwrap()` on an
+      `Err` value: "Could not run `PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=\"1\" PKG_CONFIG_ALLOW_SYSTEM_LIBS=\"1\" \"pkg-config\" \"--libs\" \"--cflags\" \"fontconfig\"`&lt;/samp>&lt;/pre></code>
+    </pre>
+  </td>
+</tr>
 <tr>
 <td><pre><samp>error[E0765]: ...
  --> src/main.rs:2:14
@@ -54,6 +69,9 @@ You may find that you still need to escape some Markdown with `\`, to avoid rend
   |  ______________^
 3 | | }
   | |__^</samp></pre>
+</td>
+</tr>
+<tr>
 <td><pre><code class="language-html">&lt;pre>&lt;samp>error[E0765]: ...
  --> src/main.rs:2:14
   |
@@ -61,4 +79,7 @@ You may find that you still need to escape some Markdown with `\`, to avoid rend
   |  ______________^
 3 | | }
   | |__^&lt;/samp>&lt;/pre></code></pre>
+</td>
+</tr>
+</tbody>
 </table>
