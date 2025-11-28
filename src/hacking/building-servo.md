@@ -3,6 +3,7 @@
 <div class="warning _note">
 
 **If this is your first time building Servo**, be sure to [set up your environment](setting-up-your-environment.md) before continuing with the steps below.
+
 </div>
 
 To build servoshell for your machine:
@@ -10,9 +11,11 @@ To build servoshell for your machine:
 ```sh
 $ ./mach build [profile]
 ```
+
 <div class="warning _note">
 
 There are multiple [profiles](#build-profiles) available for build. **debug** is default profile if no profile is passed.
+
 </div>
 
 To build servoshell for cross-compilation target:
@@ -20,9 +23,11 @@ To build servoshell for cross-compilation target:
 ```sh
 $ ./mach build [--android/--ohos] [profile]
 ```
+
 <div class="warning _note">
 
 Refer the extra setup required for [Android](building-for-android.md) and [OpenHarmony](building-for-openharmony.md) builds.
+
 </div>
 
 To check your code for compile errors, without a full build:
@@ -38,6 +43,7 @@ If you start encountering build problems after updating Servo, try running `./ma
 
 **You are not alone!**
 If you have problems building Servo that you can’t solve, you can always ask for help in the [build issues](https://servo.zulipchat.com/#narrow/stream/263398-general/topic/Build.20Issues) chat on Zulip.
+
 </div>
 
 ## Build profiles
@@ -51,38 +57,48 @@ There are three main build profiles, which you can build and use independently o
 <table>
 <thead>
     <tr>
-        <th>
-        <th>debug
-        <th>release
-        <th>production
+        <th></th>
+        <th>debug</th>
+        <th>release</th>
+        <th>production</th>
+    </tr>
+</thead>
 <tbody>
     <tr>
-        <th>mach option
-        <td><code>-d<br>--debug</code>
-        <td><code>-r<br>--release</code>
-        <td><code>--prod<br>--production</code>
+        <th>mach option</th>
+        <td><code>-d<br>--debug</code></td>
+        <td><code>-r<br>--release</code></td>
+        <td><code>--prod<br>--production</code></td>
+    </tr>
     <tr>
-        <th>optimised?
-        <td><a href="https://doc.rust-lang.org/cargo/reference/profiles.html#dev">no</a>
-        <td><a href="https://github.com/servo/servo/blob/457d37d94ee6966cad377c373d333a00c637e1ae/Cargo.toml#L153">yes</a>
-        <td>yes, <a href="https://github.com/servo/servo/blob/9457a40ca2cd4b9530ba7c5334c82f3b3f2e7ac8/Cargo.toml#L177-L182">more than</a> in <strong>release</strong>
+        <th>optimised?</th>
+        <td><a href="https://doc.rust-lang.org/cargo/reference/profiles.html#dev">no</a></td>
+        <td><a href="https://github.com/servo/servo/blob/457d37d94ee6966cad377c373d333a00c637e1ae/Cargo.toml#L153">yes</a></td>
+        <td>yes, <a href="https://github.com/servo/servo/blob/9457a40ca2cd4b9530ba7c5334c82f3b3f2e7ac8/Cargo.toml#L177-L182">more than</a> in <strong>release</strong></td>
+    </tr>
     <tr>
-        <th>maximum RUST_LOG level
-        <td><code>trace</code>
-        <td><code>info</code>
-        <td><code>info</code>
+        <th>maximum RUST_LOG level</th>
+        <td><code>trace</code></td>
+        <td><code>info</code></td>
+        <td><code>info</code></td>
+    </tr>
     <tr>
-        <th>debug assertions?
-        <td>yes<td>yes(!)<td>no
+        <th>debug assertions?</th>
+        <td>yes</td><td>yes(!)</td><td>no</td>
+    </tr>
     <tr>
-        <th>debug info?
-        <td>yes<td>no<td>no
+        <th>debug info?</th>
+        <td>yes</td><td>no</td><td>no</td>
+    </tr>
     <tr>
-        <th>symbols?
-        <td>yes<td>no<td>yes
+        <th>symbols?</th>
+        <td>yes</td><td>no</td><td>yes</td>
+    </tr>
     <tr>
-        <th>finds resources in<br>current working dir?
-        <td>yes<td>yes<td>no(!)
+        <th>finds resources in<br>current working dir?</th>
+        <td>yes</td><td>yes</td><td>no(!)</td>
+    </tr>
+</tbody>
 </table>
 
 There are also two special variants of production builds for performance-related use cases:
@@ -93,25 +109,32 @@ There are also two special variants of production builds for performance-related
 <table>
 <thead>
     <tr>
-        <th>
-        <th>production
-        <th>production-stripped
-        <th>profiling
+        <th></th>
+        <th>production</th>
+        <th>production-stripped</th>
+        <th>profiling</th>
+    </tr>
+</thead>
 <tbody>
     <tr>
-        <th>mach <code>--profile</code>
-        <td><code>production</code>
-        <td><code>production-stripped</code>
-        <td><code>profiling</code>
+        <th>mach <code>--profile</code></th>
+        <td><code>production</code></td>
+        <td><code>production-stripped</code></td>
+        <td><code>profiling</code></td>
+    </tr>
     <tr>
-        <th>debug info?
-        <td>no<td>no<td>yes
+        <th>debug info?</th>
+        <td>no</td><td>no</td><td>yes</td>
+    </tr>
     <tr>
-        <th>symbols?
-        <td>yes<td>no<td>yes
+        <th>symbols?</th>
+        <td>yes</td><td>no</td><td>yes</td>
+    </tr>
     <tr>
-        <th>finds resources in<br>current working dir?
-        <td>no<td>no<td>yes(!)
+        <th>finds resources in<br>current working dir?</th>
+        <td>no</td><td>no</td><td>yes(!)</td>
+    </tr>
+</tbody>
 </table>
 
 You can change these settings in a servobuild file (see [servobuild.example](https://github.com/servo/servo/blob/b79e2a0b6575364de01b1f89021aba0ec3fcf399/servobuild.example)) or in the root [Cargo.toml](https://github.com/servo/servo/blob/b79e2a0b6575364de01b1f89021aba0ec3fcf399/Cargo.toml).
