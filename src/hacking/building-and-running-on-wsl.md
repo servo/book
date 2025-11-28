@@ -60,7 +60,8 @@ sudo apt install libxkbcommon-x11-0
 
 **Error while running `./mach build`**:
 
-if you encounter an error like below while running `./mach build` on WSL, it is possibly caused by out of memory (OOM) error because your WSL does not have enough RAM to build servo. You will need to increase memory usage limit and swapfile on WSL, or by upgrading your ram to fix it.
+if you encounter an error like below while running `./mach build` on WSL, it is possibly caused by out of memory (OOM) error because your WSL does not have enough RAM to build servo.
+You will need to increase memory usage limit and swapfile on WSL, or upgrade your RAM to fix it.
 ```shell
 yourusername@PC:~/servo$ ./mach build
 No build type specified so assuming `--dev`.
