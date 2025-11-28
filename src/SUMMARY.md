@@ -32,6 +32,7 @@
 
 # Servo’s architecture
 
+- [Repositories under Servo Umbrella](architecture/repos.md)
 - [Architecture overview\*](architecture/overview.md)
   - [Concurrency and parallelism\*](architecture/concurrency-and-parallelism.md)
   - [Further reading\*](architecture/further-reading.md)
