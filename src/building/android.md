@@ -1,7 +1,5 @@
 # Building for Android
 
-## Building
-
 - Ensure that the following environment variables are set:
   - `ANDROID_SDK_ROOT`
   - `ANDROID_NDK_ROOT`: `$ANDROID_SDK_ROOT/ndk/28.2.13676358/`
@@ -88,3 +86,7 @@ You can uninstall Servo by running:
 ```
 adb uninstall org.servo.servoshell
 ```
+
+## Troubleshooting 
+
+Be sure to look at the [General Troubleshooting](general-troubleshooting.md) section if you have trouble with your build.

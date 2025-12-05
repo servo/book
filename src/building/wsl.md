@@ -1,26 +1,21 @@
-# Building and Running on WSL
-
-To run non-headless servo shell on WSL, you will most likely need to be on Windows 10 Build 19044+ or Windows 11 as access to WSL v2 is needed for GUI.
-
-## Building
+# Building on WSL
 
 Servo can be built on WSL as if you are building on any other Linux distribution.
+To run non-headless servo shell on WSL, you will most likely need to be on Windows 10 Build 19044+ or Windows 11 as access to WSL v2 is needed for GUI.
 
 1. Setup WSL v2.  See [Microsoft's guidelines for setting up GUI apps in WSL](https://learn.microsoft.com/en-us/windows/wsl/tutorials/gui-apps).
-2. Set up the environment depending on the WSL distribution that you are using (e.g. Ubuntu, OpenSuse, etc.)
-3. Build `./mach build`
+2. Follow the [instructions](linux.md) for building and running Servo on the WSL distribution that you are using (e.g. Ubuntu, OpenSuse, etc.)
 
-## Running
+<div class="warning _note">
 
 WSL v2 has the corresponding adaptors to display Wayland and X11 applications, though it may not always work out of the box with Servo.
-
-```
-./mach run
-```
+</div>
 
 ### Troubleshooting
 
-**Failed to create event loop**:
+Be sure to look at the [General Troubleshooting](general-troubleshooting.md) section if you have trouble with your build and your problem is not listed below.
+
+<pre><blockquote><samp>Failed to create event loop</samp></blockquote></pre>
 
 If you encounter an immediate crash after running that points to winit and its platform implementation, setting `WAYLAND_DISPLAY=''` stops the crash.
 
@@ -50,7 +45,7 @@ WAYLAND_DISPLAY='' ./mach run
 echo 'export WAYLAND_DISPLAY=""' >> ~/.bashrc
 ```
 
-**Library libxkbcommon-x11.so could not be loaded**:
+<pre><blockquote><samp>Library libxkbcommon-x11.so could not be loaded</samp></blockquote></pre>
 
 This may happen because your distro have not installed the required library. Run the following command (assuming you are using WSL Debian/Ubuntu, adjust accordingly if you use other distro):
 
@@ -58,7 +53,7 @@ This may happen because your distro have not installed the required library. Run
 sudo apt install libxkbcommon-x11-0
 ```
 
-**Error while running `./mach build`**:
+<pre><blockquote><samp>error: failed to run build command...</samp></blockquote></pre>
 
 if you encounter an error like below while running `./mach build` on WSL, it is possibly caused by out of memory (OOM) error because your WSL does not have enough RAM to build servo.
 You will need to increase memory usage limit and swapfile on WSL, or upgrade your RAM to fix it.

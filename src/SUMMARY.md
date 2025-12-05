@@ -9,13 +9,16 @@
 
 # Building
 
-- [Getting the code](building/getting-the-code.md)
-- [Building Servo](building/building.md)
-  - [Environment setup](building/environment-setup.md)
+- [Getting the Code](building/getting-the-code.md)
+- [Building](building/building.md)
+  - [Linux](building/linux.md)
+  - [macOS](building/macos.md)
+  - [Windows](building/windows.md)
+  - [NixOS](building/nixos.md)
+  - [WSL](building/wsl.md)
   - [Android](building/android.md)
   - [OpenHarmony](building/openharmony.md)
-  - [WSL](building/wsl.md)
-  - [Troubleshooting](building/troubleshooting.md)
+- [General Troubleshooting](building/general-troubleshooting.md)
 
 # Contributing
 
@@ -23,7 +26,6 @@
 - [Git workflow](git-workflow.md)
 - [How to write a pull request](pr-description.md)
 - [Requesting crate releases](hacking/requesting-crate-releases.md)
-- [mach](hacking/mach.md)
 - [Some basic Rust\*](hacking/some-basic-rust.md)
   - [Cargo and crates\*](hacking/cargo-and-crates.md)
   - [Working on a crate\*](hacking/working-on-a-crate.md)

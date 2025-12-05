@@ -217,3 +217,7 @@ The following command can be used to install previously built servoshell applica
 ## Further reading
 
 [OpenHarmony Glossary](https://gitee.com/openharmony/docs/tree/master/en/glossary.md)
+
+## Troubleshooting
+
+Be sure to look at the [General Troubleshooting](general-troubleshooting.md) section if you have trouble with your build.
