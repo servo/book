@@ -2,22 +2,28 @@
 
 [The Servo Book](title-page.md)
 
-- [Getting Servo](getting-servo.md)
-- [Running servoshell](running-servoshell.md)
+# Trying Servo
+
+- [Getting servoshell](trying/getting-servoshell.md)
+- [Running servoshell](trying/running-servoshell.md)
+
+# Building
+
+- [Getting the code](building/getting-the-code.md)
+- [Building Servo](building/building.md)
+  - [Environment setup](building/environment-setup.md)
+  - [Android](building/android.md)
+  - [OpenHarmony](building/openharmony.md)
+  - [WSL](building/wsl.md)
+  - [Troubleshooting](building/troubleshooting.md)
+
+# Contributing
+
 - [Contributing to Servo](contributing.md)
-  - [Git workflow](git-workflow.md)
-  - [How to write a pull request](pr-description.md)
-  - [Requesting crate releases](hacking/requesting-crate-releases.md)
-
-# Hacking on Servo
-
+- [Git workflow](git-workflow.md)
+- [How to write a pull request](pr-description.md)
+- [Requesting crate releases](hacking/requesting-crate-releases.md)
 - [mach](hacking/mach.md)
-- [Building Servo](hacking/building-servo.md)
-  - [Setting up your environment](hacking/setting-up-your-environment.md)
-  - [Troubleshooting your build](hacking/troubleshooting-your-build.md)
-  - [Building for Android](hacking/building-for-android.md)
-  - [Building for OpenHarmony](hacking/building-for-openharmony.md)
-  - [Building and running on WSL](hacking/building-and-running-on-wsl.md)
 - [Some basic Rust\*](hacking/some-basic-rust.md)
   - [Cargo and crates\*](hacking/cargo-and-crates.md)
   - [Working on a crate\*](hacking/working-on-a-crate.md)
@@ -30,7 +36,7 @@
 - [Profiling\*](hacking/profiling.md)
 - [Diagnosing bugs in real websites](hacking/web-compat-bugs.md)
 
-# Servo’s architecture
+# Architecture
 
 - [Architecture overview\*](architecture/overview.md)
   - [Concurrency and parallelism\*](architecture/concurrency-and-parallelism.md)
