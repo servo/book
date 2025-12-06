@@ -1,50 +1,49 @@
 # Building Servo
 
-<div class="warning _note">
+This page contains more detailed information about building Servo.
+You might want to skip straight to instructions for building Servo on your system:
 
-**If this is your first time building Servo**, be sure to [set up your environment](setting-up-your-environment.md) before continuing with the steps below.
+- [Linux](linux.md)
+- [macOS](macos.md)
+- [Windows](windows.md)
+- [NixOS](nixos.md)
+- [WSL](wsl.md)
+- [Android](android.md)
+- [OpenHarmony](openharmony.md)
 
-</div>
+# mach
 
-To build servoshell for your machine:
+You need to use `mach` to build Servo.
+`mach` is a Python program that does plenty of things to make working on Servo easier, like building and running Servo, running tests, and updating dependencies.
 
-```sh
-$ ./mach build [profile]
-```
+**Windows users:** you will need to replace `./mach` with `.\mach` in the commands in this book if you are using cmd.
 
-<div class="warning _note">
-
-There are multiple [profiles](#build-profiles) available for build. **debug** is default profile if no profile is passed.
-
-</div>
-
-To build servoshell for cross-compilation target:
-
-```sh
-$ ./mach build [--android/--ohos] [profile]
-```
-
-<div class="warning _note">
-
-Refer the extra setup required for [Android](building-for-android.md) and [OpenHarmony](building-for-openharmony.md) builds.
-
-</div>
-
-To check your code for compile errors, without a full build:
+Use `--help` to list the subcommands, or get help with a specific subcommand:
 
 ```sh
-$ ./mach check
+$ ./mach --help
+$ ./mach build --help
 ```
 
-<div class="warning _note">
+When you use mach to run another program, such as servoshell, that program may have its own options with the same names as mach options.
+You can use `--`, surrounded by spaces, to tell mach not to touch any subsequent options and leave them for the other program.
 
-**Sometimes the tools or dependencies needed to build Servo will change.**
-If you start encountering build problems after updating Servo, try running `./mach bootstrap` again, or [set up your environment](setting-up-your-environment.md) from the beginning.
+```sh
+$ ./mach run --help         # Gets help for `mach run`.
+$ ./mach run -d --help      # Still gets help for `mach run`.
+$ ./mach run -d -- --help   # Gets help for the debug build of servoshell.
+```
 
-**You are not alone!**
-If you have problems building Servo that you can’t solve, you can always ask for help in the [build issues](https://servo.zulipchat.com/#narrow/stream/263398-general/topic/Build.20Issues) chat on Zulip.
+This also applies to the Servo unit tests, where there are three layers of options: mach options, `cargo test` options, and [libtest options](https://doc.rust-lang.org/cargo/commands/cargo-test.html#description).
 
-</div>
+```sh
+$ ./mach test-unit --help           # Gets help for `mach test-unit`.
+$ ./mach test-unit -- --help        # Gets help for `cargo test`.
+$ ./mach test-unit -- -- --help     # Gets help for the test harness (libtest).
+```
+
+Work is ongoing to make it possible to build Servo without mach.
+Where possible, consider whether you can use native Cargo functionality before adding new functionality to mach.
 
 ## Build profiles
 
