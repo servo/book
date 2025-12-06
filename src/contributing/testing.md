@@ -1,6 +1,6 @@
 <!-- TODO: needs copyediting -->
 
-# Automated testing
+# Testing
 
 This is boring.
 But your PR won't get accepted without a test.
@@ -54,7 +54,7 @@ You'll then need to update the list of tests and the list of expected results:
 
 ## Debugging a test
 
-See the [debugging guide](./debugging.md) to get started in how to debug Servo.
+See the [debugging guide](debugging/index.md) to get started in how to debug Servo.
 
 ## Web Platform Tests (`tests/wpt`)
 

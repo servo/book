@@ -1,14 +1,21 @@
-# Contributing to Servo
+# Getting Started
 
 Servo welcomes contributions from everyone.
-Here are the guidelines if you are thinking of helping us:
+Working on a web engine can be challenging and sometimes frustrating, but it can also be very rewarding and fun.
+If you spend the time and effort to get involved, you will constantly be learning and growing as a developer and open source contributor.
+To get started, please do the following:
 
+1. Read the rest of this page for basic information about contributing to Servo.
+2. Successfully [fetch the Servo repository](../building/getting-the-code.md) and build Servo.
+2. Set up your fork of Servo and learn the basics of using Git, following the contents of our [Git Setup](git-setup.md) chapter.
+3. Learn a bit of Rust.
+   There are many resources online for how to do this, but one of the best is the official [Learning Rust documentation](https://doc.rust-lang.org/stable/#learning-rust).
+   If you are familiar with other imperative programming languages, you can learn Rust as you work more on Servo, but having a basic familiarity with the language is very useful to get started.
+4. [Set up your editor](editor-setup.md) so that it integrates with `rust-analyzer`.
+5. Read our [Style Guide](style-guide.md) for expectations for the code your contribute.
+6. Read and following the [steps for making a pull request](making-a-pull-request.md).
 
-## Contributions
-
-Contributions to Servo or its dependencies should be made in the form of GitHub pull requests.
-Each pull request will be reviewed by a core contributor (someone with permission to land patches) and either landed in the main tree or given feedback for changes that would be required.
-All contributions should follow this format, even those from core contributors.
+## Working on an issue
 
 Should you wish to work on an issue, please leave a comment on it in order to claim the issue.
 This is to prevent duplicated efforts from contributors on the same issue.
@@ -16,44 +23,8 @@ This is to prevent duplicated efforts from contributors on the same issue.
 Sending the message "@servo-highfive assign me" will assign the issue to you.
 
 Head over to [Servo Starters](https://starters.servo.org/) to find good tasks to start with.
-If you find any unfamiliar words or jargon, please check [the glossary](old/glossary.md) first.
+If you find any unfamiliar words or jargon, please check [the glossary](../old/glossary.md) first.
 If there's no matching entry, please make a pull request to add one with the content `TODO` so we can correct that!
-
-See [Hacking on Servo](hacking/mach.md) for more information on how to start working on Servo.
-
-Contributions should adhere to the [style guide](style-guide.md).
-
-## Pull request checklist
-
-- Branch from the main branch and, if necessary, rebase your branch to main before submitting your pull request.
-  If it doesn't merge cleanly with main you may be asked to rebase your changes.
-
-- Run `./mach fmt` and `./mach test-tidy` on your change.
-
-- Commits should be as small as possible, while ensuring that each commit is correct independently (i.e., each commit should compile and pass tests).
-
-- Commits should be accompanied by a [Developer Certificate of Origin](http://developercertificate.org) sign-off, which indicates that you (and your employer if applicable) agree to be bound by the terms of the [project license](https://github.com/servo/servo/blob/main/LICENSE).
-  In git, this is the `-s` option to `git commit`.
-
-- If your patch is not getting reviewed, or you need a specific person to review it, you can @-reply a reviewer asking for a review in the pull request or a comment, or you can ask for a review in [the Servo chat](https://servo.zulipchat.com/).
-
-- Add tests relevant to the fixed bug or new feature.
-  For a DOM change this will usually be a web platform test; for layout, a reftest.
-  See our [testing guide](https://github.com/servo/servo/wiki/Testing) for more information.
-
-## Running tests in pull requests
-
-When you push to a pull request, GitHub automatically checks that your changes have no compilation, lint, or tidy errors.
-
-To run unit tests or Web Platform Tests against a pull request, add one or more of the labels below to your pull request.
-If you do not have permission to add labels to your pull request, add a comment on your bug requesting that they be added.
-
-| Label              | Runs unit tests on | Runs web tests on          |
-|--------------------|--------------------|----------------------------|
-| `T-full`           | All platforms      | Linux                      |
-| `T-linux-wpt`      | Linux              | Linux                      |
-| `T-macos`          | macOS              | (none)                     |
-| `T-windows`        | Windows            | (none)                     |
 
 ## AI contributions
 
@@ -83,4 +54,3 @@ Servo Code of Conduct is published at <https://servo.org/coc/>.
 ## Governance
 
 Servo’s governance is defined by the **Technical Steering Committee (TSC)** and documented [in the `servo/project` repository](https://github.com/servo/project/blob/main/governance/README.md).
-

@@ -22,21 +22,18 @@
 
 # Contributing
 
-- [Contributing to Servo](contributing.md)
-- [Git workflow](git-workflow.md)
-- [How to write a pull request](pr-description.md)
-- [Requesting crate releases](hacking/requesting-crate-releases.md)
-- [Some basic Rust\*](hacking/some-basic-rust.md)
-  - [Cargo and crates\*](hacking/cargo-and-crates.md)
-  - [Working on a crate\*](hacking/working-on-a-crate.md)
-- [Editor support](hacking/editor-support.md)
-- [Debugging](hacking/debugging.md)
-  - [Using DevTools](hacking/using-devtools.md)
-  - [Developing DevTools\*](hacking/developing-devtools.md)
-  - [Debugging on OpenHarmony](hacking/debugging-on-openharmony.md)
-- [Automated testing\*](hacking/testing.md)
-- [Profiling\*](hacking/profiling.md)
-- [Diagnosing bugs in real websites](hacking/web-compat-bugs.md)
+- [Getting Started](contributing/getting-started.md)
+- [Git Setup](contributing/git-setup.md)
+- [Editor Setup](contributing/editor-setup.md)
+- [Style Guide](contributing/style-guide.md)
+- [Making a Pull Request](contributing/making-a-pull-request.md)
+- [Testing](contributing/testing.md)
+- [Debugging](contributing/debugging/index.md)
+  - [OpenHarmony](contributing/debugging/openharmony.md)
+- [Profiling](contributing/profiling.md)
+- [Crate Dependencies](contributing/crate-dependencies.md)
+- [Devtools](contributing/devtools.md)
+- [Fixing Web Content Bugs](contributing/fixing-web-content-bugs.md)
 
 # Architecture
 
@@ -57,12 +54,7 @@
 - [servodriver test harness](architecture/servodriver.md)
 - [Android app](architecture/android.md)
 
-# Meta
-
-- [Docs for older versions](hacking/older-versions.md)
-- [Style guide](style-guide.md)
-
 # Pre-book docs\*
 
-- [docs/STYLE_GUIDE.md\*](old/STYLE_GUIDE.md)
+- [Docs for older versions](old/older-versions.md)
 - [docs/glossary.md\*](old/glossary.md)

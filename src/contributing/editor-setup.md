@@ -1,10 +1,15 @@
-# Editor support
+# Editor Setup
+
+It is highly recommended that you set up your editor to support [`rust-analyzer`](https://rust-analyzer.github.io/).
+Although it requires a decent amount of RAM and CPU, this will make the experience of working on Servo much better as your editor will be able to provide you with code completion, live compilation errors and warnings, and readily-accessible [rustdoc](https://doc.rust-lang.org/rustdoc/index.html).
+Unfortunately, `rust-analyzer` tries to run `cargo` without `mach`, which will cause issues due
+to the special configuration that Servo currently needs to build.
+Use the following instructions to configure your IDE.
+Additions are welcome here!
 
 ## Visual Studio Code
 
-By default, rust-analyzer tries to run `cargo` without `mach`, which will cause issues due
-to the special configuration that Servo currently needs to build. It's recommend that you add
-the following to your project specific settings in `.vscode/settings.json`:
+It's recommend that you add the following to your project specific settings in `.vscode/settings.json`:
 
 ```json
 {
@@ -33,7 +38,7 @@ Notes:
 
 - In the above excerpt, the language server is building into its own target directory, `target/lsp`, in order to avoid unwanted rebuilds.
   If you would like to save disk space you can remove the `--target-dir` and `target/lsp` arguments and the default target directory will be used.
-- To enable [optional build settings](building-servo.md#optional-build-settings), simply add them to the build argument list in your configuration file.
+- To enable [optional build settings](../building/building.md#optional-build-settings), simply add them to the build argument list in your configuration file.
 - **Windows:** If you are on Windows, you will need to use `./mach.bat` instead of just `./mach`.
   If you do not, you may receive an error saying that the command executed is not a valid Win32 application.
 - **Cross-compilation:** If you are cross-compiling, you can override the target used for cargo by adding `"rust-analyzer.cargo.target": "aarch64-linux-android"`.
