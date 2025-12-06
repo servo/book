@@ -43,17 +43,17 @@ Updates to this list are very welcome!
 <!-- see python/servo/platform/linux.py in servo for how to update this -->
 * `sudo dnf install libtool gcc-c++ libXi-devel freetype-devel libunwind-devel mesa-libGL-devel mesa-libEGL-devel glib2-devel libX11-devel libXrandr-devel gperf fontconfig-devel cabextract ttmkfdir expat-devel rpm-build cmake libXcursor-devel libXmu-devel dbus-devel ncurses-devel harfbuzz-devel ccache clang clang-libs llvm python3-devel gstreamer1-devel gstreamer1-plugins-base-devel gstreamer1-plugins-good gstreamer1-plugins-bad-free-devel gstreamer1-plugins-ugly-free libjpeg-turbo-devel zlib-ng libjpeg-turbo vulkan-loader libxkbcommon libxkbcommon-x11 wireshark-cli`
 
-## Gentoo-like { #dependencies-for-gentoo }
+### Gentoo-like { #dependencies-for-gentoo }
 
 <!-- https://packages.gentoo.org -->
 - `sudo emerge net-misc/curl media-libs/freetype media-libs/mesa dev-util/gperf dev-libs/openssl media-libs/harfbuzz dev-util/ccache sys-libs/libunwind x11-libs/libXmu x11-base/xorg-server sys-devel/clang media-libs/gstreamer media-libs/gst-plugins-base media-libs/gst-plugins-good media-libs/gst-plugins-bad media-libs/gst-plugins-ugly media-libs/vulkan-loader`
 
-## openSUSE { #dependencies-for-opensuse }
+### openSUSE { #dependencies-for-opensuse }
 
 <!-- https://search.opensuse.org/packages/ -->
 - `sudo zypper install libX11-devel libexpat-devel Mesa-libEGL-devel Mesa-libGL-devel cabextract cmake dbus-1-devel fontconfig-devel freetype-devel gcc-c++ git glib2-devel gperf harfbuzz-devel libXcursor-devel libXi-devel libXmu-devel libXrandr-devel libopenssl-devel rpm-build ccache llvm-clang libclang autoconf213 gstreamer-devel gstreamer-plugins-base-devel gstreamer-plugins-good gstreamer-plugins-bad-devel gstreamer-plugins-ugly vulkan-loader libvulkan1`
 
-## Void Linux { #dependencies-for-void-linux }
+### Void Linux { #dependencies-for-void-linux }
 
 <!-- https://voidlinux.org/packages/ -->
 <!-- see python/servo/platform/linux.py in servo for how to update this -->

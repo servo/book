@@ -6,7 +6,6 @@ title = "The Servo Book"
 
 [output.html]
 git-repository-url = "https://github.com/servo/book"
-git-repository-icon = "fa-github"
 edit-url-template = "https://github.com/servo/book/edit/main/{path}"
 site-url = "/"
 # Putting additional-css and additional-js in src/ gives them live reload.
