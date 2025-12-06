@@ -6,8 +6,8 @@ The Servo Book
 To render the book locally:
 
 ```sh
-$ cargo install mdbook --vers '^0.4' --locked
-$ cargo install mdbook-mermaid --vers '^0.15' --locked
+$ cargo install mdbook --vers '^0.5' --locked
+$ cargo install mdbook-mermaid --vers '^0.17' --locked
 $ mdbook serve --open
 ```
 
