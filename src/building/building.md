@@ -148,3 +148,16 @@ Some build settings can only be enabled manually:
 - **SpiderMonkey debug builds** are enabled with `./mach build --debug-mozjs`, or `[build] debug-mozjs = true` in your servobuild file
 
 A full list of arguments can be seen by running `./mach build --help`.
+
+## Running servoshell
+
+When you build it yourself, servoshell will be in `target/debug/servo` or `target/release/servo`.
+You can run it directly as shown above, but we recommend using [mach](hacking/mach.md) instead.
+
+To run servoshell with mach, replace `./servo` with `./mach run -d --` or `./mach run -r --`, depending on the [build profile](hacking/building-servo.md) you want to run.
+For example, both of the commands below run the debug build of servoshell with the same options:
+
+```sh
+$ target/debug/servo https://demo.servo.org
+$ ./mach run -d -- https://demo.servo.org
+```

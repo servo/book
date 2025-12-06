@@ -1,0 +1,51 @@
+# Running servoshell
+
+Assuming you’re in the directory containing `servo`, you can run servoshell with:
+
+```sh
+$ ./servo [url] [options]
+```
+
+Use `--help` to list the available command line options:
+
+```sh
+$ ./servo --help
+```
+
+Use `--pref` enable specific experimental web platform features.
+You can find the list of [preferences] in the Servo API documentation.
+For example, to run our [Conway’s Game of Life demo](https://demo.servo.org/experiments/webgpu-game-of-life/) with WebGPU enabled:
+
+[preferences]: https://doc.servo.org/servo_config/prefs/struct.Preferences.html
+
+```sh
+$ ./servo --pref dom_webgpu_enabled https://demo.servo.org/experiments/webgpu-game-of-life/
+```
+
+## Keyboard shortcuts
+
+- **Ctrl**+`Q` (⌘Q on macOS) exits servoshell
+- **Ctrl**+`L` (⌘L on macOS) focuses the location bar
+- **Ctrl**+`R` (⌘R on macOS) reloads the page
+- **Alt**+`←` (⌘← on macOS) goes back in history
+- **Alt**+`→` (⌘→ on macOS) goes forward in history
+- **Ctrl**+`=` (⌘= on macOS) increases the page zoom
+- **Ctrl**+`-` (⌘- on macOS) decreases the page zoom
+- **Ctrl**+`0` (⌘0 on macOS) resets the page zoom
+- **Esc** exits fullscreen mode
+
+## Troubleshooting
+
+servoshell should run on most systems without any need to install dependencies.
+If you are on **Linux** and servoshell reports that a shared library is missing, ensure that you have the following packages installed:
+
+* `GStreamer` ≥ 1.18
+* `gst-plugins-base` ≥ 1.18
+* `gst-plugins-good` ≥ 1.18
+* `gst-plugins-bad` ≥ 1.18
+* `gst-plugins-ugly` ≥ 1.18
+* `libXcursor`
+* `libXrandr`
+* `libXi`
+* `libxkbcommon`
+* `vulkan-loader`
