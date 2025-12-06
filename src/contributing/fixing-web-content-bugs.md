@@ -1,4 +1,4 @@
-# Identifying and fixing bugs observed in real websites
+# Fixing Web Content Bugs
 
 There are two main classes of web compatibility issues that can be observed in Servo.
 Visual bugs are often caused by missing features or bugs in Servo's CSS and layout support,

@@ -1,6 +1,6 @@
 # Debugging on OpenHarmony
 
-It's recommended to read the general advice from the [Debugging section](debugging.md) first.
+It's recommended to read the general advice from the [Debugging section](index.md) first.
 This section will only cover the differences that need to be considered on OpenHarmony.
 
 ## Starting servoshell from the commandline

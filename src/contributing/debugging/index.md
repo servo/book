@@ -45,7 +45,7 @@ See [the `env_logger` docs](https://docs.rs/env_logger/0.11.3/env_logger/index.h
   <br>`RUST_LOG=style,style::rule_tree=warn`
 
 Note that even when a log message is filtered out, it can still impact runtime performance, albeit only slightly.
-[Some builds](building-servo.md#build-profiles) of Servo, **including official nightly releases**, remove DEBUG and TRACE messages at compile time, so enabling them with `RUST_LOG` will have no effect.
+[Some builds](../../building/building.md#build-profiles) of Servo, **including official nightly releases**, remove DEBUG and TRACE messages at compile time, so enabling them with `RUST_LOG` will have no effect.
 
 ### Event tracing
 

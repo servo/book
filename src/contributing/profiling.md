@@ -8,7 +8,7 @@ When profiling Servo or troubleshooting performance issues, make sure your build
 $ ./mach build --profile profiling --with-frame-pointer
 ```
 
-- **--profile profiling** builds Servo with [our profiling configuration](building-servo.md#build-profiles)
+- **--profile profiling** builds Servo with [our profiling configuration](../building/building.md#build-profiles)
 - **--with-frame-pointer** builds Servo with stack frame pointers on all platforms
 
 Several ways to get profiling information about Servo's runs:

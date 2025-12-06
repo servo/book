@@ -103,7 +103,7 @@ There are three main build profiles, which you can build and use independently o
 There are also two special variants of production builds for performance-related use cases:
 
 - `production-stripped` builds are ideal for benchmarking Servo over time, with debug symbols stripped for faster initial startup
-- `profiling` builds are ideal for [profiling](profiling.md) and troubleshooting performance issues; they behave like a debug or release build, but have the same performance as a production build
+- `profiling` builds are ideal for [profiling](../contributing/profiling.md) and troubleshooting performance issues; they behave like a debug or release build, but have the same performance as a production build
 
 <table>
 <thead>
@@ -151,9 +151,9 @@ A full list of arguments can be seen by running `./mach build --help`.
 ## Running servoshell
 
 When you build it yourself, servoshell will be in `target/debug/servo` or `target/release/servo`.
-You can run it directly as shown above, but we recommend using [mach](hacking/mach.md) instead.
+You can run it directly as shown above, but we recommend using [mach](#mach) instead.
 
-To run servoshell with mach, replace `./servo` with `./mach run -d --` or `./mach run -r --`, depending on the [build profile](hacking/building-servo.md) you want to run.
+To run servoshell with mach, replace `./servo` with `./mach run -d --` or `./mach run -r --`, depending on the [build profile](#build-profiles) you want to run.
 For example, both of the commands below run the debug build of servoshell with the same options:
 
 ```sh

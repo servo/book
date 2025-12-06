@@ -2,7 +2,7 @@
 
 <div hidden>
 
-See the [style guide](../style-guide.md#error-messages) for how to format error messages.
+See the [style guide](../contributing/style-guide.md#error-messages) for how to format error messages.
 </div>
 
 If you run into trouble building Servo and you do not see your error listed on any other page, first try following the steps below:
