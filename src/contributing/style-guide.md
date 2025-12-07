@@ -28,7 +28,6 @@ Note that these should be quoted as well.
 
 ## Servo Book
 
-- Use sentence case for chapter and section headings, e.g. “Getting started” rather than “Getting Started”
 - Use permalinks when linking to source code repos — press `Y` in GitHub to get a permanent URL
 
 ### Markdown source
