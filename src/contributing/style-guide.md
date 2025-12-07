@@ -51,7 +51,7 @@ Then to fix indentation of simple lists, you can replace `^([*-] .*\n([* -].*\n)
 
 The remaining rules for error messages are designed to ensure that the text is as readable as possible, and that the reader can paste their error message into find-in-page with minimal false negatives, without the rules being too cumbersome to follow.
 
-**Wrap the error message in `<pre><samp>`, with `<pre>` at the start of the line.**
+**Wrap the error message in `<pre><samp>`, with `<pre>` at the start of the line (not indented).**
 If you want to style the error message as a quote, wrap it in `<pre><blockquote><samp>`.
 
 `<pre>` treats newlines as line breaks, and at the start of the line, it [prevents](https://spec.commonmark.org/0.31.2/#example-169) Markdown syntax from accidentally [taking effect when there are blank lines](https://spec.commonmark.org/0.31.2/#example-188) in the error message.
@@ -75,39 +75,31 @@ You may find that you still need to escape some Markdown with `\`, to avoid rend
 <tbody>
   <tr>
     <td>
-      <pre><samp>thread 'main' panicked at 'called `Result::unwrap()` on an
-        `Err` value: "Could not run `PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=\"1\"
-        PKG_CONFIG_ALLOW_SYSTEM_LIBS=\"1\" \"pkg-config\" \"--libs\" \"--cflags\" \"fontconfig\"`</samp>
-      </pre>
+<pre><samp>thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: "Could not run `PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=\"1\" PKG_CONFIG_ALLOW_SYSTEM_LIBS=\"1\" \"pkg-config\" \"--libs\" \"--cflags\" \"fontconfig\"`</samp></pre>
+    </td>
+    <td>
+      <pre style="white-space: pre-wrap; word-break: break-all;"><code class="language-html">&lt;pre>&lt;samp>thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: "Could not run `PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=\"1\" PKG_CONFIG_ALLOW_SYSTEM_LIBS=\"1\" \"pkg-config\" \"--libs\" \"--cflags\" \"fontconfig\"`&lt;/samp>&lt;/pre></code></pre>
     </td>
   </tr>
   <tr>
     <td>
-    <pre style="white-space: pre-wrap; word-break: break-all;">
-      <code class="language-html">&lt;pre>&lt;samp>thread 'main' panicked at 'called `Result::unwrap()` on an
-      `Err` value: "Could not run `PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=\"1\" PKG_CONFIG_ALLOW_SYSTEM_LIBS=\"1\" \"pkg-config\" \"--libs\" \"--cflags\" \"fontconfig\"`&lt;/samp>&lt;/pre></code>
-    </pre>
-  </td>
-</tr>
-<tr>
-<td><pre><samp>error[E0765]: ...
+<pre><samp>error[E0765]: ...
  --> src/main.rs:2:14
   |
 2 |       println!("```);
   |  ______________^
 3 | | }
   | |__^</samp></pre>
-</td>
-</tr>
-<tr>
-<td><pre><code class="language-html">&lt;pre>&lt;samp>error[E0765]: ...
+    </td>
+    <td>
+      <pre><code class="language-html">&lt;pre>&lt;samp>error[E0765]: ...
  --> src/main.rs:2:14
   |
 2 |       println!("```);
   |  ______________^
 3 | | }
   | |__^&lt;/samp>&lt;/pre></code></pre>
-</td>
-</tr>
+    </td>
+  </tr>
 </tbody>
 </table>
