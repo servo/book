@@ -33,7 +33,10 @@
 - [Profiling](contributing/profiling.md)
 - [Crate Dependencies](contributing/crate-dependencies.md)
 - [Devtools](contributing/devtools.md)
-- [Fixing Web Content Bugs](contributing/fixing-web-content-bugs.md)
+- [Guides](contributing/guides/index.md)
+  - [Diagnosing DOM Errors](contributing/guides/diagnosing-dom-errors.md)
+  - [Minimal Reproducible Test Cases](contributing/guides/minimal-reproducible-test-cases.md)
+  - [Implementing a DOM API](contributing/guides/implementing-a-dom-api.md)
 
 # Architecture
 
@@ -42,7 +45,6 @@
   - [Further reading\*](architecture/further-reading.md)
 - [Directory structure\*](architecture/directory-structure.md)
 - [Script\*](architecture/script.md)
-  - [How to work on a Web API](architecture/web_api.md)
   - [Microtasks\*](architecture/microtasks.md)
   - [Garbage collection and RefCell](architecture/borrow_hazard.md)
 - [Style\*](architecture/style.md)
