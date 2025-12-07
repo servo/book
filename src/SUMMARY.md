@@ -38,23 +38,21 @@
   - [Minimal Reproducible Test Cases](contributing/guides/minimal-reproducible-test-cases.md)
   - [Implementing a DOM API](contributing/guides/implementing-a-dom-api.md)
 
-# Architecture
+# Design Documentation
 
-- [Architecture overview\*](architecture/overview.md)
-  - [Concurrency and parallelism\*](architecture/concurrency-and-parallelism.md)
-  - [Further reading\*](architecture/further-reading.md)
-- [Directory structure\*](architecture/directory-structure.md)
-- [Script\*](architecture/script.md)
-  - [Microtasks\*](architecture/microtasks.md)
-  - [Garbage collection and RefCell](architecture/borrow_hazard.md)
-- [Style\*](architecture/style.md)
-- [Layout\*](architecture/layout.md)
-- [Compositor\*](architecture/compositor.md)
-- [Canvas](architecture/canvas.md)
-- [WebXR](architecture/webxr.md)
-- [WebGPU](architecture/webgpu.md)
-- [servodriver test harness](architecture/servodriver.md)
-- [Android app](architecture/android.md)
+- [Architecture](design-documentation/overview.md)
+- [Directory structure\*](design-documentation/directory-structure.md)
+- [Script\*](design-documentation/script.md)
+  - [Microtasks\*](design-documentation/microtasks.md)
+  - [Garbage collection and RefCell](design-documentation/borrow_hazard.md)
+- [Style\*](design-documentation/style.md)
+- [Layout\*](design-documentation/layout.md)
+- [Compositor\*](design-documentation/compositor.md)
+- [Canvas](design-documentation/canvas.md)
+- [WebXR](design-documentation/webxr.md)
+- [WebGPU](design-documentation/webgpu.md)
+- [servodriver test harness](design-documentation/servodriver.md)
+- [Android app](design-documentation/android.md)
 
 # Pre-book docs\*
 
