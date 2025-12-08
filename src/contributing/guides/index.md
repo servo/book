@@ -1,6 +1,6 @@
 # Guides
 
-This sections contains a few guides for  techniques to perform common tasks when working on Servo.
+This sections contains a few guides for common tasks when working on Servo.
 
 # Fixing web content bugs
 
@@ -15,4 +15,4 @@ in Servo's DOM and JavaScript implementation.
 # Adding new features
 
 Feature additions are not a great task for a new contributor, because there is often a long series of changes necessary to fully implement a feature in a web engine.
-To get started though, see [Implementing a DOM API](implementing-a-dom-api.md).
+To get started, see [Implementing a DOM API](implementing-a-dom-api.md).
