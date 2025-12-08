@@ -3,6 +3,9 @@
 The majority of our style recommendations are automatically enforced via our automated linters.
 This document has guidelines that are less easy to lint for.
 
+Lots of code in Servo was written before these recommendations were agreed upon.
+We welcome pull requests to bring project code up to date with the modern guidelines.
+
 ## Rust
 
 In general, all Rust code in Servo is automatically formatted via `rustfmt` when you run `./mach fmt`, which should align your code with the official [Rust Style Guide](https://doc.rust-lang.org/nightly/style-guide/).
@@ -15,14 +18,14 @@ There are a few non-obvious points in the naming conventions guide such as:
 
 ### Indentation
 
-In order to make the flow of complicated functions and methods easier to follow, we try to minmize indentation by using early returns.
+In order to make the flow of complicated functions and methods easier to follow, we try to minimize indentation by using early returns.
 This also matches the language used in specifications in many cases.
-When the logic of a function reaches 2 or 3 levels of indentation or when a short conditional block is an exceptional case that drops to the bottom of a long function, you should look to use an early return.
+When the logic of a function reaches 2 or 3 levels of indentation or when a short conditional block is an exceptional case that drops to the bottom of a long function, you should consider using an early return.
 Early returns work very well when combined with the necessity to unwrap `Option`s or `enum` variants.
 Prefer the following syntax when returning early when an `Option` value is `None`:
 
 ```rust
-if let Some(inner_value) = option_value else {
+let Some(inner_value) = option_value else {
     return
 };
 ```
@@ -36,7 +39,7 @@ enum Pet {
 }
 
 let pet = Pet::Dog(10);
-if let Pet::Dog(age) = pet else {
+let Pet::Dog(age) = pet else {
    return;
 };
 ```
@@ -45,7 +48,7 @@ if let Pet::Dog(age) = pet else {
 
 Servo follows the Google C++ guide [rules for naming](https://google.github.io/styleguide/cppguide.html#General_Naming_Rules).
 Avoid abbreviations that would not be known to someone outside of the project.
-Do not abbreivate by deleting letters in the middle of words.
+Do not abbreviate by deleting letters in the middle of words.
 
 **Exception:**:
 You may use some universally-known abbreviations, such as the use of `i` for a loop index.
@@ -73,7 +76,7 @@ In this case, the `LINE_HEIGHT` constant is compiled, but expected to be dead wh
 ### `unsafe` code
 
 Try to avoid unsafe code.
-Unfortuantely, a web engine is complicated so some amount of unsafe code is inevitable in Servo.
+Unfortunately, a web engine is complicated so some amount of unsafe code is inevitable in Servo.
 In the case that you have to make an `unsafe` function, use [Safety comments](https://std-dev-guide.rust-lang.org/policy/safety-comments.html#safety-comments), which explain why a block is safe and what the safety invariants are.
 Use good judgement about when to add safety comments to `unsafe` blocks inside of functions.
 
@@ -85,13 +88,13 @@ If the invariant expressed in the assertion ever becomes false, Servo might begi
 In addition, people reading the code can know what the author presumed to be true at a given point in the code in a stronger way than a comment allows.
 If a particular part of a code is unreachable, for instance if an enum variant was handled before and shouldn't be encountered later in the same function, use `unreachable!()`, but always filling the text with why the code is unreachable.
 
-### `unwrap!()` and `expect!()`
+### `unwrap()` and `expect()`
 
 `unwrap` on `Option` or `Result` should almost never be used.
 Instead, handle the `None` or `Err` case, doing any necessary error handling.
 Servo should not crash, when possible.
-If `None` or an `Err` is impossible due to the logic of Servo-internal code *that does not involve external input or crates*, then you can use `expect!()` like you would use an assertion.
-The text passed as an argument to `expect!()` should express why the value cannot be `None` or `Err`.
+If `None` or an `Err` is impossible due to the logic of Servo-internal code *that does not involve external input or crates*, then you can use `expect()` like you would use an assertion.
+The text passed as an argument to `expect()` should express why the value cannot be `None` or `Err`.
 
 **Exception:**:
 When dealing with Rust's `std::sync::Mutex`or other concurrency primitives which use [poisoning](https://doc.rust-lang.org/std/sync/struct.Mutex.html#poisoning), it is appropriate to use `unwrap`.
