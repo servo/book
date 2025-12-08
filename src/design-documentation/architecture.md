@@ -29,25 +29,25 @@ flowchart TB
     subgraph Embedder Process
     direction TB
     Embedder-->Constellation[Constellation Thread]
-    Embedder<-->Compositor[Compositor]
-    Constellation<-->Compositor
-    Compositor-->WebRender
+    Embedder<-->Renderer[Renderer]
+    Constellation<-->Renderer
+    Renderer-->WebRender
     Constellation-->SystemFont[System Font Cache]
     Constellation-->Resource[Resource Manager]
     end
 
     Constellation<-->ScriptA
     FontA-->SystemFont
-    PipelineA-->Compositor
+    PipelineA-->Renderer
     FontB-->SystemFont
-    PipelineB-->Compositor
+    PipelineB-->Renderer
  ```
 
-This diagram shows the architecture of Servo in the case of only a single web content process, though Servo is also capable of running across multiple processes.
-A single web content process can have multiple script threads running at the same time with their own layout.
+This diagram shows the architecture of multiprocess Servo running with a single web content process.
 When multiprocess mode is enabled, each script thread runs in its own web content process.
+When multiprocess mode is disabled, all script threads run in the embedder process.
 Each script thread has a set of communication channels with the constellation and embedding API parts of the embedder process.
-Solid lines here indicate communication channels.
+Solid lines indicate communication channels or API calls.
 
 ## Constellation, script threads, and pipelines
 
