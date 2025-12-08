@@ -102,7 +102,7 @@ When dealing with Rust's `std::sync::Mutex`or other concurrency primitives which
 
 ### `todo!()` and `unimplemented!()`
 
-In code that is reachable via execution, do not use `todo!` or `unimplemnted!`.
+In code that is reachable via execution, do not use `todo!` or `unimplemented!`.
 These macros will cause Servo to panic and normal web content shouldn't cause Servo to panic.
 Intead, try to make these kind of cases unreachable and return proper error values or simply have the code do nothing instead.
 
