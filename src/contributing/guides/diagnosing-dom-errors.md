@@ -1,11 +1,4 @@
-# Fixing Web Content Bugs
-
-There are two main classes of web compatibility issues that can be observed in Servo.
-Visual bugs are often caused by missing features or bugs in Servo's CSS and layout support,
-while interactivity problems and broken content is often caused by bugs or missing features
-in Servo's DOM and JavaScript implementation.
-
-## Diagnosing JS errors
+# Diagnosing DOM Errors
 
 Error message like the following clearly show that a certain DOM interface has not been implemented in Servo yet:
 ```
