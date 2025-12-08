@@ -12,7 +12,8 @@ In general, all Rust code in Servo is automatically formatted via `rustfmt` when
 In addition, Rust code should use [Rust API naming conventions](https://rust-lang.github.io/api-guidelines/naming.html).
 There are a few non-obvious points in the naming conventions guide such as:
 
-- With a few exceptions, the `get_` prefix is not used for getters in Rust code.
+- The `get_` prefix is generally not used for getters in Rust code.
+  An exception to this rule is when it is used for a variant of a `get()` method like in `std::cell::Cell::get_mut()`.
 - When camel-casing, acronyms and contractions of compound words count as one word.
   For instance, a struct should be called `HtmlParser` and not `HTMLParser`.
 
