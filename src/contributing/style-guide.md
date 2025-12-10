@@ -64,7 +64,7 @@ When code becomes dead because it is completely unused, it should be removed.
 
 **Exception:**
 An exception for this case is when code is dead only one in some compilation configurations.
-In that case, you use use an `expect(dead_code)` compiler directive with a configuration qualifier.
+In that case, you use an `expect(dead_code)` compiler directive with a configuration qualifier.
 For example:
 
 ```rust
