@@ -184,3 +184,70 @@ When you run Servo with this command, you'll be looking at three things:
 - CPU (backend):    The amount of time WebRender is packing and batching data.
 - CPU (Compositor): Amount of time WebRender is issuing GL calls and interacting with the driver.
 - GPU: Amount of time the GPU is taking to execute the shaders.
+
+
+## Webpage snapshots
+
+It is possible to use a `mitmproxy` tool to intersept servo traffic and create local snapshot (dump) of an arbitrary web-page, to then serve locally for profiling purposes.
+
+`mitmproxy` support several ways to intersept the traffic including a `proxy` mode at port `:8080`, so you can set the browser to just:
+
+```bash
+./target/release/servo \
+--pref=network_http_proxy_uri=http://127.0.0.1:8080 \
+--ignore-certificate-errors 
+```
+
+> [!info] The default `mitmproxy` certs are in the `~/.mitmproxy` or you can generate some using `mitmproxy`, but I have just set my browser to ignore cert errors
+
+> [!warning] ignoring certs is easy, but be cautious of risks
+
+### Default mitmproxy
+
+On a default network, the mitmproxy creates a local proxy server at `:8080` and by setting it in browser or passing `http_proxy=locahost:8080` and/or `https_proxy=localhost:8080` (and by optionally unsetting the `no_proxy`) you can dump and serve the traffic.
+
+#### Creating a dump
+```bash
+mitmproxy -w <dumpfile>
+```
+
+#### Serving a dump
+```bash
+mitmproxy --serve-replay <dumpfile>
+```
+
+The resulted dump file is about `~5MB` per page, so it can get large pretty fast, as the tool is very verbose and can store pictures.
+
+### Chain-proxy
+In case of a another primary proxy connection, we need to pass the `upstream` to the main proxy from `mitmproxy` and if the main proxy also has custom certificates, it is crucial to pass them, or to ignore them
+> [!warning] ignoring certs is easy, but be cautious of risks
+#### Creating a dump
+```bash
+mitmproxy  --mode upstream:http://127.0.0.1:3128 -w <dump-path>\
+--set ssl_insecure=true
+```
+> [!info] doublecheck if the main proxy is actually `:3128`
+#### Serving the dump
+```bash
+mitmproxy -v  --server-replay ~/dev/recodings/servo_org_3.dump \
+--set server_replay_extra=404 \
+--set server_replay_ignore_host=true \
+--set connection_strategy=lazy \
+--set server_replay_reuse=true
+```
+> [!info] the `replay_extra` and `replay_reuse` are optional, and may cause unexpected behaviour
+### OpenHarmony
+It is possible to use the tool to intersept remote phone traffic including OpenHarmony targets. Open a reverse proxy port using `hdc` and then run the `servo` with proxy and certs set up.
+#### reverse port
+```bash
+hdc rport tcp:8080 tcp:8080
+```
+#### run with args
+```bash
+hdc shell aa start -a EntryAbility \
+-b org.servo.servo -U https://servo.org \
+--psn=--pref=network_http_proxy_uri=http://127.0.0.1:8080 \
+--psn=--ignore-certificate-errors
+```
+
+
