@@ -188,7 +188,7 @@ When you run Servo with this command, you'll be looking at three things:
 
 ## Webpage snapshots
 
-It is possible to use a `mitmproxy` tool to intersept servo traffic and create local snapshot (dump) of an arbitrary web-page, to then serve locally for profiling purposes.
+It is possible to use the `mitmproxy` tool to intercept servo traffic and create local snapshot (dump) of an arbitrary web-page, to then serve locally for profiling purposes.
 
 `mitmproxy` support several ways to intersept the traffic including a `proxy` mode at port `:8080`, so you can set the browser to just:
 
