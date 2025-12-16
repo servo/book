@@ -223,10 +223,8 @@ In case of a another primary proxy connection, we need to pass the `upstream` to
 > [!warning] ignoring certs is easy, but be cautious of risks
 #### Creating a dump
 ```bash
-mitmproxy  --mode upstream:http://127.0.0.1:3128 -w <dump-path>\
+mitmproxy  --mode upstream:${http_proxy} -w <dump-path>\
 --set ssl_insecure=true
-```
-> [!info] doublecheck if the main proxy is actually `:3128`
 #### Serving the dump
 ```bash
 mitmproxy -v  --server-replay ~/dev/recodings/servo_org_3.dump \
