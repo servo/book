@@ -39,7 +39,7 @@
   - [Implementing a DOM API](contributing/guides/implementing-a-dom-api.md)
 
 # Design Documentation
-
+- [Repositories under Servo Umbrella](design-documentation/repos.md)
 - [Architecture](design-documentation/architecture.md)
 - [Directory structure\*](design-documentation/directory-structure.md)
 - [Experimental features](design-documentation/experimental-features.md)
