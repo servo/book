@@ -143,6 +143,7 @@ You can change these settings in a servobuild file (see [servobuild.example](htt
 Some build settings can only be enabled manually:
 
 - **AddressSanitizer builds** are enabled with `./mach build --with-asan`
+- **ThreadSanitizer builds** are enabled with `./mach build --with-tsan`
 - **crown linting** is recommended when hacking on DOM code, and is enabled with `./mach build --use-crown`
 - **SpiderMonkey debug builds** are enabled with `./mach build --debug-mozjs`, or `[build] debug-mozjs = true` in your servobuild file
 
