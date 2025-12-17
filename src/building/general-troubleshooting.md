@@ -9,7 +9,7 @@ If you run into trouble building Servo and you do not see your error listed on a
 
 1. **Ensure that you have all of the listed build requirements**.
    In particular, if you are using an uncommon Linux distribution or some other kind of Unix, you may need to determine what the correct name of a particular dependency is on your system.
-2. **Double-check that build requirements are installed** and check [depenency versions](#dependency-versions).
+2. **Double-check that build requirements are installed** and check [dependency versions](#dependency-versions).
 3. **Run `./mach boostrap` or `.\mach boostrap` on Windows.**
    Sometimes the tools or dependencies needed to build Servo will change.
    It is safe to run this command more than once.
