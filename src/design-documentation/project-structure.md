@@ -1,6 +1,6 @@
 <!-- TODO: needs copyediting -->
 
-# Directory Structure and Repositories
+# Project Structure
 
 - **components**
   - **bluetooth** — Implementation of the bluetooth thread.
