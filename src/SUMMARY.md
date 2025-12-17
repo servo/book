@@ -40,7 +40,7 @@
 
 # Design Documentation
 - [Architecture](design-documentation/architecture.md)
-- [Directory structure and Repositories\*](design-documentation/directory-structure.md)
+- [Project Structure\*](design-documentation/project-structure.md)
 - [Experimental features](design-documentation/experimental-features.md)
 - [Script\*](design-documentation/script.md)
   - [Microtasks\*](design-documentation/microtasks.md)
