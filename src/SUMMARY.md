@@ -39,9 +39,8 @@
   - [Implementing a DOM API](contributing/guides/implementing-a-dom-api.md)
 
 # Design Documentation
-- [Repositories under Servo Umbrella](design-documentation/repos.md)
 - [Architecture](design-documentation/architecture.md)
-- [Directory structure\*](design-documentation/directory-structure.md)
+- [Directory structure and Repositories\*](design-documentation/directory-structure.md)
 - [Script\*](design-documentation/script.md)
   - [Microtasks\*](design-documentation/microtasks.md)
   - [Garbage collection and RefCell](design-documentation/borrow_hazard.md)
