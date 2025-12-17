@@ -1,6 +1,6 @@
 <!-- TODO: needs copyediting -->
 
-# Directory structure
+# Directory Structure and Repositories
 
 - **components**
   - **bluetooth** — Implementation of the bluetooth thread.
@@ -8,7 +8,7 @@
   - **compositing** — Integration with OS windowing/rendering and event loop.
   - **constellation** — Management of resources for a top-level browsing context (ie. tab).
   - **devtools** — In-process server to allow manipulating browser instances via a remote Firefox developer tools client.
-  * **fonts** — Code for dealing with fonts and text shaping.
+  - **fonts** — Code for dealing with fonts and text shaping.
   - **layout** — Converts page content into positioned, styled boxes and passes the result to the renderer.
   - **layout_thread** — Runs the threads for layout, communicates with the script thread, and calls into the layout crate to do the layout.
   - **msg** — Shared APIs for communicating between specific threads and crates.
@@ -52,16 +52,41 @@
   - **unit** — Unit tests using rustc’s built-in test harness.
   - **wpt** — W3C web-platform-tests and csswg-tests along with tools to run them and expected failures.
 
-# Major dependencies
+# Repositories the Servo project maintains
 
-* <https://github.com/servo/mozjs>: bindings to SpiderMonkey
-* <https://github.com/hyperium/hyper>: an HTTP implementation
-* <https://github.com/servo/html5ever>: an HTML5 parser
-* <https://github.com/servo/ipc-channel>: an IPC implementation
-* <https://github.com/image-rs/image>: image decoders
-* <https://github.com/rust-windowing/winit>: cross-platform windowing and input
-* <https://github.com/linebender/vello>: a pure Rust 2D graphics library
-* <https://github.com/servo/rust-cssparser>: a CSS parser
-* <https://github.com/housleyjk/ws-rs>: a WebSocket protocol implementation
-* <https://github.com/servo/rust-url>: an implementation of the URL specification
-* <https://github.com/servo/webrender>: a GPU renderer
+The Servo project maintains a number of repositories that are either independent from Servo or forked from some upstream project with ongoing updates.
+
+## Repositories that are used throughout the rust ecosystem
+
+- [ipc-channel](https://github.com/servo/ipc-channel): Crate for the rust ecosystem of making IPC work.
+- [string-cache](https://github.com/servo/string-cache): String interning library.
+- [surfman](https://github.com/servo/surfman): Low-Level cross platform Rust library for managing graphic surfaces.
+
+## Repositories that are forked from upstream projects
+
+- [euclid](https://github.com/servo/euclid): Geometric types.
+- [mozjs](https://github.com/servo/mozjs): Spidermonkey, servos JavaScriptEngine based on Spidermonkey with a small patchset.
+- [rust-url](https://github.com/servo/rust-url): Url type.
+- [rust-content-security-policy](https://github.com/servo/rust-content-security-policy): Parse and validate Content Security Policy.
+- [stylo](https://github.com/servo/stylo): Servos CSS engine based on Firefox CSS engine.
+- [unicode-bidi](https://github.com/servo/unicode-bidi): Unicode Bidirectional Algorithm implementation.
+- [webrender](https://github.com/servo/webrender): A fork of Firefox's webrender with a small patchset.
+
+## Repositories that are mainly used by servo
+
+- [book](https://github.com/servo/book): This book!
+- [ci-runners](https://github.com/servo/ci-runners): Various things for servo CI (Continuous Integration).
+- [html5ever](https://github.com/servo/html5ever): HTML5 high-performance parser.
+- [malloc_size_of](https://github.com/servo/malloc_size_of): Measure the runtime size of values.
+- [media](https://github.com/servo/media): media backends and similar that servo uses.
+- [rust-cssparser](https://github.com/servo/rust-cssparser): a CSS parser
+- [servo](https://github.com/servo/servo)servo: The main browser.
+- [wpt](https://github.com/servo/wpt): Servo's fork the the Web Platform Tests.
+
+## Other Major dependencies
+
+- [hyper](https://github.com/hyperium/hyper): an HTTP implementation
+- [image](https://github.com/image-rs/image): image decoders
+- [winit](https://github.com/rust-windowing/winit): cross-platform windowing and input
+- [vello](https://github.com/linebender/vello): a pure Rust 2D graphics library
+- [ws-rs](https://github.com/housleyjk/ws-rs): a WebSocket protocol implementation
