@@ -96,11 +96,23 @@ Use `-Z` (`-- --debug`) to enable debug options.
 For example, to print the stacking context tree after each layout, or get help about these options:
 
 ```sh
-$ ./mach run -Z dump-stacking-context-tree test.html
+$ ./mach run -Z stacking-context-tree test.html
 $ ./mach run -Z help            # Lists available debug options.
 $ ./mach run -- --debug help    # Same as above: lists available debug options.
 $ ./mach run --debug            # Not the same! This just chooses target/debug.
 ```
+
+Alternatively, you can use the `SERVO_DIAGNOSTICS` environment variable to set diagnostic options.
+
+```sh
+$ SERVO_DIAGNOSTICS=style-tree ./mach run test.html
+$ SERVO_DIAGNOSTICS=help ./mach run    # Lists available debug options.
+$ export SERVO_DIAGNOSTICS=style-tree,display-list
+$ ./mach run test.html            # Uses the exported SERVO_DIAGNOSTICS.
+```
+
+The `SERVO_DIAGNOSTICS` environment variable accepts comma-separated diagnostic options, identical to those available via `-Z`.
+This feature is only available in debug and release builds, not in production builds.
 
 On macOS, you can also add some Cocoa-specific debug options, after an extra `--`:
 
