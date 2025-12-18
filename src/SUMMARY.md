@@ -39,9 +39,8 @@
   - [Implementing a DOM API](contributing/guides/implementing-a-dom-api.md)
 
 # Design Documentation
-
 - [Architecture](design-documentation/architecture.md)
-- [Directory structure\*](design-documentation/directory-structure.md)
+- [Project Structure\*](design-documentation/project-structure.md)
 - [Script\*](design-documentation/script.md)
   - [Microtasks\*](design-documentation/microtasks.md)
   - [Garbage collection and RefCell](design-documentation/borrow_hazard.md)
