@@ -12,15 +12,12 @@ Use `--help` to list the available command line options:
 $ ./servo --help
 ```
 
-Use `--pref` enable specific experimental web platform features.
-You can find the list of [preferences] in the Servo API documentation.
-For example, to run our [Conway’s Game of Life demo](https://demo.servo.org/experiments/webgpu-game-of-life/) with WebGPU enabled:
+### Enabling experimental web platform features
 
-[preferences]: https://doc.servo.org/servo_config/prefs/struct.Preferences.html
-
-```sh
-$ ./servo --pref dom_webgpu_enabled https://demo.servo.org/experiments/webgpu-game-of-life/
-```
+Servo has in-progress support for many web platform features.
+Some are not complete enough to be enabled by default, but you can try them out using a preference setting.
+For a list of these features and the preference used to enable them, see [Experimental features](../design-documentation/experimental-features.md].
+In addition, you can enable a useful subset of these features with the `--enable-experimental-web-platform-features` command-line argument or via the servoshell user interface.
 
 ## Keyboard shortcuts
 

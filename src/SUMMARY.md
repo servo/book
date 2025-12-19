@@ -42,6 +42,7 @@
 
 - [Architecture](design-documentation/architecture.md)
 - [Directory structure\*](design-documentation/directory-structure.md)
+- [Experimental features](design-documentation/experimental-features.md)
 - [Script\*](design-documentation/script.md)
   - [Microtasks\*](design-documentation/microtasks.md)
   - [Garbage collection and RefCell](design-documentation/borrow_hazard.md)
