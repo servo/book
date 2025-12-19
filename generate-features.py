@@ -27,10 +27,9 @@ with open(sys.argv[1]) as f:
 
 
 template = """
-# Incomplete web platform features
+# Experimental Web Platform Features
 
-This is a list of web platform features that have a partial implementation
-in Servo and gated behind an optional preference.
+This is a list of web platform features that have a partial implementation in Servo and are gated behind an optional preference.
 
 | Feature | Tracking issue | Preference |
 | ------- | -------------- | ---------- |
@@ -38,8 +37,7 @@ in Servo and gated behind an optional preference.
 
 # Enabled web platform features
 
-This is a list of web platform features with an implementation that is complete
-enough to enable by default.
+This is a list of web platform features with an implementation that is complete enough to enable by default.
 However, they can still be disabled with an optional preference.
 
 | Feature | Tracking issue | Preference |

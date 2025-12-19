@@ -6,7 +6,6 @@
 
 - [Getting servoshell](trying/getting-servoshell.md)
 - [Running servoshell](trying/running-servoshell.md)
-- [Experimental features](trying/experimental-features.md)
 
 # Building
 
@@ -43,6 +42,7 @@
 
 - [Architecture](design-documentation/architecture.md)
 - [Directory structure\*](design-documentation/directory-structure.md)
+- [Experimental features](design-documentation/experimental-features.md)
 - [Script\*](design-documentation/script.md)
   - [Microtasks\*](design-documentation/microtasks.md)
   - [Garbage collection and RefCell](design-documentation/borrow_hazard.md)
