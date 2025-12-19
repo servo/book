@@ -36,6 +36,10 @@ jobs:
           tag=v0.17.0
           url="https://github.com/badboy/mdbook-mermaid/releases/download/$tag/mdbook-mermaid-$tag-x86_64-unknown-linux-gnu.tar.gz"
           curl -sSL "$url" | tar -xz --directory=./opt/mdbook-mermaid
+      - name: Generate web platform feature page
+        run: |
+          curl 'https://raw.githubusercontent.com/servo/servo/refs/heads/main/components/config/prefs.rs' -O
+          python generate-features.py prefs.rs >src/trying/experimental-features.md
       - name: Build book
         run: |
           mdbook build

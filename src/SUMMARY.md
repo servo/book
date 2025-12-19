@@ -6,6 +6,7 @@
 
 - [Getting servoshell](trying/getting-servoshell.md)
 - [Running servoshell](trying/running-servoshell.md)
+- [Experimental features](trying/experimental-features.md)
 
 # Building
 
