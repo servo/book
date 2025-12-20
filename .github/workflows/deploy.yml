@@ -39,7 +39,7 @@ jobs:
       - name: Generate web platform feature page
         run: |
           curl 'https://raw.githubusercontent.com/servo/servo/refs/heads/main/components/config/prefs.rs' -O
-          python generate-features.py prefs.rs >src/trying/experimental-features.md
+          python generate-features.py prefs.rs >src/design-documentation/experimental-features.md
       - name: Build book
         run: |
           mdbook build
