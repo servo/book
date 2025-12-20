@@ -18,7 +18,7 @@ The WebIDL interfaces are located in `components/script_bindings/webidls/`; thes
 The implementation of these interfaces is located in `components/script/dom/`.
 The implementation includes the actual data the object contains.
 
-- [How to work on a Web API](web_api.md)
+- [How to work on a Web API](../guides/implementing-a-dom-api.md)
 
 ## Script Thread
 
