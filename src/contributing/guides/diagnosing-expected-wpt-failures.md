@@ -17,7 +17,7 @@ The harness will show the specific test assertions that fail, along with the JS 
 Error results occur when an exception is thrown without being caught.
 The stack trace from the test harness should show the subtest in which the uncaught exception was observed, as well as the kind of error.
 
-If the exception comes from a calling an API method that is implemented in Rust, you will need to find that method implementation and look for code that returns a matching [`Error`](https://doc.servo.org/script/dom/bindings/error/enum.Error.html) variant.
+If the exception comes from calling an API method that is implemented in Rust, you will need to find that method implementation and look for code that returns a matching [`Error`](https://doc.servo.org/script/dom/bindings/error/enum.Error.html) variant.
 
 ## Diagnosing a TIMEOUT result
 
