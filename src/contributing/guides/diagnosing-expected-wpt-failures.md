@@ -9,8 +9,7 @@ The WPT test harness suppresses most output related to failures that are marked 
 
 To learn more about all failures for a test file, change the top-level `[filename.html]` so it doesn't match the actual filename; this will cause the harness to ignore the ini file entirely.
 
-To learn more about one subtest in particular, delete it from the `.ini` file.
-After changing the file as desired, run the test again.
+To learn more about one subtest in particular, delete it from the `.ini` file then run the test again.
 The harness will show the specific test assertions that fail, along with the JS stack trace when the failures occur.
 
 ## Diagnosing an ERROR result
@@ -47,6 +46,12 @@ These results are usually a symptom of some other problem exposed by the test fi
 ## Diagnosing a reftest failure
 
 To see a visual representation of the differences between a test file and its reference file, you can use the [reftest analyzer](../testing.md#analyzing-reftest-results).
+
+To quickly inspect the appearance of a reftest, you can try running the file directly (`./mach run tests/wpt/tests/css/CSS2/some-file.html`).
+
+If the file relies on other resources from the testsuite, you may need to start the WPT web server first:
+* `cd tests/wpt/tests; ./wpt serve`
+* `./mach run http://localhost:8000/css/CSS2/some-file.html`
 
 ## Using a debugger with Web Platform Tests
 
