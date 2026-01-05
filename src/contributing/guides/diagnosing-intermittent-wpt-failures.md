@@ -53,9 +53,9 @@ If the test verifies properties of layout (either a reftest or a test that uses 
 2. a screenshot is taken too early/too late relative to some other change (e.g. a web font loading)
 
 To make incremental layout issues more visible, try:
-* delaying the page modification until all other page updates are complete (try a very delayed `setTimeout`)
-* run the test with a real window (`--no-headless`)
-* do not touch the mouse until the page modification occurs, then resize the window
+* delaying the page modification until all other page updates are complete (try a very delayed `setTimeout`).
+* running the test with a real window (`--no-headless`).
+* not touching the mouse until the page modification occurs, then resize the window.
 
 To identify if screenshot timing is an issue, use the [reftest analyzer](../testing.md#analyzing-reftest-results) to see the screenshot received by the test harness.
 If it does not match the output you see when [running the test file](diagnosing-expected-wpt-failures.md#diagnosing-a-reftest-failure), the timing of the screenshot may be at fault.
