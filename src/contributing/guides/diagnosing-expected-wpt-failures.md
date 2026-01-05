@@ -7,7 +7,7 @@ It is found under `tests/wpt/meta/` in a parallel directory tree to `tests/wpt/t
 
 The WPT test harness suppresses most output related to failures that are marked expected in the `.ini` file.
 
-To learn more about all failures for a test file, change the top-level `[filename.html]` so it doesn't match the actual filename; this will cause the harness to ignore the ini file entirely.
+To learn more about all failures for a test file, change the top-level `[filename.html]` so it doesn't match the actual filename; this will cause the harness to ignore the `.ini` file entirely.
 
 To learn more about one subtest in particular, delete it from the `.ini` file then run the test again.
 The harness will show the specific test assertions that fail, along with the JS stack trace when the failures occur.
