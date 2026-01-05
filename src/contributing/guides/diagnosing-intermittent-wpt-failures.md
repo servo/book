@@ -19,9 +19,9 @@ In Servo, this nondeterminism often manifests in code that:
 While it's possible to come up with a theory for a particular intermittent failure, it is helpful to show a before/after failure rate for an attempted fix.
 
 Some strategies for reproducing intermittent failures:
-* run with `--repeat-until-unexpected` to repeat the test until an unexpected result is reported
-* run the test under heavy load (e.g. run a clean release build in another terminal while running the test on repeat)
-* try different build or runtime configurations:
+* Run with `--repeat-until-unexpected` to repeat the test until an unexpected result is reported
+* Run the test under heavy load (e.g. run a clean release build in another terminal while running the test on repeat)
+* Try different build or runtime configurations:
   * `./mach build --dev`
   * `./mach build --release`
   * `./mach build --debug-mozjs`
