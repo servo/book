@@ -10,9 +10,9 @@ Each of these can perturb the ordering of events within Servo in nondeterministi
 
 In Servo, this nondeterminism often manifests in code that:
 
-* uses mutexes or shared memory instead of channels
-* enqueues multiple tasks that run on one thread but via different task sources
-* uses timeouts to detect if an event occured
+* uses mutexes or shared memory instead of channels.
+* enqueues multiple tasks that run on one thread but via different task sources.
+* uses timeouts to detect if an event occurred.
 
 ## Reproducing the failure
 
