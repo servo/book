@@ -37,6 +37,8 @@
   - [Diagnosing DOM Errors](contributing/guides/diagnosing-dom-errors.md)
   - [Minimal Reproducible Test Cases](contributing/guides/minimal-reproducible-test-cases.md)
   - [Implementing a DOM API](contributing/guides/implementing-a-dom-api.md)
+  - [Diagnosing Expected Failures in Web Platform Tests](contributing/guides/diagnosing-expected-wpt-failures.md)
+  - [Diagnosing Intermittent Failures in Web Platform Tests](contributing/guides/diagnosing-intermittent-wpt-failures.md)
 
 # Design Documentation
 
