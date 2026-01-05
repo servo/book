@@ -41,13 +41,9 @@ Start by commenting out as much of the test as you can while still reproducing t
 Try adding `console.log` calls to show the ordering of different events, then compare the output between the common case and the intermittent case.
 You may need to use [set the `RUST_LOG` environment variable](../debugging.md#debug-logging-with-log-and-rust_log) to see internal Servo tracing logs for relevant crates and modules.
 
-[Add explicit delays](#adding-delays) to parts of the test to observe if the failures are more or less likely to occur.
-
-### Adding delays
-
-Consider moving part of the test into a closure that executes after a fixed delay, like `test_object.step_timeout(() => ..., 1000)`.
-
-If there is a network request for a particular URL, you can easily [add a delay](https://web-platform-tests.org/writing-tests/server-pipes.html#trickle) to the response.
+Add explicit delays to parts of the test to observe if the failures are more or less likely to occur:
+* move part of the test into a closure that executes after a fixed delay, like `test_object.step_timeout(() => ..., 1000)`
+* [add a delay](https://web-platform-tests.org/writing-tests/server-pipes.html#trickle) to the response for a network request
 
 ## Diagnosing problems with layout tests
 
