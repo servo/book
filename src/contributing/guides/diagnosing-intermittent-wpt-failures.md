@@ -47,7 +47,7 @@ Add explicit delays to parts of the test to observe if the failures are more or 
 
 ## Diagnosing problems with layout tests
 
-If the test verifies properties of layout (either a reftest or a test that uses layout APIs like `getBoundingClientRect()`, `scrollTop`, `offsetParent`, etc.), somce common sources of intermittent results include:
+If the test verifies properties of layout (either a reftest or a test that uses layout APIs like `getBoundingClientRect()`, `scrollTop`, `offsetParent`, etc.), some common sources of intermittent results include:
 
 1. incremental layout behaves incorrectly for a particular change, but this is covered up by another async operation that triggers additional layout
 2. a screenshot is taken too early/too late relative to some other change (e.g. a web font loading)
