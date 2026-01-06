@@ -1,4 +1,4 @@
-# Diagnosing Expected Failures in Web Platform Tests
+# Diagnosing Stable WPT Errors
 
 ## Diagnosing a FAIL result
 
@@ -45,7 +45,7 @@ These results are usually a symptom of some other problem exposed by the test fi
 
 ## Diagnosing a reftest failure
 
-To see a visual representation of the differences between a test file and its reference file, you can use the [reftest analyzer](../testing.md#analyzing-reftest-results).
+To see a visual representation of the differences between a test file and its reference file, you can use the [reftest analyzer](../../testing.md#analyzing-reftest-results).
 
 To quickly inspect the appearance of a reftest, you can try running the file directly (`./mach run tests/wpt/tests/css/CSS2/some-file.html`).
 

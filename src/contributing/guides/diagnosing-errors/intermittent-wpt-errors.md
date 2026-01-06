@@ -1,4 +1,4 @@
-# Diagnosing Intermittent Failures in Web Platform Tests
+# Diagnosing Intermittent WPT Errors
 
 The most common sources of intermittent failures in Web Platform Tests include:
 
@@ -39,7 +39,7 @@ Don't jump to conclusions without waiting long enough!
 Start by commenting out as much of the test as you can while still reproducing the failure.
 
 Try adding `console.log` calls to show the ordering of different events, then compare the output between the common case and the intermittent case.
-You may need to use [set the `RUST_LOG` environment variable](../debugging.md#debug-logging-with-log-and-rust_log) to see internal Servo tracing logs for relevant crates and modules.
+You may need to use [set the `RUST_LOG` environment variable](../../debugging/index.md#debug-logging-with-log-and-rust_log) to see internal Servo tracing logs for relevant crates and modules.
 
 Add explicit delays to parts of the test to observe if the failures are more or less likely to occur:
 * move part of the test into a closure that executes after a fixed delay, like `test_object.step_timeout(() => ..., 1000)`
@@ -57,5 +57,5 @@ To make incremental layout issues more visible, try:
 * running the test with a real window (`--no-headless`).
 * not touching the mouse until the page modification occurs, then resize the window.
 
-To identify if screenshot timing is an issue, use the [reftest analyzer](../testing.md#analyzing-reftest-results) to see the screenshot received by the test harness.
-If it does not match the output you see when [running the test file](diagnosing-expected-wpt-failures.md#diagnosing-a-reftest-failure), the timing of the screenshot may be at fault.
+To identify if screenshot timing is an issue, use the [reftest analyzer](../../testing.md#analyzing-reftest-results) to see the screenshot received by the test harness.
+If it does not match the output you see when [running the test file](stable-wpt-errors.md#diagnosing-a-reftest-failure), the timing of the screenshot may be at fault.
