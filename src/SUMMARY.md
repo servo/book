@@ -34,9 +34,12 @@
 - [Crate Dependencies](contributing/crate-dependencies.md)
 - [Devtools](contributing/devtools.md)
 - [Guides](contributing/guides/index.md)
-  - [Diagnosing DOM Errors](contributing/guides/diagnosing-dom-errors.md)
   - [Minimal Reproducible Test Cases](contributing/guides/minimal-reproducible-test-cases.md)
   - [Implementing a DOM API](contributing/guides/implementing-a-dom-api.md)
+  - [Diagnosing Errors](contributing/guides/diagnosing-errors/index.md)
+    - [DOM Errors](contributing/guides/diagnosing-errors/dom-errors.md)
+    - [Stable WPT Failures](contributing/guides/diagnosing-errors/stable-wpt-errors.md)
+    - [Intermittent WPT Failures](contributing/guides/diagnosing-errors/intermittent-wpt-errors.md)
 
 # Design Documentation
 
