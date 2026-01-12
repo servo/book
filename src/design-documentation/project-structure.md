@@ -62,6 +62,7 @@ project with ongoing updates.
 - [euclid](https://github.com/servo/euclid): Geometric types
 - [ipc-channel](https://github.com/servo/ipc-channel): Interprocess communication channels
 - [html5ever](https://github.com/servo/html5ever): an HTML5 parser written in rust
+- [rust-cssparser](https://github.com/servo/rust-cssparser): A CSS parser written in Rust.
 - [rust-url](https://github.com/servo/rust-url): URL library for Rust, based on the [URL Standard](https://url.spec.whatwg.org/). Also known as url.
 - [string-cache](https://github.com/servo/string-cache): String interning library
 
@@ -78,7 +79,6 @@ project with ongoing updates.
 - [ci-runners](https://github.com/servo/ci-runners): Scripts and tools used for servo CI (continuous integration)
 - [malloc_size_of](https://github.com/servo/malloc_size_of): Measure the runtime size of values
 - [media](https://github.com/servo/media): the media backend that Servo uses, currently GStreamer-only
-- [rust-cssparser](https://github.com/servo/rust-cssparser): A CSS parser written in Rust.
 - [servo](https://github.com/servo/servo)servo: The main browser
 - [surfman](https://github.com/servo/surfman): Low-Level cross platform Rust library for managing graphic surfaces
-- [wpt](https://github.com/servo/wpt): Servo's fork the the Web Platform Tests
+- [wpt](https://github.com/servo/wpt): Servo's fork of the Web Platform Tests
