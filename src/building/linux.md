@@ -14,7 +14,7 @@
 ## Unsupported Distributions 
 
 If `./mach boostrap` reports that your distribution is unsupported, then you will need to install dependencies manually.
-Below you will find instructions for installing build dependencies on a variety of types of distrubtions.
+Below you will find instructions for installing build dependencies on a variety of types of distributions.
 If your distribution is not listed, it's recommended that you try to adapt the list for the package names on your system.
 Updates to this list are very welcome!
 
@@ -32,9 +32,9 @@ Updates to this list are very welcome!
 <!-- https://packages.ubuntu.com -->
 - `sudo apt install curl`
 
-<!-- see python/servo/platform/linux.py in servo for how to update this -->
+<!-- see python/servo/platform/building/linux_packages/apt/ in servo for how to update this -->
 <!-- be sure to *remove* `libgstreamer-plugins-good1.0-dev` from this list, due to the note below -->
-- `sudo apt install build-essential ccache clang cmake curl g++ git gperf libdbus-1-dev libfreetype6-dev libgl1-mesa-dri libgles2-mesa-dev libglib2.0-dev gstreamer1.0-plugins-good gstreamer1.0-plugins-bad libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-ugly gstreamer1.0-plugins-base libgstreamer-plugins-base1.0-dev gstreamer1.0-libav libgstrtspserver-1.0-dev gstreamer1.0-tools libges-1.0-dev libharfbuzz-dev liblzma-dev libudev-dev libunwind-dev libvulkan1 libx11-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev libxmu-dev libxmu6 libegl1-mesa-dev llvm-dev m4 xorg-dev libxkbcommon0 libxkbcommon-x11-0 tshark`
+- `sudo apt install {{#include linux_packages/apt_common.txt}}`
 
 **Note:** For Ubuntu-based distributions, ensure that you also include the `libgstreamer-plugins-good1.0-dev` package alongside the packages listed above.
 
