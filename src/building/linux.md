@@ -56,9 +56,8 @@ Updates to this list are very welcome!
 ### Void Linux { #dependencies-for-void-linux }
 
 <!-- https://voidlinux.org/packages/ -->
-<!-- see python/servo/platform/linux.py in servo for how to update this -->
-* `sudo xbps-install libtool gcc libXi-devel freetype-devel libunwind-devel MesaLib-devel glib-devel pkg-config libX11-devel libXrandr-devel gperf bzip2-devel fontconfig-devel cabextract expat-devel cmake cmake libXcursor-devel libXmu-devel dbus-devel ncurses-devel harfbuzz-devel ccache glu-devel clang gstreamer1-devel gst-plugins-base1-devel gst-plugins-good1 gst-plugins-bad1-devel gst-plugins-ugly1 vulkan-loader libxkbcommon libxkbcommon-x11`
-
+<!-- Update python/servo/platform/linux_packages/xbps in servo as changes will sync to the book -->
+* `sudo xbps-install {{#include linux_packages/xbps_base.txt}}`
 ## Troubleshooting
 
 Be sure to look at the [General Troubleshooting](general-troubleshooting.md) section if you have trouble with your build and your problem is not listed below.
