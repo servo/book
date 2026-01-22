@@ -40,8 +40,8 @@ Updates to this list are very welcome!
 
 ### Fedora-like { #dependencies-for-fedora }
 
-<!-- see python/servo/platform/linux.py in servo for how to update this -->
-* `sudo dnf install libtool gcc-c++ libXi-devel freetype-devel libunwind-devel mesa-libGL-devel mesa-libEGL-devel glib2-devel libX11-devel libXrandr-devel gperf fontconfig-devel cabextract ttmkfdir expat-devel rpm-build cmake libXcursor-devel libXmu-devel dbus-devel ncurses-devel harfbuzz-devel ccache clang clang-libs llvm python3-devel gstreamer1-devel gstreamer1-plugins-base-devel gstreamer1-plugins-good gstreamer1-plugins-bad-free-devel gstreamer1-plugins-ugly-free libjpeg-turbo-devel zlib-ng libjpeg-turbo vulkan-loader libxkbcommon libxkbcommon-x11 wireshark-cli`
+<!-- Update python/servo/platform/linux_packages/dnf in servo as changes will sync to the book -->
+* `sudo dnf install {{#include linux_packages/dnf_base.txt}}`
 
 ### Gentoo-like { #dependencies-for-gentoo }
 
