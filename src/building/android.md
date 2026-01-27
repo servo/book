@@ -21,13 +21,11 @@
 **Note**: This will install dependencies and build Servo for the `aarch64-linux-android` platform.
 In order to build Servo for other Android targets, ensure that you install the appropriate system images via `sdkmanager` and pass `--target` with a Rust compatible target to `mach` when building instead of `--android`.
 
-**Note**: It's also possible to use an installation from [Android Studio](https://developer.android.com/studio).
-Just ensure that the `ANDROID_SDK_ROOT` and `ANDROID_NDK_ROOT` variables are set properly.
-
 **Note**: If you are not using Android Studio on macOS, you will need to install a JDK.
 Use `brew install opendjdk@21` to install a usable version; newer versions cause `java.lang.IllegalArgumentException: 25` when running the gradle build step during the Servo build.
 
-**Note**: If you are using Nix, you don't need to install the tools or set up the ANDROID_* environment variables manually.
+
+**Note**: If you are using Nix, you don't need to install the tools or set up the `ANDROID_SDK_ROOT` and `ANDROID_NDK_ROOT` environment variables manually.
 Simply enable the Android build support running:
 
 ```
@@ -35,6 +33,27 @@ export SERVO_ANDROID_BUILD=1
 ```
 
 in the shell session before invoking ./mach commands
+
+## Building with Android Studio
+
+It's recommended to build Servo via the command-line for Android, but you can also build it using Android Studio, if you prefer to use the Android IDE.
+
+- Install Android Studio by downloading the appropriate version from the [official website](https://developer.android.com/) and following the [installation instructions](https://developer.android.com/studio/install).
+- In order to install additional tools run Android Studio, go to *Settings* and type `sdk` on the search bar.
+- Select the SDK:
+  - Click *Android SDK`*
+  - Navigate to *SDK Tools*
+  - Check *Android SDK Command-line tools (latest)*: ![image](../images/android-additional-downloads.png)
+- Select the NDK. Note that Servo **requires version 28 of the NDK**.
+  - In the *SDK Tools* section, select *NDK (side by side)*
+  - Click *show package details*: ![image](../images/android-sdk-details-1.png)
+  - Select the latest version of NDK 28: ![image](../images/android-sdk-details-2.png)
+- Click *Ok* to install both the NDK and SDK.
+- Find the path to the SDK under *Languages & Frameworks* then *Android SDK Location*: ![image](../images/android-sdk-path.png).
+  Then, ensure that the following environment variables are set:
+  - `ANDROID_SDK_ROOT`: The path found above.
+  - `ANDROID_NDK_ROOT`: `$ANDROID_SDK_ROOT/ndk/28.2.13676358/`
+- Run `./mach build --android -r`
 
 ## Running in the emulator
 
