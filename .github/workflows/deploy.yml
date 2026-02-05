@@ -19,7 +19,9 @@ jobs:
           fetch-depth: 0
       - name: Generate link list
         run: |
-          grep -Rin --include="*.md" -E -o "https?://[a-zA-Z0-9./?#=_%:-]*" src >> src/links.txt
+          for link in $(grep -Rin --include="*.md" -E -o "https?://[a-zA-Z0-9./?#=_%:-]*[^\.]" src); do
+            echo "$link" | sed 's/\.$//' >> src/links.txt
+          done
       - name: Configure PATH
         run: |
           mkdir -p opt/mdbook

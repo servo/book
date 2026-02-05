@@ -10,7 +10,11 @@ ignore=(
   https://github.githubassets.com
   # Example of locally hosted WPT tests.
   http://web-platform.test:8000
+  # Local URLs.
+  http://127.0.0.1
+  http://localhost
   # Do not play nice with curl (fake 4XX).
+  https://medium.com
   https://www.researchgate.net
   https://crates.io
   https://developer.huawei.com
