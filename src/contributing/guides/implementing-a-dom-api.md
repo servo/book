@@ -47,7 +47,7 @@
      - There is a bug in the code. These should be fixed.
      - The test uses other APIs that aren't supported yet(usually `ERROR`).
 3. Bugs should be fixed. Copilot is of little help here.
-4. Expected failures can be marked as such, using the process described [here](../testing.html#updating-web-platform-test-expectations).
+4. Expected failures can be marked as such, using the process described [here](../testing.md#updating-web-platform-test-expectations).
 5. This part is done when there are no unexpected test results left.
 6. On occasion, on the advice of a reviewer, you may file an issue and describe a failure that you cannot fix, mark the test as a failure, and leave it to a follow-up.
 
