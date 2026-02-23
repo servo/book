@@ -18,6 +18,7 @@
   - [WSL](building/wsl.md)
   - [Android](building/android.md)
   - [OpenHarmony](building/openharmony.md)
+  - [Offline builds](building/offline-builds.md)
 - [General Troubleshooting](building/general-troubleshooting.md)
 
 # Contributing
