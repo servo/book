@@ -1,4 +1,4 @@
-# Offline Builds
+# Building Offline
 
 Servo releases provide a `servo.tar.gz` artifact which contains Servo's source code and all Rust dependencies
 vendored. The `.cargo/config.toml` file in the tarball contains the necessary configuration to build Servo
