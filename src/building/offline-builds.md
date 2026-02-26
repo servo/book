@@ -28,14 +28,14 @@ cargo build --profile=production --frozen
 
 
 
-## Windows and MacOS
+## Windows and macOS
 
-On Windows and MacOS, `./mach bootstrap` will download additional dependencies necessary to build Servo.
+On Windows and macOS, `./mach bootstrap` will download additional dependencies necessary to build Servo.
 These are currently not provided in the tarball. 
 If there is interest in offline builds for these platforms, contributions are welcome (but reach out first on Zulip or via GitHub issues).
 
 
-## Prebuilt SpiderMonkey artifacts
+## Prebuilt SpiderMonkey Artifacts
 
 Online builds use prebuilt SpiderMonkey artifacts by default, hosted on [servo/mozjs](https://github.com/servo/mozjs)'s GitHub releases.
 If you want to simplify or speed-up your build environment, you can pre-download these artifacts yourself and use `MOZJS_ARCHIVE=path/to/libmozjs.tar.gz` to use the prebuilt artifacts in offline builds.
