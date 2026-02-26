@@ -1,14 +1,12 @@
 # Building Offline
 
-Servo releases provide a `servo.tar.gz` artifact which contains Servo's source code and all Rust dependencies
-vendored. The `.cargo/config.toml` file in the tarball contains the necessary configuration to build Servo
-offline using the vendored dependencies.
+Servo releases provide a `servo.tar.gz` artifact which contains Servo's source code and all Rust dependencies vendored.
+The `.cargo/config.toml` file in the tarball contains the necessary configuration to build Servo offline using the vendored dependencies.
 
 ## Linux
 
 Please view the [Linux build instructions](./linux.md) for more on installing the required build dependencies.
-We generally recommend using `./mach build` to build Servo, however that does require `uv` to be installed and the
-Python dependencies to be synced via `uv sync` in advance (otherwise `./mach` will try to access the network to setup the python environment). 
+We generally recommend using `./mach build` to build Servo, however that does require `uv` to be installed and the Python dependencies to be synced via `uv sync` in advance (otherwise `./mach` will try to access the network to setup the python environment). 
 ```shell
 # online pre-build environment (e.g. building a docker container)
 uv sync
