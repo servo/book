@@ -52,6 +52,7 @@
   - [Garbage collection and RefCell](design-documentation/borrow_hazard.md)
 - [Style\*](design-documentation/style.md)
 - [Layout\*](design-documentation/layout.md)
+- [Accessibility](design-documentation/accessibility.md)
 - [Compositor\*](design-documentation/compositor.md)
 - [Canvas](design-documentation/canvas.md)
 - [WebXR](design-documentation/webxr.md)
