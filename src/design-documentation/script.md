@@ -13,7 +13,8 @@ A root tells the garbage collector two things:
 2. If garbage collection causes this rooted value to be moved in memory, all pointers to this value should be updated.
 
 In Servo's code, roots are created automatically by using the `DomRoot<T>`, `Root<T>`, and `Rooted<T>` types.
-See the [module documentation](https://doc.servo.org/script/dom/bindings/root/index.html) for more details.
+See the [module documentation](https://doc.servo.org/script/dom/bindings/root/index.html) for more details about the difference. These types implement `Deref`, so we an treat them as
+normal references.
 
 The following examples contain simplifications of real Servo code patterns to make them easier to understand.
 Assume the following code, declaring a `Kittens` type that contains pointers to `Cat` types, all of which are owned by the garbage collector:
@@ -50,12 +51,13 @@ Unrooting (the reverse) will automatically be done via a Drop impl on `DomRoot<T
 To ensure web API implementations in Servo are sound, the engine code is conservative and usually returns rooted types (such as `DomRoot<Node>`).
 This is an acceptable tradeoff between safety and performance because rooting and unrooting operations are efficient.
 
-## CanGC and Crown
+## Crown and CanGc
 Now rooting could be easily forgotten when implementing particular exciting apis. How to we prevent this?
 Crown is the answer (if you are working on Script things you should run `./mach build --use-crown` to be sure it is checking things).
 In essence, Crown just checks that you do not forgotten to root things and you will sometimes see certain lints in the code talking to crown such as `#[cfg_attr(crown, allow(crown::unrooted_must_root))]`. These essentially disable crown and should only be used in very specific circumstances.
 
-But there is another piece of the puzzle. CanGC. More about CanGC can be found in [here](borrow_hazard.md).
+But there is another piece of the puzzle. CanGC. CanGc is essentially a marker for you, the
+programmer, to be careful of borrows of RefCells. The details can be found [here](borrow_hazard.md).
 
 ```rust
 fn some_function(cats: &Kittens, can_gc: CanGc) {
@@ -65,9 +67,20 @@ fn some_function(cats: &Kittens, can_gc: CanGc) {
 }
 ```
 
+In essence, if a method you are calling needs `CanGc` you should have your method use `CanGc`
+so that everybody can remember to be careful about borrows of RefCells around the code.
+
+
+# JSContext, &mut JSContext
+**TODO STIL TO BE CLEANUP THIS SECTION**
+
 The pecise notion of this is that we can be sure that no GC will happen when we call `play_with_cats` but there
 might be a GC happening while we call `cleanup_after_cats`. The reason why some methods can incur GC and some methods do not are deep in the SpiderMonkey connections to servo and you will generally not be obvious.
-In essence, you can not use can_gc until you call a method that needs it and then you go back along your callstack and give it as argument to every call until you arrive in something origininating from 'Bindings.conf' (see how to implement a dom method).
+
+
+
+
+
 
 You will sometimes see `&JSContext` and `&mut JSContext` and `NoGC`. You can think of `&mut JSContext` as a `CanGc` and `JSContext` and `NoGC` as the absence of `CanGc`.
 
@@ -101,8 +114,8 @@ This API for interacting with kittens is safely rooted, but when there are many 
 Yes. Remember rusts golden rule that `&mut` can only be hold exactly once!
 What if we have a new type
 ```rust
-struct UnrootedDom<'a> {
-    inner_cat: Dom<Cat>,
+struct UnrootedDom<'a, T> {
+    inner_cat: Dom<T>,
     js_context: &mut 'a JSContext,
 }
 ```
@@ -112,14 +125,14 @@ The following is **invalid** code.
 ```rust
 #[dom_struct]
 struct Kittens {
-    children: Vec<UnrootedDom<'_>>,
+    children: Vec<UnrootedDom<'_, Cat>>,
 }
 
 fn make_cats(cx: &mut JSContext) -> Kittens {}
 
-fn play_with_cat(cx: &JSContext, cat: Cat) {}
+fn play_with_cat(cx: &JSContext, cat: &Cat) {}
 
-fn cleanup_after_cats(cx: &mut JSContext, cat: Cat) {}
+fn cleanup_after_cats(cx: &mut JSContext, cat: &Cat) {}
 
 fn some_function(cx: &mut JSContext) {
     let cats = make_cats(cx);
