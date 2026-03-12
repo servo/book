@@ -1,7 +1,7 @@
 # Script
 
 Servo is unique in that it uses garbage collection for some things that are non obvious. For example, every dom object
-(a struct with `#[dom_struct])` on it is controlled by spidermonkeys garbage collector. Extra care is to be taken when interacting with this. While the garbage collector is complicated and has multiple modes we will assume for now the following.
+(a struct with `#[dom_struct])` on it is controlled by spidermonkeys garbage collector. Extra care is to be taken when interacting with this. Which is what this document is about. While the garbage collector is complicated and has multiple modes we will assume for now the following.
 Whenever the GC runs, the rust program is stopped at whatever state it was in.
 We will for now only assume read only access to objects as this makes it easer to understand.
 
