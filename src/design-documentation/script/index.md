@@ -3,23 +3,30 @@
 Servo is unique in that it uses garbage collection for some things that are non obvious. For example, every dom object
 (a struct with `#[dom_struct])` on it is controlled by spidermonkeys garbage collector. Extra care is to be taken when interacting with this. Which is what this document is about. While the garbage collector is complicated and has multiple modes we will assume for now the following.
 Whenever the GC runs, the rust program is stopped at whatever state it was in.
-We will for now only assume read only access to objects as this makes it easer to understand.
+Servo is unique in that it uses garbage collection for some things that are non-obvious.
+For example, every DOM object (a struct with `#[dom_struct])` is owned by SpiderMonkey's garbage collector.
+This necessitates that the engine APIs that interact with these objects must be sound when garbage collection can occur at many points in the program.
+While [the garbage collector](https://firefox-source-docs.mozilla.org/js/gc.html) is complex and has multiple modes, we can assume that whenever the GC runs then the Rust program does not run concurrently.
 
-## Rooting and you
+## Rooting and rooted types
 
-The most often used method is Rooting. Rooting (`Root<Dom<T>>`) means that we tell the garbage collector two things.
-- Please do not delete any value that is reachable by this root.
-- Please fix any pointer that points to this after you do a garbage collection.
+An important part of garbage collection is establishing the roots of the object graph.
+A root tells the garbage collector two things:
+1. Do not delete any value that is transitively reachable from this root.
+2. If garbage collection causes this rooted value to be moved in memory, all pointers to this value should be updated.
 
-In the following we will look at some code that is close to what is happening behind some abstractions but not the complete picture.
-Let us now assume we have the following code:
+In Servo's code, roots are created automatically by using the `DomRoot<T>`, `Root<T>`, and `Rooted<T>` types.
+See the [module documentation](https://doc.servo.org/script/dom/bindings/root/index.html) for more details.
+
+The following examples contain simplifications of real Servo code patterns to make them easier to understand.
+Assume the following code, declaring a `Kittens` type that contains pointers to `Cat` types, all of which are owned by the garbage collector:
 ```rust
 #[dom_struct]
 struct Kittens {
     children: Vec<Dom<Cat>>
 }
 
-fn some_function(cats: &Kittens) {
+fn play_with_kittens(kittens: &Kittens) {
     let children = & cats.children;
     play_with(children)
 }
@@ -27,6 +34,8 @@ fn some_function(cats: &Kittens) {
 
 Without rooting the GC could pause our program after we got the reference to children, move the `Kittens` struct around
 and we would have invalid access when playing with them! This holds even if Kittens was rooted by some other mechanism earlier in the call chain.
+If our data is not rooted correctly, the GC could pause our program after we got the reference to children, move the `kittens` value in memory, and we would have invalid access when playing with them!
+This is true even if `kittens` was rooted by the code that called `play_with_kittens`.
 Hence, we need to transform the code into
 ```rust
 #[dom_struct]
@@ -34,15 +43,15 @@ struct Kittens {
     children: Vec<Dom<Cat>>
 }
 
-fn some_function(cats: &Kittens) {
-    let children: DomRoot<Vec<Dom<Cat>>> = cats.children().iter().map(|cat| cat.as_rooted()).collect();
+fn play_with_kittens(cats: &Kittens) {
+    let children: Vec<DomRoot<Cat>> = cats.children.iter().map(|cat| cat.as_rooted()).collect();
     play_with(children)
 }
 ```
-Unrooting (the reverse) will automatically be done via a Drop impl on Root.
+Unrooting (the reverse) will automatically be done via a Drop impl on `DomRoot<T>`.
 
-When you implement some HTML api you will generally only encounter rooted things (such as 'DomRoot\<Node\>'). And rooting
-and unrooting is generally pretty fast.
+To ensure web API implementations in Servo are sound, the engine code is conservative and usually returns rooted types (such as `DomRoot<Node>`).
+This is an acceptable tradeoff between safety and performance because rooting and unrooting operations are efficient.
 
 ## CanGC and Crown
 Now rooting could be easily forgotten when implementing particular exciting apis. How to we prevent this?
@@ -83,10 +92,24 @@ fn some_function(cats: &Kittens) {
     if happy {
         println!("Happy cat found!");
     }
+struct Kittens {
+    children: Vec<Cat>
 }
+
+impl Kittens {
+    fn children(&self) -> Vec<DomRoot<Cat>> {
+        self.children.iter().map(|cat| cat.as_rooted()).collect()
+    }
+}
+
+fn some_function(cats: &Kittens) {
+    let happy = cats.children().iter().any(|cat| cat.is_purring());
+    if happy {
+        println!("Happy cat found!");
+    }
 ```
 
-Now if the litter is especially large, we do a lot of work just rooting and unrooting the cats only to test a probably fast bool. Can we do something about this?
+This API for interacting with kittens is safely rooted, but when there are many children the rooting and unrooting work can add up.
 
 Yes. Remember rusts golden rule that &mut can only be hold exactly once!
 What if we have a new type
