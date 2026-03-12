@@ -3,7 +3,7 @@
 Servo is unique in that it uses garbage collection for some things that are non-obvious.
 For example, every DOM object (a struct with `#[dom_struct]`) is owned by SpiderMonkey's garbage collector.
 This necessitates that the engine APIs that interact with these objects must be sound when garbage collection can occur at many points in the program.
-While [the garbage collector](https://firefox-source-docs.mozilla.org/js/gc.html) is complex and has multiple modes, we can assume that whenever the GC runs then the Rust program does not run.
+While [the garbage collector](https://firefox-source-docs.mozilla.org/js/gc.html) (GC) is complex and has multiple modes, we can assume that whenever the GC runs then the Rust program does not run.
 
 ## Rooting and rooted types
 
@@ -73,6 +73,9 @@ so that everybody can remember to be careful about borrows of RefCells around th
 
 # JSContext, &mut JSContext
 **TODO STIL TO BE CLEANUP THIS SECTION**
+For now we assumed that the GC can run at any point interrupting your work but that is actually
+not the case. The GC runs only at very specific circumstances.
+
 
 The pecise notion of this is that we can be sure that no GC will happen when we call `play_with_cats` but there
 might be a GC happening while we call `cleanup_after_cats`. The reason why some methods can incur GC and some methods do not are deep in the SpiderMonkey connections to servo and you will generally not be obvious.
