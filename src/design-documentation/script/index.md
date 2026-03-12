@@ -1,12 +1,9 @@
 # Script
 
-Servo is unique in that it uses garbage collection for some things that are non obvious. For example, every dom object
-(a struct with `#[dom_struct])` on it is controlled by spidermonkeys garbage collector. Extra care is to be taken when interacting with this. Which is what this document is about. While the garbage collector is complicated and has multiple modes we will assume for now the following.
-Whenever the GC runs, the rust program is stopped at whatever state it was in.
 Servo is unique in that it uses garbage collection for some things that are non-obvious.
-For example, every DOM object (a struct with `#[dom_struct])` is owned by SpiderMonkey's garbage collector.
+For example, every DOM object (a struct with `#[dom_struct]`) is owned by SpiderMonkey's garbage collector.
 This necessitates that the engine APIs that interact with these objects must be sound when garbage collection can occur at many points in the program.
-While [the garbage collector](https://firefox-source-docs.mozilla.org/js/gc.html) is complex and has multiple modes, we can assume that whenever the GC runs then the Rust program does not run concurrently.
+While [the garbage collector](https://firefox-source-docs.mozilla.org/js/gc.html) is complex and has multiple modes, we can assume that whenever the GC runs then the Rust program does not run.
 
 ## Rooting and rooted types
 
@@ -33,9 +30,8 @@ fn play_with_kittens(kittens: &Kittens) {
 ```
 
 Without rooting the GC could pause our program after we got the reference to children, move the `Kittens` struct around
-and we would have invalid access when playing with them! This holds even if Kittens was rooted by some other mechanism earlier in the call chain.
-If our data is not rooted correctly, the GC could pause our program after we got the reference to children, move the `kittens` value in memory, and we would have invalid access when playing with them!
-This is true even if `kittens` was rooted by the code that called `play_with_kittens`.
+and we would have invalid access when playing with them! This holds even if Kittens was rooted by some other mechanism earlier in the call chain. Remember that the Garbage Collector cannot change pointers of our local variable 'children' if it doesn't know aobut it.
+
 Hence, we need to transform the code into
 ```rust
 #[dom_struct]
@@ -48,6 +44,7 @@ fn play_with_kittens(cats: &Kittens) {
     play_with(children)
 }
 ```
+(We have to obviously make sure that getting the cat reference and rooting it is one atomic action but let us ignore this for now).
 Unrooting (the reverse) will automatically be done via a Drop impl on `DomRoot<T>`.
 
 To ensure web API implementations in Servo are sound, the engine code is conservative and usually returns rooted types (such as `DomRoot<Node>`).
@@ -55,43 +52,32 @@ This is an acceptable tradeoff between safety and performance because rooting an
 
 ## CanGC and Crown
 Now rooting could be easily forgotten when implementing particular exciting apis. How to we prevent this?
-Crown is the answer (if you are working on Script things you should run `./mach build --use-crown` to be sure it is checking things.
+Crown is the answer (if you are working on Script things you should run `./mach build --use-crown` to be sure it is checking things).
 In essence, Crown just checks that you do not forgotten to root things and you will sometimes see certain lints in the code talking to crown such as `#[cfg_attr(crown, allow(crown::unrooted_must_root))]`. These essentially disable crown and should only be used in very specific circumstances.
 
-But there is another piece of the puzzle. CanGC.
-Some method interacting with the DOM will never have any chance of starting GC operations. So we can relax our requirement there.
-As the name implies, if a function takes this argument it means that it can have a GC operation in the middle of it and crown needs to check it.
+But there is another piece of the puzzle. CanGC. More about CanGC can be found in [here](borrow_hazard.md).
 
 ```rust
 fn some_function(cats: &Kittens, can_gc: CanGc) {
-    let children = Root::from_ref(cats.children);
+    let children: Vec<DomRoot<Cat>> = cats.children.iter().map(|cat| cat.as_rooted()).collect();
     play_with_cats(children);
     cleanup_after_cats(children, can_gc);
 }
 ```
 
-The pecise notion of this is that we can be sure that no GC will happen when we call 'play_with_cats' but there
-might be a GC happening while we call 'cleanup_after_cats'. The reason why some methods can incur GC and some methods do not are deep in the SpiderMonkey connections to servo and you will generally not be obvious.
-In essence, you can not use can_gc until you call a method that needs it and then you go back along your callstack and give it as argument to every call until you arrive in something origininating from 'Bindings.conf' (see how to implement a dom meth'od).
+The pecise notion of this is that we can be sure that no GC will happen when we call `play_with_cats` but there
+might be a GC happening while we call `cleanup_after_cats`. The reason why some methods can incur GC and some methods do not are deep in the SpiderMonkey connections to servo and you will generally not be obvious.
+In essence, you can not use can_gc until you call a method that needs it and then you go back along your callstack and give it as argument to every call until you arrive in something origininating from 'Bindings.conf' (see how to implement a dom method).
 
-You will sometimes see '&JSContext' and &mut JSContext' and 'NoGC'. You can think of '&mut JSContext' as a 'CanGc' and 'JSContext' and 'NoGC' as the absence of 'CanGc'.
+You will sometimes see `&JSContext` and `&mut JSContext` and `NoGC`. You can think of `&mut JSContext` as a `CanGc` and `JSContext` and `NoGC` as the absence of `CanGc`.
 
-JSContext and associates are the new way as they have some advantages.
-
+JSContext and associates are the new way as they have some advantages, for example, that they tell us exactly which methods
+can have a 'GC Pause' and prevents people from forgetting to annotate 'CanGC'.
 
 # The performance of rooting
 
 ```rust
 #[dom_struct]
-struct Kittens {
-    children: Vec<Cat>
-}
-
-fn some_function(cats: &Kittens) {
-    let happy = cats.children.iter().map(|cat| Root::from_ref(cat)).any(|cat| cat.is_purring());
-    if happy {
-        println!("Happy cat found!");
-    }
 struct Kittens {
     children: Vec<Cat>
 }
@@ -107,15 +93,16 @@ fn some_function(cats: &Kittens) {
     if happy {
         println!("Happy cat found!");
     }
+}
 ```
 
-This API for interacting with kittens is safely rooted, but when there are many children the rooting and unrooting work can add up.
+This API for interacting with kittens is safely rooted, but when there are many children the rooting and unrooting work can add up. Can we somehow go around this without violating safety?
 
-Yes. Remember rusts golden rule that &mut can only be hold exactly once!
+Yes. Remember rusts golden rule that `&mut` can only be hold exactly once!
 What if we have a new type
 ```rust
 struct UnrootedDom<'a> {
-    inner_cat: Cat,
+    inner_cat: Dom<Cat>,
     js_context: &mut 'a JSContext,
 }
 ```
@@ -144,6 +131,7 @@ fn some_function(cx: &mut JSContext) {
     }
 }
 ```
+
 We will get a compile error that cx is borrowed mutably once by 'make_cats' and once by 'cleanup_after_cats'.
 But notice that the call to 'play_with_cat' is perfectly fine.
 
