@@ -1,7 +1,7 @@
 # Script
 
 Servo is unique in that it uses garbage collection for some things that are non obvious. For example, every dom object
-(a struct with `#[dom_object])` on it is controlled by spidermonkeys garbage collector. Extra care is to be taken when interacting with this. While the garbage collector is complicated and has multiple modes we will assume for now the following.
+(a struct with `#[dom_struct])` on it is controlled by spidermonkeys garbage collector. Extra care is to be taken when interacting with this. While the garbage collector is complicated and has multiple modes we will assume for now the following.
 Whenever the GC runs, the rust program is stopped at whatever state it was in.
 
 ## Rooting and you
@@ -13,9 +13,9 @@ The most often used method is Rooting. Rooting (`Root<Dom<T>>`) means that we te
 In the following we will look at some code that is close to what is happening behind some abstractions but not the complete picture.
 Let us now assume we have the following code:
 ```rust
-#[dom_object]
+#[dom_struct]
 struct Kittens {
-    children: Vec<Cat>
+    children: Vec<Dom<Cat>>
 }
 
 fn some_function(cats: &Kittens) {
@@ -28,20 +28,20 @@ Without rooting the GC could pause our program after we got the reference to chi
 and we would have invalid access when playing with them! This holds even if Kittens was rooted by some other mechanism earlier in the call chain.
 Hence, we need to transform the code into
 ```rust
-#[dom_object]
+#[dom_struct]
 struct Kittens {
-    children: Vec<Cat>
+    children: Vec<Dom<Cat>>
 }
 
 fn some_function(cats: &Kittens) {
-    let children = Root::from_ref(&cats.children);
+    let children: DomRoot<Vec<Dom<Cat>>> = cats.children().iter().map(|cat| cat.as_rooted()).collect();
     play_with(children)
 }
 ```
 Unrooting (the reverse) will automatically be done via a Drop impl on Root.
 
 When you implement some HTML api you will generally only encounter rooted things (such as 'DomRoot\<Node\>'). And rooting
-and unrooting is generally pretty fast but there is a catch.
+and unrooting is generally pretty fast.
 
 ## CanGC and Crown
 Now rooting could be easily forgotten when implementing particular exciting apis. How to we prevent this?
@@ -49,7 +49,7 @@ Crown is the answer (if you are working on Script things you should run `./mach 
 In essence, Crown just checks that you do not forgotten to root things and you will sometimes see certain lints in the code talking to crown such as `#[cfg_attr(crown, allow(crown::unrooted_must_root))]`. These essentially disable crown and should only be used in very specific circumstances.
 
 But there is another piece of the puzzle. CanGC.
-Some methods interacting with the DOM will never have any change of starting GC operations. So we can relax our requirement there.
+Some method interacting with the DOM will never have any chance of starting GC operations. So we can relax our requirement there.
 As the name implies, if a function takes this argument it means that it can have a GC operation in the middle of it and crown needs to check it.
 
 ```rust
@@ -61,8 +61,8 @@ fn some_function(cats: &Kittens, can_gc: CanGc) {
 ```
 
 The pecise notion of this is that we can be sure that no GC will happen when we call 'play_with_cats' but there
-might be a GC happening while we call 'cleanup_after_cats'. The reason why some methods can incur GC and some methods do not are deep in the SpiderMonkey connections to servo and you will generally be obvious.
-In essence, you can not use can_gc until you call a method that needs it and then you go back along your callstack and give it as argument to every call until you arrive in something origininating from 'Bindings.conf' (see how to implement a dom meth'od). 
+might be a GC happening while we call 'cleanup_after_cats'. The reason why some methods can incur GC and some methods do not are deep in the SpiderMonkey connections to servo and you will generally not be obvious.
+In essence, you can not use can_gc until you call a method that needs it and then you go back along your callstack and give it as argument to every call until you arrive in something origininating from 'Bindings.conf' (see how to implement a dom meth'od).
 
 You will sometimes see '&JSContext' and &mut JSContext' and 'NoGC'. You can think of '&mut JSContext' as a 'CanGc' and 'JSContext' and 'NoGC' as the absence of 'CanGc'.
 
@@ -72,7 +72,7 @@ JSContext and associates are the new way as they have some advantages.
 # The performance of rooting
 
 ```rust
-#[dom_object]
+#[dom_struct]
 struct Kittens {
     children: Vec<Cat>
 }
@@ -96,10 +96,10 @@ struct UnrootedDom<'a> {
 }
 ```
 
-Then whenever we have a handle on `UnrootedDom` we know that as long as this lifes we can not call any methods that has a GC.
+Then whenever we have a handle on `UnrootedDom` we know that as long as this lives we can not call any methods that has a GC.
 The following is **invalid** code.
 ```rust
-#[dom_object]
+#[dom_struct]
 struct Kittens {
     children: Vec<UnrootedDom<'_>>,
 }
@@ -120,14 +120,14 @@ fn some_function(cx: &mut JSContext) {
     }
 }
 ```
-We will get a compile error that cx is borrowed mutabil once by 'make_cats' and once by 'cleanup_after_cats'.
+We will get a compile error that cx is borrowed mutably once by 'make_cats' and once by 'cleanup_after_cats'.
 But notice that the call to 'play_with_cat' is perfectly fine.
 
 This is the essence of 'UnrootedDomNode' and similar 'Unrooted' methods. Some of these might also take the 'NoGC' argument
 ```rust
 fn play_with_cats<'a>(no_gc: &'a NoGC, cat: Cat) {}
 
-fn some_function(cx: &mut JSContext, cat: UnrootedDom<'_>) {
+fn some_function(cx: &mut JSContext, cat: &Cat) {
     play_with_cats(cx.no_gc(), cat);
 }
 ```
