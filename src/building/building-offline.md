@@ -15,7 +15,7 @@ uv sync
 ```
 
 In cases where this is difficult, you can also build Servo using `cargo`, in which case any recent Python version (>= 3.11) should be sufficient (but this is not tested in CI).
-Note that `./mach build` will enable the `media-gstreamer` feature by default - When using `cargo` you need to enable this feature manually, and set any gstreamer-related environment variables as well.
+Note that `./mach build` will enable the `media-gstreamer` feature by default - when using `cargo` you need to enable this feature manually, and set any gstreamer-related environment variables as well.
 The required environment variables for the gstreamer feature are not documented here, but documentation improvements based on our `./mach build` code are welcome.
 
 ```shell
@@ -37,10 +37,10 @@ If there is interest in offline builds for these platforms, contributions are we
 
 Online builds use prebuilt SpiderMonkey artifacts by default, hosted on [servo/mozjs](https://github.com/servo/mozjs)'s GitHub releases.
 If you want to simplify or speed-up your build environment, you can pre-download these artifacts yourself and use `MOZJS_ARCHIVE=path/to/libmozjs.tar.gz` to use the prebuilt artifacts in offline builds.
-You can verify the integrity of the downloaded artifacts by using [GitHub attestions] with the `gh` tool:
+You can verify the integrity of the downloaded artifacts by using [GitHub attestations] with the `gh` tool:
 
 ```shell
-gh attestion verify path/to/libmozjs.tar.gz -R servo/mozjs
+gh attestation verify path/to/libmozjs.tar.gz -R servo/mozjs
 ```
 
-[GitHub attestions]: https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations/use-artifact-attestations
+[GitHub attestations]: https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations/use-artifact-attestations
