@@ -42,6 +42,10 @@
     - [Stable WPT Failures](contributing/guides/diagnosing-errors/stable-wpt-errors.md)
     - [Intermittent WPT Failures](contributing/guides/diagnosing-errors/intermittent-wpt-errors.md)
 
+# Maintainer Guides
+
+- [Making a Release](for-maintainers/release-process.md)
+
 # Design Documentation
 
 - [Architecture](design-documentation/architecture.md)
