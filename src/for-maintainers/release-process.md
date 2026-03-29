@@ -16,7 +16,7 @@ The branch should be pushed to the upstream servo repository.
 
 ### Creating a draft release for testing
 
-Go the `actions` tab of the servo repository, and select the [`Release` workflow](https://github.com/servo/servo/actions/workflows/release.yml).
+Go to the `actions` tab of the servo repository, and select the [`Release` workflow](https://github.com/servo/servo/actions/workflows/release.yml).
 Select the `Run workflow` button on the top right corner.
 Choose the branch `release/vX.Y.Z` (that you just pushed) as the branch to run the workflow on.
 Leave the tickbox **unchecked** to create a release on the **nightly-releases repository**, since that allows non-maintainers to help test the release.
@@ -46,9 +46,8 @@ Click on `Generate release notes` and then wrap the generated release notes with
 </details>
 ```
 
-Contact the dedicated signer of the macos artifact and ask them to sign the release. 
+Contact the dedicated signer of the macOS artifact and ask them to sign the release. 
 This might take a while, so this should be done a couple of days before the planned release date.
 
-Finally, add our usual release notes summary, linking to the blog post and to the common issues section.
-Check the previous release notes for examples.
-Once the blog-post is published, we publish the release.
+Finally, add our usual release notes summary, linking to the blog post and to the common issues section (check the previous release notes for examples).
+Once the blog post is published, we publish the release.
