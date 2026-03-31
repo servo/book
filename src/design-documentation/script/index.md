@@ -1,4 +1,5 @@
 # Script
+This document should get you up to speed on Script Thread, rooting and Gc. It is by no means complete.
 
 Servo is unique in that it uses garbage collection for some things that are non-obvious.
 For example, every DOM object (a struct with `#[dom_struct]`) is owned by SpiderMonkey's garbage collector.
@@ -49,15 +50,56 @@ fn play_with_kittens(cats: &Kittens) {
 Unrooting (the reverse) will automatically be done via a Drop impl on `DomRoot<T>`.
 
 To ensure web API implementations in Servo are sound, the engine code is conservative and usually returns rooted types (such as `DomRoot<Node>`).
-This is an acceptable tradeoff between safety and performance because rooting and unrooting operations are efficient.
+This is an acceptable tradeoff between safety and performance because rooting and unrooting operations are efficient. (How efficient? They are essentially just adding and removing from a vector).
 
 ## Crown and CanGc
 Now rooting could be easily forgotten when implementing particular exciting apis. How to we prevent this?
 Crown is the answer (if you are working on Script things you should run `./mach build --use-crown` to be sure it is checking things).
 In essence, Crown just checks that you do not forgotten to root things and you will sometimes see certain lints in the code talking to crown such as `#[cfg_attr(crown, allow(crown::unrooted_must_root))]`. These essentially disable crown and should only be used in very specific circumstances.
 
-But there is another piece of the puzzle. CanGC. CanGc is essentially a marker for you, the
-programmer, to be careful of borrows of RefCells. The details can be found [here](borrow_hazard.md).
+But there is another piece of the puzzle tangentially related. While rooting gives us the way to enforce the GC to play nice with our rust pointers, we also have rust RefCells. While the pointers for these are now properly handled by the GC, the GC needs to borrow the `RefCell` to test reachability and redirect the pointer.
+But we can only borrow a `RefCell` not simulataneously. What happens if we have a Gc pause while having a cell borrowd?
+
+```rust
+struct CatCarrier {
+    cat: RefCell<Dom<Cat>>,
+}
+
+fn some_function(carrier: &CatCarrier) {
+    let mutable_cat = carrier.inner_cat.borrow_mut().as_rooted();
+    play_with_cat_mutably(mutable_cat);
+    cleanup_playspace();
+}
+```
+Now assume that `cleanup_playspace` can call the GC. It could then happen that we
+- Hold the mutable borrow to the cat inside the carrier.
+- Cleanup after the cat.
+- The GC pauses and tries to trace the rooted `mutable_cat` via borrowing the RefCell.
+- Panics because the RefCell can only be borrowed mutably once!
+
+We call this a borrow hazard. To prevent this we have the following solution.
+
+```rust
+fn some_function(carrier: &CatCarrier, can_gc: CanGc) {
+    {
+        let mutable_cat = carrier.inner_cat.borrow_mut().as_rooted();
+        play_with_cat_mutably(mutable_cat);
+    }
+    cleanup_playspace(can_gc);
+}
+```
+
+Now this example is not complete and only here to illustrate the following point.
+CanGC (which is a trivial type and easily copyable) was introduced, not as a
+formal prevention of the borrow hazard but as a note to the programmer. It says:
+Be careful if you want to have a mutable borrow that it does not cross the boundaries
+of a function taking `CanGc`.
+
+There are more details [here](borrow_hazard.md) on how to recognize and handle borrow hazards.
+We only want to use this as a motivating example for the following section on `&JSContext`
+and `&mut JSContext`.
+
+Our running example would then look something like this:
 
 ```rust
 fn some_function(cats: &Kittens, can_gc: CanGc) {
@@ -66,29 +108,30 @@ fn some_function(cats: &Kittens, can_gc: CanGc) {
     cleanup_after_cats(children, can_gc);
 }
 ```
-
-In essence, if a method you are calling needs `CanGc` you should have your method use `CanGc`
-so that everybody can remember to be careful about borrows of RefCells around the code.
-
-
-# JSContext, &mut JSContext
-**TODO STIL TO BE CLEANUP THIS SECTION**
-For now we assumed that the GC can run at any point interrupting your work but that is actually
-not the case. The GC runs only at very specific circumstances.
-
-
 The pecise notion of this is that we can be sure that no GC will happen when we call `play_with_cats` but there
 might be a GC happening while we call `cleanup_after_cats`. The reason why some methods can incur GC and some methods do not are deep in the SpiderMonkey connections to servo and you will generally not be obvious.
 
+What does it mean for you?
+In essence, if a method you are calling needs `CanGc` you should have your method use `CanGc`
+so that everybody can remember to be careful about borrow hazards around the code.
 
 
+# JSContext, &mut JSContext
+But as you can see this can be hazardous. What if somebody forgot to use the `CanGc` attribute
+in their function call but actually does call the GC somewhere deep in the call stack?
+Then we created a borrow hazard that will lead to crashes we might not understand.
+To solve this we introduce `JSContext` and `&mut JSContext`.
+Here we require that any SpiderMonkey method that can run the Gc will need a `&mut JSContext` reference. Because these cannot be created outside of the Dom bindings we will have to
+carry these through all our function calls.
 
+Similarly, we have the related types of `&JSContext` which means that we call some SpiderMonkey API that does not call the GC.
+We also have the `NoGC` type which can be constructed via a `JSContext`. You can think of this as enforcing that no GC methods can be called when a `NoGC` is held. Think ofthe `NoGC` being essentially a `struct NoGC(&mut JSContext)`, hence, it forbids any method needing a `&mut JSContext` being called while `NoGC` is alive (via the multiple mutable borrow rule).
 
+> Note:
+> Currently the servo codebase is transforming from the previous `CanGc` approach
+> to the `JSContext` approach. You might see both in the codebase and also several
+> escape hatches.
 
-You will sometimes see `&JSContext` and `&mut JSContext` and `NoGC`. You can think of `&mut JSContext` as a `CanGc` and `JSContext` and `NoGC` as the absence of `CanGc`.
-
-JSContext and associates are the new way as they have some advantages, for example, that they tell us exactly which methods
-can have a 'GC Pause' and prevents people from forgetting to annotate 'CanGC'.
 
 # The performance of rooting
 
@@ -159,9 +202,6 @@ fn some_function(cx: &mut JSContext, cat: &Cat) {
     play_with_cats(cx.no_gc(), cat);
 }
 ```
-
-## Further information
-Now that you understand the basics of read only access, there is more to learn on using writeable Dom Objects [[borrow_hazard.md]].
 
 
 ## More Information
