@@ -7,6 +7,8 @@ At the end of the month, prepare a branch based on latest `main`.
 Run `./mach release X.Y.Z` to bump the version numbers and commit the changes. 
 Open a pull request on servo, to merge the branch into `main`.
 Ideally, the pull request is merged timely on the last or the first day of the month, so that the version number bump correlates closely with the blog-post range.
+The blog-post range is up to (including) the head of the last nightly release of the month.
+The version bump should be merged **after** this commit, so that all changes mentioned in the blog post are included in the release.
 
 ### Creating a release branch
 
