@@ -12,8 +12,8 @@ To get started, please do the following:
    There are many resources online for how to do this, but one of the best is the official [Learning Rust documentation](https://doc.rust-lang.org/stable/#learning-rust).
    If you are familiar with other imperative programming languages, you can learn Rust as you work more on Servo, but having a basic familiarity with the language is very useful to get started.
 4. [Set up your editor](editor-setup.md) so that it integrates with `rust-analyzer`.
-5. Read our [Style Guide](style-guide.md) for expectations for the code your contribute.
-6. Read and following the [steps for making a pull request](making-a-pull-request.md).
+5. Read our [Style Guide](style-guide.md) for expectations about the code you contribute.
+6. Read and follow the [steps for making a pull request](making-a-pull-request.md).
 
 ## Working on an issue
 
@@ -55,7 +55,7 @@ Yes.
 
 #### Can I use an AI tool to assist in finding bugs or security issues in Servo?
 
-Yes, but you must verify the output of any AI tools before filing issues against the Servo project.
+Yes, but you must verify the output of any AI tool before filing issues against the Servo project.
 Any issues filed against the project are expected to abide by the project's AI policy—you must be able to reproduce and validate any findings, not simply trust the tool's output.
 
 #### Can I use an AI tool to help me understand Servo's codebase better?
