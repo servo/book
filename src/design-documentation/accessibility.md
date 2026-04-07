@@ -45,8 +45,7 @@ Properties which refer to other nodes in the tree, including `children`, refer t
 
 [`TreeUpdate`](https://docs.rs/accesskit/0.24.0/accesskit/struct.TreeUpdate.html) represents a _change_ to an accessibility tree.
 The initial full tree for an application or subtree is sent as a `TreeUpdate` with all known nodes, and the necessary metadata for the tree; subsequent `TreeUpdate`s need only include nodes which have changed and the tree's `TreeId`.
-Any node which is added or changed in any way, including adding or removing child nodes, must be included in the `TreeUpdate` in full (i.e.
-not only changed properties for the node).
+Any node which is added or changed in any way, including adding or removing child nodes, must be included in the `TreeUpdate` in full (i.e. not only changed properties for the node).
 
 Somewhat counter-intuitively, AccessKit doesn't provide a schema for an accessibility tree data structure to be used as a "source" for `TreeUpdate`s - it's up to the application to produce `TreeUpdate`s based on any UI changes in any way it sees fit.
 
@@ -73,15 +72,8 @@ Adapters map between this platform-independent representation and the various pl
 
 Typically, an adapter will provide a method which takes a `TreeUpdate`, and uses the [`accesskit_consumer` API](https://docs.rs/accesskit_consumer/latest/accesskit_consumer/index.html) to update an in-memory tree which can be queried via platform APIs, triggering the appropriate notifications to the API in the process.
 
----
-
-We do this by sending AccessKit [tree updates](https://docs.rs/accesskit/0.23.0/accesskit/struct.TreeUpdate.html) from layout (in web content processes) to an embedder-provided AccessKit adapter (in the main process), such as [accesskit_winit](https://docs.rs/accesskit_winit/0.31.1/accesskit_winit/struct.Adapter.html).
-Internally the adapter uses [accesskit_consumer](https://docs.rs/accesskit_consumer/0.33.1/accesskit_consumer/) to retain the tree.
-
- ([embedder process](architecture.md)).
- 
- ---
-
+AccessKit provides platform-specific adapters for Linux, macOS and Windows, as well as a cross-platform [`accesskit_winit`](https://crates.io/crates/accesskit_winit) adapter which can be used by projects using the `winit` cross-platform windowing library.
+`accesskit_winit` pulls in the respective platform-specific adapters under the hood.
 
 ### Actions
 
@@ -97,7 +89,7 @@ This will return a randomly-generated `TreeId`, which will remain stable for the
 The WebView's `TreeId` can also be accessed via the [`accesskit_tree_id()`](https://doc.servo.org/servo/webview/struct.WebView.html#method.accesskit_tree_id) method.
 
 Once accessibility is active for the WebView, it will begin to emit `TreeUpdate`s via the [`WebViewDelegate::notify_accessibility_tree_update()`](https://doc.servo.org/servo/trait.WebViewDelegate.html#method.notify_accessibility_tree_update) method.
-These updates include the AccessKit `TreeId` for the WebView, so they must be preceded by a `TreeUpdate` for the [root tree](https://docs.rs/accesskit/struct.TreeId.html#associatedconstant.ROOT) for the application which includes a [graft node](https://docs.rs/accesskit/struct.Node.html#method.tree_id) for the `WebView`'s subtree.
+These updates include the AccessKit `TreeId` for the WebView, so a `TreeUpdate` for the [root tree](https://docs.rs/accesskit/struct.TreeId.html#associatedconstant.ROOT) for the application which includes a [graft node](https://docs.rs/accesskit/struct.Node.html#method.tree_id) for the `WebView`'s subtree must be sent to the Adapter before they are.
 
 The `WebView` will continue to emit `TreeUpdate`s for any change to its accessibility tree until either its `set_accessibility_active()` method is used to deactivate the accessibility tree, or its lifetime ends.
 Accessibility tree changes will be triggered by navigations within the webview, as well as any changes to the currently active document.
@@ -107,25 +99,36 @@ Servo manages subtrees within the `WebView`'s accessibility tree; the embedder o
 TODO: diagram
 ```
 
-Still to come: embedder API for forwarding actions to the appropriate WebView.
+Still to be implemented: embedder API for forwarding actions to the appropriate WebView.
 
 ## Servo accessibility tree internal design
 
-![](https://notes.igalia.com/uploads/5d85e981-4c2b-41a9-875c-226781663a6d.png)
-By @delan in https://github.com/servo/servo/pull/43012
+![Diagram of the various components of the aggregated Servo accessibility tree. Full description below.](../images/servo-accessibility-trees.png)
+
+<details>
+<summary>Full description of Servo accessibility trees diagram</summary>
+The diagram shows different components of an embedding application nesting within one another in a tree structure, with the root node at the left and the leaf nodes to the right. It's loosely arranged in columns, with labels for each column:
+- embedding application, on the left;
+- webviews (e.g. "tabs"), in the middle;
+- pipelines for documents, on the right.
+
+The root node is the embedding application, shown as two application windows.
+
+The embedding application has two arrows pointing into it, from two webviews. The two webviews are shown as two separate tabs in a tab component.
+
+The top webview has one solid arrow pointing into it, from a document labelled "active", and two dotted arrows from documents labelled "back" and "forward" respectively.
+
+The bottom webiew has a single, solid arrow pointing into it from a document labelled "top". This document, in turn, has two solid arrows pointing into it, from two documents each labelled "iframe".
+</details>
 
 ### WebView subtree
 
 Each WebView has a minimal tree consisting of a [`ScrollView`](https://docs.rs/accesskit/0.24.0/accesskit/enum.Role.html#variant.ScrollView) and a graft node for the top-level pipeline (i.e. the top-level document).
 
-When accessibility is activated, and when the top-level pipeline changes, the constellation sends an `EmbedderMsg::AccessibilityTreeIdChanged()` message with the new top-level `accesskit::TreeId`.
-This triggers the WebView to emit an `accesskit::TreeUpdate` updating the graft node with the new `TreeId`.
- 
+A `TreeUpdate` with an updated graft node is emitted when accessibility is enabled for the WebView, and when the top-level pipeline (i.e. the top-level Document) changes.
+
 ```
 // TODO: diagram
-```
-```
-// TODO: redundant with below, need to edit
 ```
 
 ### Accesibility state for ConstellationWebView and Pipelines
