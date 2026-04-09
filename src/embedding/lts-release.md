@@ -29,7 +29,8 @@ This means that LTS patch releases of servo shouldn't be expected to be avaiable
 
 - Servo is provided AS IS and no specific security guarantees are given.
   The LTS releases are provided on a best-effort basis by interested community members.
-- As mentioned above servo does not have a 1.0 release yet, which mean that production usage of servo should be evaluated by people it
+- As mentioned above servo does not have a 1.0 release yet, which means that production usage of servo should be carefully evaluated.
+  The risk profile of using servo in an app to render known, trusted content is very different from using servo as a browser to render arbitrary content.
 
 ## LTS release maintainers
 
