@@ -21,6 +21,11 @@
   - [Building Offline](building/building-offline.md)
 - [General Troubleshooting](building/general-troubleshooting.md)
 
+# Embedding Servo
+
+- [Overview](embedding/overview.md)
+- [LTS Release](embedding/lts-release.md)
+
 # Contributing
 
 - [Getting Started](contributing/getting-started.md)
