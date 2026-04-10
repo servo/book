@@ -16,7 +16,7 @@ For now, this means:
 - Patch releases will be released as needed; there is no fixed schedule.
 - Only the `servo` library and its dependencies are in scope.
   The browser demo, servoshell, is explicitly out of scope.
-- The minimum supported Rust version (MSRV) will not be bumped during the LTS release cycle.
+- The minimum supported Rust version (MSRV) will not be increased on the LTS branch, but may increase when upgrading to the next LTS version
 - Releases will be published to crates.io **if possible**, but embedders should expect that `git` dependencies might be required.
 
 ## Patching CVEs in downstream crates
