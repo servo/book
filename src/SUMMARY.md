@@ -57,6 +57,7 @@
 - [Directory structure\*](design-documentation/directory-structure.md)
 - [Experimental features](design-documentation/experimental-features.md)
 - [Script\*](design-documentation/script/index.md)
+  - [DOM Bindings](design-documentation/script/dom-bindings.md)
   - [Microtasks\*](design-documentation/script/microtasks.md)
   - [Garbage Collection and RefCell](design-documentation/script/garbage-collection-and-refcell.md)
 - [Style\*](design-documentation/style.md)
