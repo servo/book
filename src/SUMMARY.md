@@ -52,9 +52,8 @@
 - [Making a Release](for-maintainers/release-process.md)
 
 # Design Documentation
-
 - [Architecture](design-documentation/architecture.md)
-- [Directory structure\*](design-documentation/directory-structure.md)
+- [Project Structure\*](design-documentation/project-structure.md)
 - [Experimental features](design-documentation/experimental-features.md)
 - [Script\*](design-documentation/script/index.md)
   - [Microtasks\*](design-documentation/script/microtasks.md)
