@@ -5,13 +5,20 @@
 When profiling Servo or troubleshooting performance issues, make sure your build is optimised while still allowing for accurate profiling data.
 
 ```sh
-$ ./mach build --profile profiling --with-frame-pointer
+./mach build --profile profiling --with-frame-pointer
 ```
 
 - **--profile profiling** builds Servo with [our profiling configuration](../building/building.md#build-profiles)
 - **--with-frame-pointer** builds Servo with stack frame pointers on all platforms
 
+The matching profile needs to be selected when running Servo:
+
+```sh
+./mach run --profile profiling http://example.org
+```
+
 Several ways to get profiling information about Servo's runs:
+* [Tracing with Perfetto](#tracing-with-perfetto)
 * [Interval Profiling](#interval-profiling)
   * [TSV Profiling](#tsv-profiling)
   * [Generating Timelines](#generating-timelines)
@@ -19,48 +26,82 @@ Several ways to get profiling information about Servo's runs:
 * [Memory Profiling](#memory-profiling)
 * [Using macOS Instruments](#using-macos-instruments)
 
+
+## Tracing with Perfetto
+
+Tracing works by instrumenting specific functions (or portions of code) with explicit annotations such as `time_profile!` and `servo_tracing::*`.
+It deterministically records every call through instrumented code, but does not provide any visibility into code that is not instrumented.
+
+In contrast, sampling profilers can see everything but only probabilistically and thus get more accurate with long-running loops.
+
+To use tracing, enable related compile-time features:
+
+```sh
+./mach build --profile profiling --features tracing tracing-perfetto
+```
+
+Then run Servo with the `SERVO_TRACING` environment variable set to [`EnvFilter` directives] to select which traces to enable:
+
+```
+SERVO_TRACING=… ./mach run --profile profiling http://example.org
+```
+
+For example:
+
+- `SERVO_TRACING=off` disables all tracing (this is the default)
+- `SERVO_TRACING=trace` enables all tracing (yields massive traces due to `compositing`)
+- `SERVO_TRACING=[{servo_profiling}]` does the same, since we implicitly filter on `servo_profiling`
+- `SERVO_TRACING=info` would enable only the `info` level and above, but we don’t yet use levels
+- `SERVO_TRACING=layout` enables tracing in the `layout` crate only
+- `SERVO_TRACING=trace,compositing=off` enables all tracing except in the `compositing` crate
+- `SERVO_TRACING=[handle_reflow]` enables tracing in spans named “handle_reflow” *or their descendants*
+
+This creates a `servo.pftrace` file in the current directory, which can be visualized in [ui.perfetto.dev](https://ui.perfetto.dev/).
+
+[`EnvFilter` directives]: https://docs.rs/tracing-subscriber/0.3.23/tracing_subscriber/filter/struct.EnvFilter.html#directives
+
+
 ## Interval Profiling
 
 Using the -p option followed by a number (time period in seconds), you can spit out profiling information to the terminal periodically.
 To do so, run Servo on the desired site (URLs and local file paths are both supported) with profiling enabled:
+
 ```
- ./mach run --release -p 5 https://www.cnn.com/
+./mach run --profile profiling http://example.org -p 5
 ```
 
 In the example above, while Servo is still running (AND is processing new passes), the profiling information is printed to the terminal every 5 seconds.
 
 Once the page has loaded, hit ESC (or close the app) to exit.
 Profiling output will be provided, broken down by area of the browser and URL.
-For example, if you would like to profile loading Hacker News, you might get output of the form below:
+For example, you might get output of the form below:
+
 ```
-[larsberg@lbergstrom servo]$ ./mach run --release -p 5 http://news.ycombinator.com/
 _category_                          _incremental?_ _iframe?_             _url_                  _mean (ms)_   _median (ms)_      _min (ms)_      _max (ms)_       _events_ 
-Compositing                             N/A          N/A                  N/A                        0.0440          0.0440          0.0440          0.0440               1
-Layout                                  no           no      https://news.ycombinator.com/          29.8497         29.8497         29.8497         29.8497               1
-Layout                                  yes          no      https://news.ycombinator.com/          11.0412         10.9748         10.8149         11.3338               3
-+ Style Recalc                          no           no      https://news.ycombinator.com/          22.8149         22.8149         22.8149         22.8149               1
-+ Style Recalc                          yes          no      https://news.ycombinator.com/           5.3933          5.2915          5.2727          5.6157               3
-+ Restyle Damage Propagation            no           no      https://news.ycombinator.com/           0.0135          0.0135          0.0135          0.0135               1
-+ Restyle Damage Propagation            yes          no      https://news.ycombinator.com/           0.0146          0.0149          0.0115          0.0175               3
-+ Primary Layout Pass                   no           no      https://news.ycombinator.com/           3.3569          3.3569          3.3569          3.3569               1
-+ Primary Layout Pass                   yes          no      https://news.ycombinator.com/           2.8727          2.8472          2.8279          2.9428               3
-| + Parallel Warmup                     no           no      https://news.ycombinator.com/           0.0002          0.0002          0.0002          0.0002               2
-| + Parallel Warmup                     yes          no      https://news.ycombinator.com/           0.0002          0.0002          0.0001          0.0002               6
-+ Display List Construction             no           no      https://news.ycombinator.com/           3.4058          3.4058          3.4058          3.4058               1
-+ Display List Construction             yes          no      https://news.ycombinator.com/           2.6722          2.6523          2.6374          2.7268               3
+Painting                                N/A          N/A                  N/A                        6.8177          0.9512          0.0035         30.7573               6
+Layout                                  yes          yes     http://example.org/                     0.0016          0.0016          0.0016          0.0016               1
+Layout                                  no           yes     http://example.org/                    14.4966         14.4966         14.4966         14.4966               1
+ScriptParseHTML                         no           yes     http://example.org/                     0.8507          1.7009          0.0004          1.7009               2
+TimeToFirstPaint                        no           yes     http://example.org/                     0.0000          0.0000          0.0000          0.0000               1
+TimeToFirstContentfulPaint              no           yes     http://example.org/                     0.0000          0.0000          0.0000          0.0000               1
+
+_url_   _blocked layout queries_
+
 ```
 
-In this example, when loading the page we performed one full layout and three incremental layout passes, for a total of (29.8497 + 11.0412 * 3) = 62.9733ms.
+In this example, when loading the page we performed one full layout and one incremental layout passes.
 
 ### TSV Profiling
 
 Using the -p option followed by a file name, you can spit out profiling information of Servo's execution to a TSV (tab-separated because certain url contained commas) file.
 The information is written to the file only upon Servo's termination.
-This works well with the -x OR -o option so that performance information can be collected during automated runs.
+This works well with the `-x`, `-z`, and `-o` options so that performance information can be collected during automated runs.
 Example usage:
+
 ```
-./mach run -r -o out.png -p out.tsv https://www.google.com/
+./mach run --profile profiling http://example.org -zxo out.png -p out.tsv
 ```
+
 The formats of the profiling information in the Interval and TSV Profiling options are the essentially the same; the url names are not truncated in the TSV Profiling option.
 
 ### Generating Timelines
@@ -68,7 +109,9 @@ The formats of the profiling information in the Interval and TSV Profiling optio
 Add the `--profiler-trace-path /timeline/output/path.html` flag to output the profiling data as a self contained HTML timeline.
 Because it is a self contained file (all CSS and JS is inline), it is easy to share, upload, or link to from bug reports.
 
-    $ ./mach run --release -p 5 --profiler-trace-path trace.html https://reddit.com/
+```
+./mach run --profile profiling http://example.org -p 5 --profiler-trace-path trace.html
+```
 
 #### Usage:
 
@@ -101,44 +144,36 @@ To control the sampling rate (default 10ms), set the `SAMPLING_RATE` environment
 
 ## Memory Profiling
 
-Using the -m option followed by a number (time period in seconds), you can spit out profiling information to the terminal periodically.
-To do so, run Servo on the desired site (URLs and local file paths are both supported) with profiling enabled:
-```
-./mach run --release -m 5 http://example.com/
-```
-
-In the example above, while Servo is still running (AND is processing new passes), the profiling information is printed to the terminal every 5 seconds.
+* Run Servoshell normally
+* Open a new tab
+* Navigate to `about:memory`
+* Click `Measure`
+* See a report similar to this:
 
 ```
-./mach run --release -m 5 http://example.com/
-Begin memory reports 5
-|
-|  115.15 MiB -- explicit
-|     101.15 MiB -- jemalloc-heap-unclassified
-|      14.00 MiB -- url(http://example.com/)
-|         10.01 MiB -- layout-thread
-|            10.00 MiB -- font-context
-|             0.00 MiB -- stylist
-|             0.00 MiB -- display-list
-|          4.00 MiB -- js
-|             2.75 MiB -- malloc-heap
-|             1.00 MiB -- gc-heap
-|                0.56 MiB -- decommitted
-|                0.35 MiB -- used
-|                0.06 MiB -- unused
-|                0.02 MiB -- admin
-|             0.25 MiB -- non-heap
-|       0.00 MiB -- memory-cache
-|          0.00 MiB -- private
-|          0.00 MiB -- public
-|
-|  121.89 MiB -- jemalloc-heap-active
-|  111.16 MiB -- jemalloc-heap-allocated
-|  203.02 MiB -- jemalloc-heap-mapped
-|  272.61 MiB -- resident
-|404688.75 MiB -- vsize
-|
-End memory reports
+  115.15 MiB -- explicit
+     101.15 MiB -- jemalloc-heap-unclassified
+      14.00 MiB -- url(http://example.org/)
+         10.01 MiB -- layout-thread
+            10.00 MiB -- font-context
+             0.00 MiB -- stylist
+             0.00 MiB -- display-list
+          4.00 MiB -- js
+             2.75 MiB -- malloc-heap
+             1.00 MiB -- gc-heap
+                0.56 MiB -- decommitted
+                0.35 MiB -- used
+                0.06 MiB -- unused
+                0.02 MiB -- admin
+             0.25 MiB -- non-heap
+       0.00 MiB -- memory-cache
+          0.00 MiB -- private
+          0.00 MiB -- public
+
+  121.89 MiB -- jemalloc-heap-active
+  111.16 MiB -- jemalloc-heap-allocated
+  203.02 MiB -- jemalloc-heap-mapped
+  272.61 MiB -- resident
 ```
 
 ## Using macOS Instruments
@@ -148,19 +183,19 @@ Xcode has a [instruments](https://help.apple.com/instruments/mac/10.0/) tool to 
 First, you need to install Xcode instruments:
 
 ```
-$ xcode-select --install
+xcode-select --install
 ```
 
 Second, install `cargo-instruments` via Homebrew:
 
 ```
-$ brew install cargo-instruments
+brew install cargo-instruments
 ```
 
 Then, you can simply run it via CLI:
 
 ```
-$cargo instruments -t Allocations
+cargo instruments -t Allocations
 ```
 
 Here are some links and resources for help with Instruments (Some will stream only on Safari):
@@ -175,15 +210,7 @@ Here are some links and resources for help with Instruments (Some will stream on
 
 ## Profiling WebRender
 
-Use the following command to get some profile data from WebRender:
-
-    $ ./mach run -w -Z wr-stats --release http://www.nytimes.com
-
-When you run Servo with this command, you'll be looking at three things:
-
-- CPU (backend):    The amount of time WebRender is packing and batching data.
-- CPU (Compositor): Amount of time WebRender is issuing GL calls and interacting with the driver.
-- GPU: Amount of time the GPU is taking to execute the shaders.
+When running Servoshell, press CTRL+F12 to show (or hide) the WebRender overlay.
 
 
 ## Webpage snapshots
