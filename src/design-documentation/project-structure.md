@@ -54,31 +54,29 @@
 
 # Repositories
 
-The Servo project maintains a number of repositories that are either independent from Servo or forked from some upstream
-project with ongoing updates.
+The Servo project maintains a number of repositories that are either released independently of Servo or are forked from an upstream project.
 
 ## Widely-used in Rust ecosystem
 
 - [euclid](https://github.com/servo/euclid): Geometric types
 - [ipc-channel](https://github.com/servo/ipc-channel): Interprocess communication channels
-- [html5ever](https://github.com/servo/html5ever): an HTML5 parser written in rust
-- [rust-cssparser](https://github.com/servo/rust-cssparser): A CSS parser written in Rust.
-- [rust-url](https://github.com/servo/rust-url): URL library for Rust, based on the [URL Standard](https://url.spec.whatwg.org/). Also known as url.
+- [html5ever](https://github.com/servo/html5ever): an HTML5 parser written in Rust
+- [rust-cssparser](https://github.com/servo/rust-cssparser): A CSS parser written in Rust
+- [rust-url](https://github.com/servo/rust-url): URL library for Rust, based on the [URL Standard](https://url.spec.whatwg.org/). Also known as `url`.
 - [string-cache](https://github.com/servo/string-cache): String interning library
 
 ## Forks
 
 - [mozjs](https://github.com/servo/mozjs): Servo's fork of SpiderMonkey and Rust bindings
-- [rust-content-security-policy](https://github.com/servo/rust-content-security-policy): Parse and validate Content Security Policy
-- [stylo](https://github.com/servo/stylo): Servo's CSS implementation with rolling updates from the upstream in the Gecko repository
-- [webrender](https://github.com/servo/webrender): A fork of Firefox's WebRender with a few small changes for Servo.
+- [stylo](https://github.com/servo/stylo): Servo's CSS implementation with regular synchronization with the upstream version in the Gecko repository
+- [webrender](https://github.com/servo/webrender): A fork of Firefox's WebRender with a few small changes for Servo
 
 ## Servo-internal
 
 - [book](https://github.com/servo/book): This book!
-- [ci-runners](https://github.com/servo/ci-runners): Scripts and tools used for servo CI (continuous integration)
+- [ci-runners](https://github.com/servo/ci-runners): Scripts and tools used for Servo's CI (continuous integration)
 - [malloc_size_of](https://github.com/servo/malloc_size_of): Measure the runtime size of values
-- [media](https://github.com/servo/media): the media backend that Servo uses, currently GStreamer-only
-- [servo](https://github.com/servo/servo)servo: The main browser
-- [surfman](https://github.com/servo/surfman): Low-Level cross platform Rust library for managing graphic surfaces
+- [media](https://github.com/servo/media): The media backend that Servo uses, currently GStreamer-only
+- [servo](https://github.com/servo/servo): The main repository for the Servo web platform engine
+- [surfman](https://github.com/servo/surfman): Low-level cross-platform Rust library for managing graphic surfaces
 - [wpt](https://github.com/servo/wpt): Servo's fork of the Web Platform Tests
