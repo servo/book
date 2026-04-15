@@ -123,11 +123,12 @@ But as you can see this can be hazardous. What if somebody forgot to use the `Ca
 in their function call but actually does call the GC somewhere deep in the call stack?
 Then we created a borrow hazard that will lead to crashes we might not understand.
 To solve this we introduce `JSContext` and `&mut JSContext`.
-Here we require that any SpiderMonkey method that can run the Gc will need a `&mut JSContext` reference. Because these cannot be created outside of the Dom bindings we will have to
-carry these through all our function calls.
+Unlike `CanGc`, these types use the Rust compiler's borrowing rules and SpiderMonkey API wrappers to ensure that any API that can trigger garbage collection requires a `&mut JSContext` argument.
+Since these values are unique, they must be passed by callers.
+Similarly, any API function that _cannot_ GC but still requires access to a JS context only takes a `&JSContext` argument.
 
-Similarly, we have the related types of `&JSContext` which means that we call some SpiderMonkey API that does not call the GC.
-We also have the `NoGC` type which can be constructed via a `JSContext`. You can think of this as enforcing that no GC methods can be called when a `NoGC` is held. Think ofthe `NoGC` being essentially a `struct NoGC(&mut JSContext)`, hence, it forbids any method needing a `&mut JSContext` being called while `NoGC` is alive (via the multiple mutable borrow rule).
+There is also a `NoGc` type that can be constructed from a `JSContext`.
+Since this type borrows the `&mut JSContext`, it makes it impossible to invoke any code that requires a `&mut JSContext` argument (i.e. can trigger a GC operation) while the `NoGc` value exists.
 
 > Note:
 > Currently the servo codebase is transforming from the previous `CanGc` approach
