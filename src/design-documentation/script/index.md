@@ -32,7 +32,9 @@ fn play_with_kittens(kittens: &Kittens) {
 ```
 
 Without rooting the GC could pause our program after we got the reference to children, move the `Kittens` struct around
-and we would have invalid access when playing with them! This holds even if Kittens was rooted by some other mechanism earlier in the call chain. Remember that the Garbage Collector cannot change pointers of our local variable 'children' if it doesn't know aobut it.
+and we would have invalid access when playing with them!
+This holds even if Kittens was rooted by some other mechanism earlier in the call chain.
+Remember that the Garbage Collector cannot change pointers of our local variable 'children' if it doesn't know about it.
 
 Hence, we need to transform the code into
 ```rust
