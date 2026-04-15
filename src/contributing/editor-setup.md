@@ -99,9 +99,11 @@ In your `./zed/settings.json` file you need something like this:
 
 ### Python
 
-Servo contains Python scripts as part of build tooling and certain types of tests. Zed's default Python configuration might not be able to provide proper static code analysis.
+Servo contains Python scripts as part of build tooling and certain types of tests.
+Zed's default Python configuration might not be able to provide proper static code analysis.
 
-Servo is configured to work with the Pyrefly language server, which you can enable with something resembling the below config. You will also need to install the [Pyrefly](https://zed.dev/extensions/pyrefly) Zed extension.
+Servo is configured to work with the Pyrefly language server, which you can enable with something resembling the below config.
+You will also need to install the [Pyrefly](https://zed.dev/extensions/pyrefly) Zed extension.
 
 ```json
 {
