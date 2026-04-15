@@ -52,7 +52,7 @@ We will assume that getting the cat reference and rooting it is one atomic actio
 Unrooting (the reverse) will automatically be done via a Drop impl on `DomRoot<T>`.
 
 To ensure web API implementations in Servo are sound, the engine code is conservative and usually returns rooted types (such as `DomRoot<Node>`).
-This is an acceptable tradeoff between safety and performance because rooting and unrooting operations are efficient. (How efficient? They are essentially just adding and removing from a vector).
+This is an acceptable tradeoff between safety and performance because rooting and unrooting operations are efficient; they essentially just push and pop vector elements.
 
 ## Crown and CanGc
 Now rooting could be easily forgotten when implementing particular exciting apis. How to we prevent this?
