@@ -158,7 +158,8 @@ fn some_function(cats: &Kittens) {
 }
 ```
 
-This API for interacting with kittens is safely rooted, but when there are many children the rooting and unrooting work can add up. Can we somehow go around this without violating safety?
+This API for interacting with kittens is safely rooted, but when there are many children the rooting and unrooting work can add up.
+We can use the `JSContext` types to ensure code that violates rooting rules won't trigger any GC operations that could observe those violations.
 
 Yes. Remember rusts golden rule that `&mut` can only be hold exactly once!
 What if we have a new type
