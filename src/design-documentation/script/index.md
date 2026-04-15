@@ -14,7 +14,7 @@ A root tells the garbage collector two things:
 2. If garbage collection causes this rooted value to be moved in memory, all pointers to this value should be updated.
 
 In Servo's code, roots are created automatically by using the `DomRoot<T>`, `Root<T>`, and `Rooted<T>` types.
-See the [module documentation](https://doc.servo.org/script/dom/bindings/root/index.html) for more details about the difference. These types implement `Deref`, so we an treat them as
+See the [module documentation](https://doc.servo.org/script/dom/bindings/root/index.html) for more details about the difference. These types implement `Deref`, so we can treat them as
 normal references.
 
 The following examples contain simplifications of real Servo code patterns to make them easier to understand.
