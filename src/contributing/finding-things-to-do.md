@@ -1,4 +1,4 @@
-# Finding things to do
+# Finding Things to Do
 
 Servo's [issue tracker](https://github.com/servo/servo/issues/) contains a lot of issues, and it can feel overwhelming looking for something to work on.
 Here are some helpful tips for issue labels to look for:

@@ -29,7 +29,7 @@
 # Contributing
 
 - [Getting Started](contributing/getting-started.md)
-- [Finding Things to Do](contributing/things-to-do.md)
+- [Finding Things to Do](contributing/finding-things-to-do.md)
 - [Git Setup](contributing/git-setup.md)
 - [Editor Setup](contributing/editor-setup.md)
 - [Style Guide](contributing/style-guide.md)
