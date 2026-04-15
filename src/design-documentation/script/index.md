@@ -132,8 +132,8 @@ Since this type borrows the `&mut JSContext`, it makes it impossible to invoke a
 
 > Note:
 > Currently the Servo codebase is transforming from the previous `CanGc` approach
-> to the `JSContext` approach. You might see both in the codebase and also several
-> escape hatches.
+> to the `JSContext` approach.
+> You might see both in the codebase and also several escape hatches.
 
 
 # The performance of rooting
