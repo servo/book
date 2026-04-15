@@ -131,7 +131,7 @@ There is also a `NoGc` type that can be constructed from a `JSContext`.
 Since this type borrows the `&mut JSContext`, it makes it impossible to invoke any code that requires a `&mut JSContext` argument (i.e. can trigger a GC operation) while the `NoGc` value exists.
 
 > Note:
-> Currently the servo codebase is transforming from the previous `CanGc` approach
+> Currently the Servo codebase is transforming from the previous `CanGc` approach
 > to the `JSContext` approach. You might see both in the codebase and also several
 > escape hatches.
 
