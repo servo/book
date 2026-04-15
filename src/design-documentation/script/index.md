@@ -55,7 +55,7 @@ To ensure web API implementations in Servo are sound, the engine code is conserv
 This is an acceptable tradeoff between safety and performance because rooting and unrooting operations are efficient; they essentially just push and pop vector elements.
 
 ## Crown and CanGc
-Now rooting could be easily forgotten when implementing particular exciting apis. How to we prevent this?
+It's easy to overlook rooting concerns when implementing new APIs.
 Crown is the answer (if you are working on Script things you should run `./mach build --use-crown` to be sure it is checking things).
 In essence, Crown just checks that you do not forgotten to root things and you will sometimes see certain lints in the code talking to crown such as `#[cfg_attr(crown, allow(crown::unrooted_must_root))]`. These essentially disable crown and should only be used in very specific circumstances.
 
