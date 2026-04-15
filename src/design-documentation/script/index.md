@@ -48,7 +48,7 @@ fn play_with_kittens(cats: &Kittens) {
     play_with(children)
 }
 ```
-(We have to obviously make sure that getting the cat reference and rooting it is one atomic action but let us ignore this for now).
+We will assume that getting the cat reference and rooting it is one atomic action.
 Unrooting (the reverse) will automatically be done via a Drop impl on `DomRoot<T>`.
 
 To ensure web API implementations in Servo are sound, the engine code is conservative and usually returns rooted types (such as `DomRoot<Node>`).
