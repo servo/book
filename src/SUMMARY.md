@@ -62,6 +62,7 @@
   - [Garbage Collection and RefCell](design-documentation/script/garbage-collection-and-refcell.md)
 - [Style\*](design-documentation/style.md)
 - [Layout\*](design-documentation/layout.md)
+- [Accessibility](design-documentation/accessibility.md)
 - [Compositor\*](design-documentation/compositor.md)
 - [Canvas](design-documentation/canvas.md)
 - [WebXR](design-documentation/webxr.md)
