@@ -186,7 +186,7 @@ Then configure either your sysroot path or proc macro server path in `.vscode/se
 
 Emacs has two LSP client implementations: [eglot](https://elpa.gnu.org/packages/eglot.html), which is a built-in package Emacs, and [emacs-lsp](https://emacs-lsp.github.io/lsp-mode/).
 
-## Eglot
+### Eglot
 
 To override the commands, we need to set [`eglot-workspace-configuration`](https://elpa.gnu.org/packages/doc/eglot.html#Project_002dspecific-configuration). To do so, create a `.dir-locals.el` file in the top level directory of your servo checkout with the following contents:
 
