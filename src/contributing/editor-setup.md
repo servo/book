@@ -181,3 +181,29 @@ Then configure either your sysroot path or proc macro server path in `.vscode/se
     "rust-analyzer.procMacro.server": "[paste what you copied]/libexec/rust-analyzer-proc-macro-srv",
 }
 ```
+
+## Emacs
+
+Emacs has two LSP client implementations: [eglot](https://elpa.gnu.org/packages/eglot.html), which is a built-in package Emacs, and [emacs-lsp](https://emacs-lsp.github.io/lsp-mode/).
+
+### Eglot
+
+To override the commands, we need to set [`eglot-workspace-configuration`](https://elpa.gnu.org/packages/doc/eglot.html#Project_002dspecific-configuration). To do so, create a `.dir-locals.el` file in the top level directory of your servo checkout with the following contents:
+
+
+```elisp
+;;; Directory Local Variables         -*- no-byte-compile: t; -*-
+;;; For more information see (info "(emacs) Directory Variables")
+
+((nil . ((eglot-workspace-configuration
+          . (:rust-analyzer
+             (:rustfmt (:overrideCommand ["./mach" "fmt"])
+                       :check (:overrideCommand
+                               ["./mach" "clippy" "--message-format=json" "--target-dir" "target/lsp" "--features" "tracing,tracing-perfetto"])
+                       :cargo (:buildScripts
+                               (:overrideCommand
+                                ["./mach" "clippy" "--message-format=json" "--target-dir" "target/lsp" "--features" "tracing,tracing-perfetto"]))))))))
+
+```
+
+After starting eglot (`M-x eglot`), you can check the workspace-configuration being used with `M-x eglot-show-workspace-configuration`.
