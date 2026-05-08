@@ -231,7 +231,7 @@ It is possible to use the `mitmproxy` tool to intercept servo traffic and create
 
 ### Default mitmproxy
 
-On a default network, the mitmproxy creates a local proxy server at `:8080` and by setting it in browser or passing `http_proxy=locahost:8080` and/or `https_proxy=localhost:8080` (and by optionally unsetting the `no_proxy`) you can dump and serve the traffic.
+On a default network, the mitmproxy creates a local proxy server at `:8080` and by setting it in browser or passing `http_proxy=localhost:8080` and/or `https_proxy=localhost:8080` (and by optionally unsetting the `no_proxy`) you can dump and serve the traffic.
 
 #### Creating a dump
 ```bash
@@ -240,7 +240,7 @@ mitmproxy -w <dumpfile>
 
 #### Serving a dump
 ```bash
-mitmproxy --serve-replay <dumpfile>
+mitmproxy --server-replay <dumpfile>
 ```
 
 The resulted dump file is about `~5MB` per page, so it can get large pretty fast, as the tool is very verbose and can store pictures.
