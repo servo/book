@@ -240,7 +240,7 @@ mitmproxy -w <dumpfile>
 
 #### Serving a dump
 ```bash
-mitmproxy --serve-replay <dumpfile>
+mitmproxy --server-replay <dumpfile>
 ```
 
 The resulted dump file is about `~5MB` per page, so it can get large pretty fast, as the tool is very verbose and can store pictures.
