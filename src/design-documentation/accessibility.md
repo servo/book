@@ -1,5 +1,71 @@
 # Accessibility
 
+## TODO: patch analysis
+
+- [#44768](https://github.com/servo/servo/pull/44768)
+    - towards a future where we traverse the accessibility tree instead of the DOM tree (for aria-owns?)
+    - ended up refactoring the methods, which could help with profiling
+- [#44767](https://github.com/servo/servo/pull/44767)
+    - accessibility node ids are sequential u64
+    - u64 is big enough that Servo can create 2^32 new nodes per second for 136 years without overflow, so we don’t need to do anything special to avoid collisions.
+    - accessibility node ids can outlive DOM nodes in the AT and in action requests, so decoupling the ids from DOM node addresses is necessary to avoid potential incorrect targeting of action requests when a DOM node has since been freed and its address reused
+- [#44766](https://github.com/servo/servo/pull/44766)
+    - setters/getters are purely procedural
+    - node mutations now set updated flag on AccessibilityNode (which controls whether the node goes in the TreeUpdate), rather than ad-hoc bubbling out to locals, which made it easy to only set updated when a property genuinely has a different value
+- [#44473](https://github.com/servo/servo/pull/44473)
+    - fix crash when reloading; we deactivate a11y when navigating away from a page, which includes reloading, but when reloading, the pipeline seems to get closed before we can deactivate accessibility. so ignore attempts to deactivate a11y on closed pipelines (because that’s a normal part of reloading), but log an error without panicking when activating a11y on closed pipelines (which should in theory never happen)
+- [#44439](https://github.com/servo/servo/pull/44439)
+    - implement name from content <https://w3c.github.io/aria/#namefromcontent>, walking the accessibility tree
+- [#44438](https://github.com/servo/servo/pull/44438)
+    - use ArcRefCell, like the rest of layout, because classical ownership means that all of your methods have to be (&mut self), which means the whole tree is tied up, and together that means you can’t make (&self) helper methods that read from the tree. also this causes problems for recursion?
+- [#44437](https://github.com/servo/servo/pull/44437)
+    - dedupe nodes that get changed multiple times within one TreeUpdate (don’t remember if this happens in practice?)
+- [#44255](https://github.com/servo/servo/pull/44255)
+    - build a minimal tree with some non-interactive roles like paragraphs and headings, rather than just text nodes and generic containers
+- [#44208](https://github.com/servo/servo/pull/44208)
+    - don’t send a message for the tree update from layout to script, because layout now runs on the script thread, just send it to libservo directly
+- [#43772](https://github.com/servo/servo/pull/43772)
+    - don’t send an empty TreeUpdate for the WebView with no pipeline graft, because it’s not necessary
+    - don’t set label on graft nodes, because nothing can see it really (other than consumer API itself)
+    - rename method for clarity and make it pub(crate) not pub
+- [#43558](https://github.com/servo/servo/pull/43558)
+    - in servoshell, activate accessibility in all webviews *and* plumb the webview a11y trees into the app’s main tree, because if we do the former without the latter, accesskit will panic!
+- [#43556](https://github.com/servo/servo/pull/43556)
+    - graft active top-level pipeline trees into webview trees whenever the webview navigates (including both normal and bfcache navigations)
+    - we steer clear of doing anything about iframes, but we expect that the grafts for those will be done by the containing document’s layout (see “Graft node ordering problems in Servo Accessibility” § iframe support)
+    - implicit: we detach the a11y tree of the old document when navigating (rather than say, keeping it but somehow marking it “hidden”), which effectively destroys it in accesskit (central cache) and hence the platform. we also deactivate accessibility in the document, which effectively destroys it in our internal tree. combined that means if we do a bfcache navigation, we need to rebuild the a11y tree from scratch, which is unfortunate because it partially defeats the bfcache. maybe we can revisit one or both of these? note that firefox does not retain those trees in the platform at least (not sure about the central cache or internally)
+- [#43029](https://github.com/servo/servo/pull/43029)
+    - change API from Servo::set_accessibility_active to WebView::set_accessibility_active
+    - aligns more closely with the fact that embedders get an accesskit subtree per webview, and need to graft the subtrees for each webview into the app’s main tree
+    - new API design encourages correct use by returning the TreeId with each WebView::set_accessibility_active call
+    - internally move from activating all documents in each ScriptThread, to activating one document at a time
+        - may have proved useful later for bfcache navigation, where we have to deactivate a11y upon navigating away
+- [#43013](https://github.com/servo/servo/pull/43013)
+    - add active_top_level_pipeline_id field and update it when the frame tree changes
+    - later became Option, because we found that our logic relied on the None → Some transition for new tabs/windows
+- [#43012](https://github.com/servo/servo/pull/43012)
+    - introduces the three levels of grafts (embedder to webview, webview to pipeline, and pipeline to pipeline)
+    - if pipelines generate random TreeId, they need to communicate it to the constellation somehow
+        - this is asynchronous, so more plumbing and more potential for timing problems
+    - instead we derive a TreeId from the PipelineId as a UUIDv5, which the constellation can do on its own
+    - caveat: now you can’t run more than one `Servo` in an application (if that was even possible before?)
+- [#42402](https://github.com/servo/servo/pull/42402)
+    - update accesskit to include subtree support; we had to coordinate updates in egui and kittest also
+- [#42338](https://github.com/servo/servo/pull/42338)
+    - initial tree building in layout
+    - observes that if the constellation sends a TreeId to libservo, and script sends a TreeUpdate to libservo, there’s no guarantee that the TreeId is received before the TreeUpdate, even though it was the constellation that originally kicked off both
+    - ordering issues solved with epoch (see “Graft node ordering problems in Servo Accessibility”)
+    - to ensure that bfcache navigations work, we also deactivate a11y in the old pipeline when navigating away
+- [#42336](https://github.com/servo/servo/pull/42336)
+    - old Servo::set_accessibility_active API
+    - would activate a11y in all event loops (all script threads), which would in turn activate a11y in all of their documents
+- [#42333](https://github.com/servo/servo/pull/42333)
+    - pref. note that enabled ≠ active
+- [#41924](https://github.com/servo/servo/pull/41924)
+    - plumbing – everything between layout and the embedder
+    - has one unnecessary message from layout to script, later eliminated in [#44208](https://github.com/servo/servo/pull/44208)
+    - otherwise quite direct, going directly from script thread to embedder’s main thread, no constellation or anything
+
 ## Background: AccessKit concepts
 
 [AccessKit](https://accesskit.dev) provides a platform-independent schema for exposing information about the application's UI to assistive technology APIs.
@@ -90,6 +156,10 @@ The WebView's `TreeId` can also be accessed via the [`accesskit_tree_id()`](http
 
 Once accessibility is active for the WebView, it will begin to emit `TreeUpdate`s via the [`WebViewDelegate::notify_accessibility_tree_update()`](https://doc.servo.org/servo/trait.WebViewDelegate.html#method.notify_accessibility_tree_update) method.
 These updates include the AccessKit `TreeId` for the WebView, so a `TreeUpdate` for the [root tree](https://docs.rs/accesskit/struct.TreeId.html#associatedconstant.ROOT) for the application which includes a [graft node](https://docs.rs/accesskit/struct.Node.html#method.tree_id) for the `WebView`'s subtree must be sent to the Adapter before they are.
+
+```
+NOTE: this influenced our decision to change activation from a Servo method to a WebView method in [#43029](https://github.com/servo/servo/pull/43029)
+```
 
 The `WebView` will continue to emit `TreeUpdate`s for any change to its accessibility tree until either its `set_accessibility_active()` method is used to deactivate the accessibility tree, or its lifetime ends.
 Accessibility tree changes will be triggered by navigations within the webview, as well as any changes to the currently active document.
