@@ -17,6 +17,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          submodules: true
       - name: Generate link list
         run: |
           for link in $(grep -Rin --include="*.md" -E -o "https?://[a-zA-Z0-9./?#=_%:-]*[^\.]" src); do
@@ -40,9 +41,10 @@ jobs:
           curl -sSL "$url" | tar -xz --directory=./opt/mdbook-mermaid
       - name: Generate web platform feature page
         run: |
-          curl 'https://raw.githubusercontent.com/servo/servo/refs/heads/main/components/config/prefs.rs' -O
-          curl 'https://raw.githubusercontent.com/servo/servo/refs/heads/main/ports/servoshell/prefs.rs' -o servoshell_prefs.rs
-          python generate-features.py prefs.rs servoshell_prefs.rs >src/design-documentation/experimental-features.md
+          python generate-features.py \
+            servo/components/config/prefs.rs \
+            servo/ports/servoshell/prefs.rs \
+            > src/design-documentation/experimental-features.md
       - name: Build book
         run: |
           mdbook build
