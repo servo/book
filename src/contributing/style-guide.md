@@ -55,6 +55,12 @@ Do not abbreviate by deleting letters in the middle of words.
 You may use some universally-known abbreviations, such as the use of `i` for a loop index.
 You may also use single letters such as `T` for Rust type parameters.
 
+### Enum variants
+
+In the interest of readability, avoid `use`-ing the variants of enums directly.
+Instead, refer to enums by their qualified name (i.e. `Enum::Variant`).
+In addition to avoiding naming collisions, this allows those unfamiliar with the code will more readily see the type used in the code.
+
 ### Dead code
 
 In almost all cases, do not commit dead code or commented out code to the repository.
