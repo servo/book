@@ -14,7 +14,7 @@ Building for OpenHarmony requires the following:
 ### Setting up the OpenHarmony SDK
 
 The OpenHarmony SDK is required to compile applications for OpenHarmony.
-The minimum version of SDK that Servo currently supports is v5.0.2 (API-14).
+The minimum version of SDK that Servo currently supports is v6.0.0 (API-20).
 
 #### Downloading via DevEco Studio
 
