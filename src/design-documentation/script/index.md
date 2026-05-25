@@ -217,8 +217,6 @@ TODO:
 
 Current state of, and outlook on, Servo's integration of SpiderMonkey: [https://github.com/gterzian/spidermonkey_servo](https://github.com/servo/servo/wiki/Servo-and-SpiderMonkey-Report)
 
-- [How to work on a Web API](../guides/implementing-a-dom-api.md)
-
 ## Script Thread
 
 - [Microtask queuing](microtasks.md)
