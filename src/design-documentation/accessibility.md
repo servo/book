@@ -131,6 +131,8 @@ Nesting a tree as a subtree of another tree is a two-step process, where the ord
 
 Any `TreeUpdate` with a `tree_id` value other than [`TreeId::ROOT`](https://docs.rs/accesskit/0.24.0/accesskit/struct.TreeId.html#associatedconstant.ROOT) MUST be preceded by a `TreeUpdate` containing a `Node` with the same `tree_id` value; otherwise, the AccessKit adapter consuming the `TreeUpdate` will panic.
 
+![Diagram of subtree grafting: Tree 1 includes a node with tree_id: 2, which is labelled as "graft node" and has a dotted line pointing to the root node of Tree 2.](../images/accesskit-graft-node.png)
+
 ### Adapters
 
 `Node`s and `TreeUpdate`s allow an application to describe a platform-independent accessibility tree.
@@ -153,21 +155,20 @@ While the system is being developed, the [`accessibility_enabled`](https://doc.s
 The entry point for enabling accessibility is [`WebView::set_accessibility_active()`](https://doc.servo.org/servo/webview/struct.WebView.html#method.set_accessibility_active).
 This will return a randomly-generated `TreeId`, which will remain stable for the lifetime of the WebView.
 The WebView's `TreeId` can also be accessed via the [`accesskit_tree_id()`](https://doc.servo.org/servo/webview/struct.WebView.html#method.accesskit_tree_id) method.
-
-Once accessibility is active for the WebView, it will begin to emit `TreeUpdate`s via the [`WebViewDelegate::notify_accessibility_tree_update()`](https://doc.servo.org/servo/trait.WebViewDelegate.html#method.notify_accessibility_tree_update) method.
-These updates include the AccessKit `TreeId` for the WebView, so a `TreeUpdate` for the [root tree](https://docs.rs/accesskit/struct.TreeId.html#associatedconstant.ROOT) for the application which includes a [graft node](https://docs.rs/accesskit/struct.Node.html#method.tree_id) for the `WebView`'s subtree must be sent to the Adapter before they are.
+This `TreeId` must be used to create a [graft node](#subtrees) in the embedder's application tree by sending a `TreeUpdate` to AccessKit Adapter including a node with a `tree_id` value corresponding to the WebView's `TreeId`, before any `TreeUpdate`s are forwarded to AccessKit from the WebView.
 
 ```
 NOTE: this influenced our decision to change activation from a Servo method to a WebView method in [#43029](https://github.com/servo/servo/pull/43029)
 ```
 
+Once accessibility is active for the WebView, it will begin to emit `TreeUpdate`s via the [`WebViewDelegate::notify_accessibility_tree_update()`](https://doc.servo.org/servo/trait.WebViewDelegate.html#method.notify_accessibility_tree_update) method.
+Once the graft node has been created, these `TreeUpdate`s can be forwarded directly to the AccessKit adapter.
+
 The `WebView` will continue to emit `TreeUpdate`s for any change to its accessibility tree until either its `set_accessibility_active()` method is used to deactivate the accessibility tree, or its lifetime ends.
 Accessibility tree changes will be triggered by navigations within the webview, as well as any changes to the currently active document.
 Servo manages subtrees within the `WebView`'s accessibility tree; the embedder only needs to ensure that there is a graft node for the `WebView` in its top-level tree, and that Servo's `TreeUpdate`s are sent to the adapter in the order in which they are emitted from Servo.
 
-```
-TODO: diagram
-```
+![Diagram showing the data flow between the embedder, the WebView and accesskit as described above.](../images/embedder-accessibility-data-flow.png)
 
 Still to be implemented: embedder API for forwarding actions to the appropriate WebView.
 
@@ -197,9 +198,7 @@ Each WebView has a minimal tree consisting of a [`ScrollView`](https://docs.rs/a
 
 A `TreeUpdate` with an updated graft node is emitted when accessibility is enabled for the WebView, and when the top-level pipeline (i.e. the top-level Document) changes.
 
-```
-// TODO: diagram
-```
+![Diagram showing subtree grafting between the minimal tree for a WebView, containing just a ScrollView node and graft node, and the tree for a pipeline for a document named webpage.html](../images/servo-accessibility-webview-pipeline.png)
 
 ### Accesibility state for ConstellationWebView and Pipelines
 
