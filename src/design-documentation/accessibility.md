@@ -2,7 +2,7 @@
 
 ## TODO: patch analysis
 
-- [#44768](https://github.com/servo/servo/pull/44768)
+- [layout: Split recompute_children() from update_node() in AccessibilityTree.](https://github.com/servo/servo/pull/44768)
     - towards a future where we traverse the accessibility tree instead of the DOM tree (for aria-owns?)
     - ended up refactoring the methods, which could help with profiling
 - [#44767](https://github.com/servo/servo/pull/44767)
@@ -61,7 +61,7 @@
     - would activate a11y in all event loops (all script threads), which would in turn activate a11y in all of their documents
 - [#42333](https://github.com/servo/servo/pull/42333)
     - pref. note that enabled ≠ active
-- [#41924](https://github.com/servo/servo/pull/41924)
+- [Plumb accessibility tree updates from layout to embedder](https://github.com/servo/servo/pull/41924)
     - plumbing – everything between layout and the embedder
     - has one unnecessary message from layout to script, later eliminated in [#44208](https://github.com/servo/servo/pull/44208)
     - otherwise quite direct, going directly from script thread to embedder’s main thread, no constellation or anything
@@ -131,7 +131,7 @@ Nesting a tree as a subtree of another tree is a two-step process, where the ord
 
 Any `TreeUpdate` with a `tree_id` value other than [`TreeId::ROOT`](https://docs.rs/accesskit/0.24.0/accesskit/struct.TreeId.html#associatedconstant.ROOT) MUST be preceded by a `TreeUpdate` containing a `Node` with the same `tree_id` value; otherwise, the AccessKit adapter consuming the `TreeUpdate` will panic.
 
-![Diagram of subtree grafting: Tree 1 includes a node with tree_id: 2, which is labelled as "graft node" and has a dotted line pointing to the root node of Tree 2.](../images/accesskit-graft-node.png)
+<img alt="Diagram of subtree grafting: Tree 1 includes a node with tree_id: 2, which is labelled as 'graft node' and has a dotted line pointing to the root node of Tree 2." src="../images/accesskit-graft-node.svg">
 
 ### Adapters
 
@@ -150,47 +150,48 @@ Adapters provide hooks for the application to be notified of action requests to 
 
 ## Servo accessibility for embedders
 
+### `accessibility_enabled` pref
+
 While the system is being developed, the [`accessibility_enabled`](https://doc.servo.org/servo/prefs/struct.Preferences.html#structfield.accessibility_enabled) pref must be set in order to enable the accessibility code to run.
 
-The entry point for enabling accessibility is [`WebView::set_accessibility_active()`](https://doc.servo.org/servo/webview/struct.WebView.html#method.set_accessibility_active).
+### Activating accessibility for a `WebView`
+
+The entry point for activating accessibility is [`WebView::set_accessibility_active()`](https://doc.servo.org/servo/webview/struct.WebView.html#method.set_accessibility_active).
 This will return a randomly-generated `TreeId`, which will remain stable for the lifetime of the WebView.
 The WebView's `TreeId` can also be accessed via the [`accesskit_tree_id()`](https://doc.servo.org/servo/webview/struct.WebView.html#method.accesskit_tree_id) method.
-This `TreeId` must be used to create a [graft node](#subtrees) in the embedder's application tree by sending a `TreeUpdate` to AccessKit Adapter including a node with a `tree_id` value corresponding to the WebView's `TreeId`, before any `TreeUpdate`s are forwarded to AccessKit from the WebView.
 
-```
-NOTE: this influenced our decision to change activation from a Servo method to a WebView method in [#43029](https://github.com/servo/servo/pull/43029)
-```
+> [!IMPORTANT]
+> The `WebView`'s `TreeId` _must_ be used to create a [graft node](#subtrees) in the embedder's application tree by sending a `TreeUpdate` to AccessKit Adapter including a node with a `tree_id` value corresponding to the WebView's `TreeId`, _before_ any `TreeUpdate`s are forwarded to AccessKit from the WebView.
+
+<!--
+This influenced our decision to change activation from a Servo method to a WebView method in [#43029](https://github.com/servo/servo/pull/43029).
+-->
 
 Once accessibility is active for the WebView, it will begin to emit `TreeUpdate`s via the [`WebViewDelegate::notify_accessibility_tree_update()`](https://doc.servo.org/servo/trait.WebViewDelegate.html#method.notify_accessibility_tree_update) method.
 Once the graft node has been created, these `TreeUpdate`s can be forwarded directly to the AccessKit adapter.
 
 The `WebView` will continue to emit `TreeUpdate`s for any change to its accessibility tree until either its `set_accessibility_active()` method is used to deactivate the accessibility tree, or its lifetime ends.
 Accessibility tree changes will be triggered by navigations within the webview, as well as any changes to the currently active document.
+
 Servo manages subtrees within the `WebView`'s accessibility tree; the embedder only needs to ensure that there is a graft node for the `WebView` in its top-level tree, and that Servo's `TreeUpdate`s are sent to the adapter in the order in which they are emitted from Servo.
 
-![Diagram showing the data flow between the embedder, the WebView and accesskit as described above.](../images/embedder-accessibility-data-flow.png)
+![Diagram showing the data flow between the embedder, the WebView and accesskit as described above.](../images/embedder-accessibility-data-flow.svg)
 
-Still to be implemented: embedder API for forwarding actions to the appropriate WebView.
+> [!NOTE]
+> The updates from the `WebView` are currently one-way: we don't yet support [`ActionRequest`](https://docs.rs/accesskit/latest/accesskit/struct.ActionRequest.html)s.
 
 ## Servo accessibility tree internal design
 
-![Diagram of the various components of the aggregated Servo accessibility tree. Full description below.](../images/servo-accessibility-trees.png)
+As described in the [Servo accessibility for embedders](#servo-accessibility-for-embedders) section, the Servo accessibility system is exposed to embedders on a per-`WebView` basis.
 
-<details>
-<summary>Full description of Servo accessibility trees diagram</summary>
-The diagram shows different components of an embedding application nesting within one another in a tree structure, with the root node at the left and the leaf nodes to the right. It's loosely arranged in columns, with labels for each column:
-- embedding application, on the left;
-- webviews (e.g. "tabs"), in the middle;
-- pipelines for documents, on the right.
+The `WebView` has a [minimal tree](#webview-subtree) of its own, which essentially exists to provide a [graft node](#subtrees) for its top-level [`Pipeline`](https://doc.servo.org/servo_constellation/pipeline/struct.Pipeline.html)'s accessibility tree.
 
-The root node is the embedding application, shown as two application windows.
+The tree for the pipeline is generated based on its document's structure by [layout::AccessibilityTree](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html).
+This tree is created when accessibility is activated for the pipeline, and updated each time the document is reflowed.
+Any changes to the tree are captured in a `TreeUpdate`, which is sent to the embedder.
 
-The embedding application has two arrows pointing into it, from two webviews. The two webviews are shown as two separate tabs in a tab component.
-
-The top webview has one solid arrow pointing into it, from a document labelled "active", and two dotted arrows from documents labelled "back" and "forward" respectively.
-
-The bottom webiew has a single, solid arrow pointing into it from a document labelled "top". This document, in turn, has two solid arrows pointing into it, from two documents each labelled "iframe".
-</details>
+> [!NOTE]
+> We currently don't support accessibility trees in IFrames.
 
 ### WebView subtree
 
@@ -198,26 +199,38 @@ Each WebView has a minimal tree consisting of a [`ScrollView`](https://docs.rs/a
 
 A `TreeUpdate` with an updated graft node is emitted when accessibility is enabled for the WebView, and when the top-level pipeline (i.e. the top-level Document) changes.
 
-![Diagram showing subtree grafting between the minimal tree for a WebView, containing just a ScrollView node and graft node, and the tree for a pipeline for a document named webpage.html](../images/servo-accessibility-webview-pipeline.png)
+![Diagram showing subtree grafting between the minimal tree for a WebView, containing just a ScrollView node and graft node, and the tree for a pipeline for a document named webpage.html](../images/servo-accessibility-webview-pipeline.svg)
 
-### Accesibility state for ConstellationWebView and Pipelines
+### Accessibility activation
 
-When accessibility is activated for a WebView, the WebView notifies the constellation via `EmbedderToConstellationMessage::SetAccessibilityActive` that accessibility should be activated for the corresponding `ConstellationWebView.`
+When an embedder calls `set_accessibility_active(true)` on a `WebView`, the `WebView` assumes responsibility for ensuring that until accessibility is deactivated or the `WebView` is destroyed, the embedder will receive `TreeUpdate`s representing the `WebView` and its current contents at any given time.
 
-This sets the `accessibility_active` flag on the ConstellationWebView, and sends a `ScriptThreadMessage::SetAccessibilityActive` message to all active pipelines for the WebView.
+In order to do this, it needs to activate accessibility in its top-level [`Pipeline`](https://doc.servo.org/servo_constellation/pipeline/struct.Pipeline.html) both immediately, and whenever the top-level `Pipeline` changes.
+It also de-activates accessibility in any inactive pipelines.
 
-The Constellation also immediately sends back a `EmbedderMsg::AccessibilityTreeIdChanged` message with the pipeline ID for the top-level pipeline for the WebView, so that the WebView can create a `TreeUpdate` for the graft node.
+The basic initial flow is:
+
+1. The embedder application calls `set_accessibility_active(true)` on the `WebView`.
+    - This causes the `WebView` to randomly generate and store a `TreeId` for itself, which will remain consistent for the life of the `WebView` or until `set_accessibility_active(false)` is called.
+2. The `WebView` sends a `EmbedderToConstellationMessage::SetAccessibilityActive()` message to notify the constellation that accessibility should be activated for its top-level pipeline.
+3. The constellation sends a `ScriptThreadMessage::SetAccessibilityActive()` message to notify the script thread that accessibility should be activated for the specified pipeline.
+4. The script thread calls `set_accessibility_active()` on the pipeline's `LayoutImpl`.
+5. On the next reflow, the `LayoutImpl` generates an initial `TreeUpdate` for its accessibility tree, and sends an `EmbedderMsg::AccessibilityTreeUpdate()` message with the tree update.
+6. The `WebView` calls `notify_accessibility_tree_update()` on the embedder's `WebViewDelegate` implementation to forward the `TreeUpdate.
+
+![Diagram showing activating accessibility and navigating to a new URL](../images/accessibility-activation.svg)
 
 
 ### Deterministic `TreeId` generation for `Pipeline`s
 
+<!--
 [#43012](https://github.com/servo/servo/pull/43012)
+-->
 
-To allow synchronous generation of the `TreeUpdate` updating the graft node's `TreeId`, we have a deterministic mapping from a `PipelineId` to `accesskit::TreeId`.
-This means we don't need to wait for the `Pipeline` to generate a random ID and notify the `WebView` of its value, so that the `TreeUpdate` with the graft node can be sent before the `TreeUpdate` with the document's initial tree.
+We have a deterministic mapping from a `PipelineId` to `accesskit::TreeId`, implemented using the [`Uuid::new_v5()`](https://docs.rs/uuid/latest/uuid/struct.Uuid.html#method.new_v5) method, using a static namespace value combined with the pipeline ID.
 
-This is implemented using the [`Uuid::new_v5()`](https://docs.rs/uuid/latest/uuid/struct.Uuid.html#method.new_v5) method, using a static namespace value combined with the pipeline ID.
-
+This was implemented to allow immediately sending a `TreeUpdate` updating the `WebView`'s graft node without needing to wait for a message to return from the pipeline.
+However, now we update the graft node immediately after receiving the first `TreeUpdate` from the new pipeline.
 
 ### Generating `TreeUpdate`s in `layout`
 
