@@ -70,7 +70,7 @@ It's recommended to build Servo via the command-line for Android, but you can al
    Open `~/.android/avd/Servo.avd/config.ini` and change `hw.keyboard = no` to `hw.keyboard = yes`.
 3. Launch the emulator
    ```
-   $ANDROID_SDK_ROOT/emulator/emulator -avd servo -netdelay none -no-snapshot
+   $ANDROID_SDK_ROOT/emulator/emulator -avd Servo -netdelay none -no-snapshot
    ```
 4. Install Servo on the emulator:
    ```
