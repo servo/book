@@ -180,7 +180,7 @@ Servo manages subtrees within the `WebView`'s accessibility tree; the embedder o
 > [!NOTE]
 > The updates from the `WebView` are currently one-way: we don't yet support [`ActionRequest`](https://docs.rs/accesskit/latest/accesskit/struct.ActionRequest.html)s.
 
-## Servo accessibility tree internal design
+## WebView accessibility internals
 
 As described in the [Servo accessibility for embedders](#servo-accessibility-for-embedders) section, the Servo accessibility system is exposed to embedders on a per-`WebView` basis.
 
@@ -261,21 +261,38 @@ It's then sent back to the `WebView` in [`EmbedderMsg::AccessibilityTreeUpdate()
 We have a deterministic mapping from a `PipelineId` to `accesskit::TreeId`, implemented using the [`Uuid::new_v5()`](https://docs.rs/uuid/latest/uuid/struct.Uuid.html#method.new_v5) method, using a static namespace value combined with the pipeline ID.
 
 This was implemented to allow immediately sending a `TreeUpdate` updating the `WebView`'s graft node without needing to wait for a message to return from the pipeline.
-However, now we update the graft node immediately after receiving the first `TreeUpdate` from the new pipeline.
+However, now we update the graft node immediately after receiving the first `TreeUpdate` from the new pipeline, which also includes the tree id.
 
-### Generating `TreeUpdate`s in `layout`
+We expect it will be still useful when implementing IFrame support: we would only need to have the pipeline ID for the embedded frame to turn the `<iframe>` element into a graft node.
 
-When the ScriptThread receives the `ScriptThreadMessage::SetAccessibilityActive` message for a pipeline, it locates the Document for that pipeline, and calls the `set_accessibility_active()` method on its LayoutThread.
+## Generating accessibility trees for web content: `layout::accessibility_tree`
 
-This causes the LayoutThread to:
-- create an instance of `AccessibilityTree` which is stored in its `accessibility_tree` property and acts as a flag for its accessibility activation;
-- sets the `needs_accessibility_update` flag for the layout, which marks it as needing the accessibility tree to be updated in the next reflow.
+We generate and update the accessibility tree for a single pipeline (i.e. a single web page being rendered) as part of the [reflow](https://doc.servo.org/layout_api/trait.Layout.html#tymethod.reflow) routine.
+This allows us to ensure that all layout information is up to date before updating the accessibility tree, that the tree is updated whenever any DOM mutations and/or style recalculations have occurred, and that DOM mutations are prevented from occurring while the tree is being updated.
 
-If no reflow is otherwise required, having the `needs_accessibility_update` flag will ensure a rendering update occurs, as it is checked in Document's [`needs_rendering_update()`](https://doc.servo.org/script/dom/document/document/struct.Document.html#method.needs_rendering_update) method, and LayoutThread's [`can_skip_reflow_request_entirely()`](https://doc.servo.org/layout/layout_impl/struct.LayoutThread.html#method.can_skip_reflow_request_entirely) method.
+The logic for generating and updating the accessibility tree lives in [`layout::accessibility_tree`](https://doc.servo.org/layout/accessibility_tree/index.html).
+This module includes:
+- [`AccessibilityTree`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html), representing the current state of the accessibility tree and the logic to update the tree based on the current document state
+- [`AccessibilityNode`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityNode.html), representing a single node in the accessibility tree and the logic to update it based on its corresponding DOM node
+- [`AccessibilityUpdate`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityUpdate.html), representing the in-process update pass, and providing the `TreeUpdate` when the update is complete.
 
-When the next reflow occurs, if the LayoutThread's `accessibility_tree` property is set, the accessibility tree update occurs as a phase after all the other phases in [`handle_reflow()`](https://doc.servo.org/layout/layout_impl/struct.LayoutThread.html#method.handle_reflow).
-This primarily consists of calling the `update_tree()` method on `AccessibilityTree`, which returns a `TreeUpdate`.
-The `TreeUpdate` is emitted back to the embedder via [`ScriptThreadMessage::AccessibilityTreeUpdate`](https://doc.servo.org/script_traits/enum.ScriptThreadMessage.html#variant.AccessibilityTreeUpdate), [`EmbedderMessage::AccessibilityTreeUpdate`](https://doc.servo.org/servo/enum.EmbedderMsg.html#variant.AccessibilityTreeUpdate) and finally [`WebViewDelegate::notify_accessibility_tree_update()`](https://doc.servo.org/servo/trait.WebViewDelegate.html#method.notify_accessibility_tree_update).
+Our goal is to make updating the accessibility tree fast enough that users can't notice any performance degradation when accessibility is active.
+
+### Activating accessibility for a pipeline
+
+When the ScriptThread receives the `ScriptThreadMessage::SetAccessibilityActive` message for a pipeline, it locates the Document for that pipeline, and calls the [`set_accessibility_active()`](https://doc.servo.org/layout_api/trait.Layout.html#tymethod.set_accessibility_active) method on its `LayoutThread`.
+
+This causes the `LayoutThread` to:
+- toggle its [`accessibility_active`](https://doc.servo.org/layout/layout_impl/struct.LayoutThread.html#structfield.accessibility_active) flag,
+- create an instance of [`AccessibilityTree`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html) which is stored in its [`accessibility_tree`](https://doc.servo.org/layout/layout_impl/struct.LayoutThread.html#structfield.accessibility_tree) field, and
+- set its [`needs_accessibility_update`](https://doc.servo.org/layout/layout_impl/struct.LayoutThread.html#structfield.needs_accessibility_update) flag, which marks it as needing the accessibility tree to be updated in the next reflow.
+
+If no reflow is otherwise required, setting the `needs_accessibility_update` flag will ensure a rendering update occurs, as it is checked in Document's [`needs_rendering_update()`](https://doc.servo.org/script/dom/document/document/struct.Document.html#method.needs_rendering_update) method, and LayoutThread's [`can_skip_reflow_request_entirely()`](https://doc.servo.org/layout/layout_impl/struct.LayoutThread.html#method.can_skip_reflow_request_entirely) method.
+
+When the next reflow occurs, if the LayoutThread's `accessibility_tree` exists, the accessibility tree update occurs as a phase after all the other phases in [`handle_reflow()`](https://doc.servo.org/layout/layout_impl/struct.LayoutThread.html#method.handle_reflow).
+This primarily consists of calling the [`update_tree()`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html#method.update_tree) method on `AccessibilityTree`, which returns an [`accesskit::TreeUpdate`](https://doc.servo.org/accesskit/struct.TreeUpdate.html).
+
+The `TreeUpdate` is emitted back to the embedder via [`EmbedderMessage::AccessibilityTreeUpdate`](https://doc.servo.org/servo/enum.EmbedderMsg.html#variant.AccessibilityTreeUpdate), where the `WebView` can forward it to the embedding application via [`WebViewDelegate::notify_accessibility_tree_update()`](https://doc.servo.org/servo/trait.WebViewDelegate.html#method.notify_accessibility_tree_update). (See [WebView accessibility internals](webview-accessibility-internals) for more information on how `TreeUpdate`s are processed in `WebView`.)
 
 ### `AccessibilityTree`
 
