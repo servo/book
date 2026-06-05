@@ -16,7 +16,7 @@
    "platforms;android-33" \
    "system-images;android-33;google_apis;arm64-v8a"
   ```
-- Run `./mach build --android --release`
+- Run `./mach build --android`
 
 **Note**: This will install dependencies and build Servo for the `aarch64-linux-android` platform.
 In order to build Servo for other Android targets, ensure that you install the appropriate system images via `sdkmanager` and pass `--target` with a Rust compatible target to `mach` when building instead of `--android`.
@@ -53,7 +53,7 @@ It's recommended to build Servo via the command-line for Android, but you can al
   Then, ensure that the following environment variables are set:
   - `ANDROID_SDK_ROOT`: The path found above.
   - `ANDROID_NDK_ROOT`: `$ANDROID_SDK_ROOT/ndk/28.2.13676358/`
-- Run `./mach build --android --release`
+- Run `./mach build --android`
 
 ## Running in the emulator
 
@@ -74,7 +74,7 @@ It's recommended to build Servo via the command-line for Android, but you can al
    ```
 4. Install Servo on the emulator:
    ```
-    ./mach install --android --release
+    ./mach install --android
    ```
 5. Start Servo by tapping the Servo icon on your launcher screen.
 
@@ -84,7 +84,7 @@ It's recommended to build Servo via the command-line for Android, but you can al
 2. Build Servo as described above, ensuring that you are building for the appropriate target for your device.
 3. Install Servo to your device by running:
    ```
-   ./mach install --android --release
+   ./mach install --android
    ```
 4. Start Servo by tapping the Servo icon on your launcher screen or run:
    ```
