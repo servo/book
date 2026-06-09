@@ -112,6 +112,18 @@ In code that is reachable via execution, do not use `todo!` or `unimplemented!`.
 These macros will cause Servo to panic and normal web content shouldn't cause Servo to panic.
 Intead, try to make these kind of cases unreachable and return proper error values or simply have the code do nothing instead.
 
+### Macros
+
+Macros obscure implementation details, and the callsites are often harder to read than inline Rust code.
+When possible, prefer generic/parameterized functions over using `macro_rules!`.
+Macros that are declared should attempt to look as much like inline valid Rust code as possible.
+
+**Exception:**
+When there are common control flow patterns (e.g. checking for an error/cached value and returning early) that can't be replicated with `Result`/`Option` and the `?` operator, macros are one way of reducing repetitive boilerplate.
+
+**Exception:**
+When many unique types must be declared that follow an identical pattern, macros are one way of reducing the boilerplate.
+
 ## Shell scripts
 
 Shell scripts are suitable for small tasks or wrappers, but it's preferable to use Python for anything with a hint of complexity or in general.
