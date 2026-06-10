@@ -95,6 +95,11 @@ If the invariant expressed in the assertion ever becomes false, Servo might begi
 In addition, people reading the code can know what the author presumed to be true at a given point in the code in a stronger way than a comment allows.
 If a particular part of a code is unreachable, for instance if an enum variant was handled before and shouldn't be encountered later in the same function, use `unreachable!()`, but always filling the text with why the code is unreachable.
 
+### `Option::map` and `Result::map`/`Result::map_err`
+
+The `map` APIs should only be used to transform one type to another, not as a form of control flow.
+Prefer `match`, `if let`, or `let`/`else` when writing code that only affects a particular variant.
+
 ### `unwrap()` and `expect()`
 
 `unwrap` on `Option` or `Result` should almost never be used.
