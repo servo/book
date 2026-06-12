@@ -104,6 +104,85 @@ Unexpected results that are known-intermittent can likely be ignored.
 
 When opening a PR, you can include a link to the run. Otherwise, reviewers will run the tests again.
 
+## Updating Web Platform Test expectations
+
+When fixing a bug that causes the result of a test to change, the expected results for that test need to be changed.
+This can be done manually, by editing the `.ini` file under the `meta` folder that corresponds to the test.
+In this case, remove the references to tests whose expectation is now `PASS`, and remove `.ini` files that no longer contain any expectations.
+
+When a larger number of changes is required, this process can be automated:
+
+    ./mach test-wpt --update-expectations path/to/tests/
+
+You can also update test expectations from Try runs performed on CI. Every CI run automatically saves a `.log` file that you can pass into `update-wpt`:
+
+    ./mach update-wpt https://github.com/servo/servo/actions/runs/<ID-OF-CI-RUN>
+
+Running *all* Web Platform Tests locally will take a long time and often cause unrelated failures (such as the runner exceeding the maximum number of open files on your system).
+The test expectations are also set based on the results of Servo's CI machines, so differences in your setup might cause failures.
+
+Usually you will have a rough idea where tests for your changes are.
+For example, almost all tests for [SubtleCrypto](https://github.com/servo/servo/blob/63793ccbb7c0768af3f31c274df70625abacb508/components/script/dom/subtlecrypto.rs) code are in the [`WebCryptoAPI`](https://github.com/web-platform-tests/wpt/tree/550fb109615cf434b03b30b76aa0dea6bfb0ebe1/WebCryptoAPI) directory.
+In this case you can run only these tests with `./mach test-wpt WebCryptoAPI`, followed by `./mach update-wpt` as described above.
+To ensure that other tests didn't break, do a [try run](#running-web-platform-tests-on-your-github-fork) afterwards.
+
+For updating WebGPU expectations, please see [WebGPU](../architecture/webgpu.md#updating-webgpu-cts-expectations) chapter for more information.
+
+## Modifying Web Platform Tests
+
+Please see the Web Platform Test [Writing Tests guide](https://web-platform-tests.org/writing-tests/index.html) for how to write tests.
+In general, a good way to start is to follow these steps:
+
+1. Find the directory that tests the feature you want to test.
+2. Find a test in that directory that tests a similar behavior, make a copy of the test with an appropriate name, and make your modifications.
+3. If the test is a reference test, you should also copy the reference if it needs to change, following the naming pattern of the directory you are modifying.
+4. Run  `./mach update-manifest` to update the WPT manifest with the new tests.
+
+You must also run `./mach update-manifest` whenever you modify a test, reference, or support file.
+All changes to our in-tree Web Platform Tests will be upstreamed automatically when your PR is merged.
+
+## Servo-specific tests
+
+The `mozilla` directory contains tests that cannot be upstreamed for some reason (e.g. because they depend on Servo-specific APIs), as well as some legacy tests that should be upstreamed at some point.
+When run they are mounted on the server under `/_mozilla/`.
+
+## Analyzing reftest results
+
+Reftest results can be analyzed from a raw log file.
+To generate this run with the `--log-raw` option e.g.
+
+```
+./mach test-wpt --log-raw wpt.log
+```
+
+<!-- TODO: reftest analyzer link is dead -->
+This file can then be fed into the [reftest analyzer](https://hg.mozilla.org/mozilla-central/raw-file/tip/layout/tools/reftest/reftest-analyzer-structured.xhtml) which will show all failing tests (not just those with unexpected results).
+Note that this ingests logs in a different format to [original version of the tool](https://hg.mozilla.org/mozilla-central/raw-file/tip/layout/tools/reftest/reftest-analyzer.xhtml) written for gecko reftests.
+
+The reftest analyzer allows pixel-level comparison of the test and reference screenshots.
+Tests that both fail and have an unexpected result are marked with a `!`.
+
+## Updating the WPT manifest
+
+MANIFEST.json can be regenerated automatically with the mach command `update-manifest` e.g.
+
+    ./mach update-manifest
+
+This is equivalent to running
+
+    ./mach test-wpt --manifest-update SKIP_TESTS
+
+## Running Devtools Tests
+
+The simplest way to run the Devtools tests in Servo is `./mach test-devtools` from the root directory.
+This will run all tests defined in `devtools_tests.py`. All Devtools-related test files exist in `python/servo/devtools_tests`.
+
+## Alternatives to running web platform tests
+
+There are other ways to run web platform tests as well.
+These are not advised for the typical development workflows as they require custom setup.
+However, sometimes these runs are required to be able to debug complex interactions.
+
 ### Running the Web Platform Tests with an external server
 
 Normally wptrunner starts its own WPT server, but occasionally you might want to run multiple instances of `mach test-wpt`, such as when debugging one test while running the full suite in the background, or when running a single test many times in parallel (--processes only works across different tests).
@@ -194,74 +273,3 @@ You can supply `--product firefox` along with the path to a Firefox binary (as w
     GECKO="$HOME/projects/mozilla/gecko"
     GECKO_BINS="$GECKO/obj-firefox-release-artifact/dist/Nightly.app/Contents/MacOS"
     ./mach test-wpt dom --product firefox --binary $GECKO_BINS/firefox --certutil-binary $GECKO_BINS/certutil --prefs-root $GECKO/testing/profiles
-
-## Updating Web Platform Test expectations
-
-When fixing a bug that causes the result of a test to change, the expected results for that test need to be changed.
-This can be done manually, by editing the `.ini` file under the `meta` folder that corresponds to the test.
-In this case, remove the references to tests whose expectation is now `PASS`, and remove `.ini` files that no longer contain any expectations.
-
-When a larger number of changes is required, this process can be automated.
-This first requires saving the raw, unformatted log from a test run, for example by running `./mach test-wpt --log-raw /tmp/servo.log`.
-Once the log is saved, run from the root directory:
-
-    ./mach update-wpt /tmp/servo.log
-
-Running *all* Web Platform Tests locally will take a long time and often cause unrelated failures (such as the runner exceeding the maximum number of open files on your system).
-The test expectations are also set based on the results of Servo's CI machines, so differences in your setup might cause failures.
-
-Usually you will have a rough idea where tests for your changes are.
-For example, almost all tests for [SubtleCrypto](https://github.com/servo/servo/blob/63793ccbb7c0768af3f31c274df70625abacb508/components/script/dom/subtlecrypto.rs) code are in the [`WebCryptoAPI`](https://github.com/web-platform-tests/wpt/tree/550fb109615cf434b03b30b76aa0dea6bfb0ebe1/WebCryptoAPI) directory.
-In this case you can run only these tests with `./mach test-wpt WebCryptoAPI`, followed by `./mach update-wpt` as described above.
-To ensure that other tests didn't break, do a [try run](#running-web-platform-tests-on-your-github-fork) afterwards.
-
-For updating WebGPU expectations, please see [WebGPU](../architecture/webgpu.md#updating-webgpu-cts-expectations) chapter for more information.
-
-## Modifying Web Platform Tests
-
-Please see the Web Platform Test [Writing Tests guide](https://web-platform-tests.org/writing-tests/index.html) for how to write tests.
-In general, a good way to start is to follow these steps:
-
-1. Find the directory that tests the feature you want to test.
-2. Find a test in that directory that tests a similar behavior, make a copy of the test with an appropriate name, and make your modifications.
-3. If the test is a reference test, you should also copy the reference if it needs to change, following the naming pattern of the directory you are modifying.
-4. Run  `./mach update-manifest` to update the WPT manifest with the new tests.
-
-You must also run `./mach update-manifest` whenever you modify a test, reference, or support file.
-All changes to our in-tree Web Platform Tests will be upstreamed automatically when your PR is merged.
-
-## Servo-specific tests
-
-The `mozilla` directory contains tests that cannot be upstreamed for some reason (e.g. because they depend on Servo-specific APIs), as well as some legacy tests that should be upstreamed at some point.
-When run they are mounted on the server under `/_mozilla/`.
-
-## Analyzing reftest results
-
-Reftest results can be analyzed from a raw log file.
-To generate this run with the `--log-raw` option e.g.
-
-```
-./mach test-wpt --log-raw wpt.log
-```
-
-<!-- TODO: reftest analyzer link is dead -->
-This file can then be fed into the [reftest analyzer](https://hg.mozilla.org/mozilla-central/raw-file/tip/layout/tools/reftest/reftest-analyzer-structured.xhtml) which will show all failing tests (not just those with unexpected results).
-Note that this ingests logs in a different format to [original version of the tool](https://hg.mozilla.org/mozilla-central/raw-file/tip/layout/tools/reftest/reftest-analyzer.xhtml) written for gecko reftests.
-
-The reftest analyzer allows pixel-level comparison of the test and reference screenshots.
-Tests that both fail and have an unexpected result are marked with a `!`.
-
-## Updating the WPT manifest
-
-MANIFEST.json can be regenerated automatically with the mach command `update-manifest` e.g.
-
-    ./mach update-manifest
-
-This is equivalent to running
-
-    ./mach test-wpt --manifest-update SKIP_TESTS
-
-## Running Devtools Tests
-
-The simplest way to run the Devtools tests in Servo is `./mach test-devtools` from the root directory.
-This will run all tests defined in `devtools_tests.py`. All Devtools-related test files exist in `python/servo/devtools_tests`.
