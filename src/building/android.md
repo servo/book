@@ -9,12 +9,12 @@
 - Run the following command to install the necessary components:
   ```shell
   sudo $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --install \
-   "build-tools;34.0.0" \
+   "build-tools;36.0.0" \
    "emulator" \
    "ndk;28.2.13676358" \
    "platform-tools" \
-   "platforms;android-33" \
-   "system-images;android-33;google_apis;arm64-v8a"
+   "platforms;android-34" \
+   "system-images;android-34;google_apis;arm64-v8a"
   ```
 - Run `./mach build --android`
 
