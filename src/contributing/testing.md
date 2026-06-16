@@ -20,9 +20,9 @@ with `#[test]` annotations. You can run unit tests with `./mach test-unit`. Exam
 
 ```
 # Run all unit tests in the net crate
-./mach test-unit -p net
+./mach test-unit -p servo-net
 # Run a specific unit test in the net crate
-./mach test-unit -p net test_fetch_response_is_not_network_error
+./mach test-unit -p servo-net test_fetch_response_is_not_network_error
 ```
 
 Running the whole test-suite can be very memory intensive, you can dampen this behaviour somewhat with
