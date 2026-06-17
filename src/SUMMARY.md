@@ -39,7 +39,7 @@
   - [OpenHarmony](contributing/debugging/openharmony.md)
 - [Profiling](contributing/profiling.md)
 - [Crate Dependencies](contributing/crate-dependencies.md)
-- [Devtools](contributing/devtools.md)
+- [DevTools](contributing/devtools.md)
 - [Guides](contributing/guides/index.md)
   - [Minimal Reproducible Test Cases](contributing/guides/minimal-reproducible-test-cases.md)
   - [Implementing a DOM API](contributing/guides/implementing-a-dom-api.md)
