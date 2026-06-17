@@ -4,7 +4,12 @@
 
 ***
 
-[_Servo_](https://servo.org) is a web browser engine written in the Rust programming language, and currently developed on 64-bit Linux, 64-bit macOS, 64-bit Windows, and Android.
+[_Servo_](https://servo.org) is a web browser engine written in the Rust programming language, and currently developed for following platforms:
+- 64-bit Linux
+- 64-bit macOS
+- 64-bit Windows
+- Android
+- OpenHarmony
 
 Work is still ongoing to make Servo consumable as a webview library.
 Currently, the recommended way to run Servo as a browser is via [_servoshell_](https://servo.org/download/), our [winit](https://crates.io/crates/winit) and [egui](https://crates.io/crates/egui)-based demo browser.
