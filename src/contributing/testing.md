@@ -172,10 +172,10 @@ This is equivalent to running
 
     ./mach test-wpt --manifest-update SKIP_TESTS
 
-## Running Devtools Tests
+## Running DevTools Tests
 
-The simplest way to run the Devtools tests in Servo is `./mach test-devtools` from the root directory.
-This will run all tests defined in `devtools_tests.py`. All Devtools-related test files exist in `python/servo/devtools_tests`.
+The simplest way to run the DevTools tests in Servo is `./mach test-devtools` from the root directory.
+This will run all tests defined in `devtools_tests/test_*.py`. All DevTools-related test files exist in `python/servo/devtools_tests`.
 
 ## Alternatives to running web platform tests
 

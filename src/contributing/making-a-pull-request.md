@@ -136,3 +136,8 @@ If you do not have permission to add labels to your pull request, add a comment 
 | `T-linux-wpt`      | Linux              | Linux                      |
 | `T-macos`          | macOS              | (none)                     |
 | `T-windows`        | Windows            | (none)                     |
+
+The DevTools tests are experimental and not yet enabled by default.
+It is highly recommended that pull requests that modify DevTools code run them.
+To do so, add the `T-linux-devtools` label.
+As with Web Platform Tests, if you do not have permission to add labels, comment to request that it is added.
