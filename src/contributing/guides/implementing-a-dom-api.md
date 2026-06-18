@@ -33,11 +33,10 @@
        - Copy the line from the spec.
        - Implement the spec in code(which may take more than one line, and might require additional commenting).
 2. Note: there are certain things that are often needed to perform operation as part of an algorithm:
-   - `SafeJSContext`: can be obtained using `GlobalScope::get_cx()`.
-   - `GlobalScope`: can be obtained using `self.global()` on a `dom_struct`, or `GlobalScope::from_safe_context`
-   - `InRealm`: can be obtained as an argument to the generated trait method, using [this configuration file](https://github.com/servo/servo/blob/4a5ff01e060293721d10289ec56dbd4c58a0969e/components/script_bindings/codegen/Bindings.conf)
-   - `CanGc`: same as for `InRealm`.
-   -  It is best to access them as early as possible, say at the top of the trait method implementation, and to pass them down(as ref for `GlobalScope`) as arguments, in the order described above(with any other needed argument coming in between `&GlobalScope` and `InRealm`).
+   - `JSContext` or `CurrentRealm`, which are mutually exclusive, can be obtained as an argument to the generated trait method, using [this configuration file](https://github.com/servo/servo/blob/4a5ff01e060293721d10289ec56dbd4c58a0969e/components/script_bindings/codegen/Bindings.conf)
+   - `GlobalScope`: can be obtained using `self.global()` on a `dom_struct`, or `GlobalScope::from_current_realm`
+   -  It is best to access them as early as possible, say at the top of the trait method implementation, and to pass them down as ref(in most cases `JSContext`/`CurrentRealm` need to be behind an `&mut` reference)
+   -  It is preferred to have `JSContext`/`CurrentRealm` as the first argument, followed by `&GlobalScope` if needed, and any other needed argument coming after
 2. This should give you a complete first draft.
 
 ## Part 3: Running tests and fixing bugs
