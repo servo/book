@@ -1,5 +1,8 @@
 # Accessibility
 
+<details>
+<summary>TODO: Patch analysis</summary>
+
 ## TODO: patch analysis
 
 - [layout: Split recompute_children() from update_node() in AccessibilityTree.](https://github.com/servo/servo/pull/44768)
@@ -65,6 +68,8 @@
     - plumbing – everything between layout and the embedder
     - has one unnecessary message from layout to script, later eliminated in [#44208](https://github.com/servo/servo/pull/44208)
     - otherwise quite direct, going directly from script thread to embedder’s main thread, no constellation or anything
+
+</details>
 
 ## Background: AccessKit concepts
 
