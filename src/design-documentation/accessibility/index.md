@@ -6,15 +6,20 @@ This section contains information on the design of Servo's accessibility system.
 
 **[Servo accessibility for embedders](for-embedders.md)** explains the embedder APIs for activating accessibility and consuming accessibility information produced by Servo.
 
-**[Servoshell accessibility](servoshell.md)** describes how we use the embedder API to embed Servo's accessibility trees in the servoshell application.
+**[servoshell accessibility](servoshell.md)** describes how we use the embedder API to embed Servo's accessibility trees in the servoshell application.
 
-**[WebView accessibility internals](internals.md)** explains how accessibility activation for a particular webview is implemented.
+**[WebView accessibility internals](webview-internals.md)** explains how accessibility activation for a particular webview is implemented.
 
 **[Generating accessibility trees for web content](tree.md)** explains how the tree for a particular web page is created and updated.
 
 **[Servo accessibility tree testing](testing.md)** describes how we test the correctness of our accessibility tree implementation.
 
+## `accessibility_enabled` pref
 
+While the system is being developed, the [`accessibility_enabled`](https://doc.servo.org/servo/prefs/struct.Preferences.html#structfield.accessibility_enabled) pref must be set in order to enable the accessibility code to run.
+
+> [!NOTE]
+> As well as enabling the pref, it may be necessary to have an assistive technology running in order for the accessibility tree to be built and exposed to accessibility inspectors. On Linux, running [Orca](https://orca.gnome.org/) is sufficient. [Accerciser](https://gitlab.gnome.org/GNOME/accerciser) or [Elevado](https://gitlab.gnome.org/feaneron/elevado/) can be used to inspect the accessibility tree as it is exposed to assistive technologies.
 
 ## TODOs
 

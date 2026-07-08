@@ -1,16 +1,16 @@
 # Accessibility Background
 
-## AccessKit concepts
-
-[AccessKit](https://accesskit.dev) provides a platform-independent schema for exposing information about the application's UI to assistive technology APIs.
-
-### Accessibility tree
+## Accessibility tree
 
 Accessibility information is provided to platform accessibility APIs as a tree of nodes, representing the different parts of the UI - for example, a node representing a toolbar may contain nodes representing buttons.
 
 Platform APIs allow assistive technologies like screen readers to present an alternative user interface (for example, a speech- or braille-based interface) to users, and allow those interfaces to be interacted with via the assistive technology by allowing the assistive technology to relay user interactions back to the application.
 
 A browser's accessibility tree combines the accessibility tree for its own UI (the address bar, and so on) with the accessibility trees for any active documents, so that users can use assistive technology to interact with web pages being shown in the browser.
+
+## AccessKit concepts
+
+[AccessKit](https://accesskit.dev) provides a platform-independent schema for exposing information about the application's UI to assistive technology APIs.
 
 ### Central cache
 
@@ -36,7 +36,7 @@ A `Node` _must_ have a [`Role`](https://docs.rs/accesskit/0.24.0/accesskit/enum.
 
 #### `NodeId`
 
-Each `Node` is associated with a [`NodeId`](https://docs.rs/accesskit/0.24.0/accesskit/struct.NodeId.html), which must be unique within the node's tree.
+Each `Node` is associated with a [`NodeId`](https://docs.rs/accesskit/0.24.0/accesskit/struct.NodeId.html), which must be unique within the node's [tree](#subtrees).
 Properties which refer to other nodes in the tree, including `children`, refer to nodes by their `NodeId`s.
 
 `Node` doesn't have an ID property; rather, the mechanism for associating a `Node` with a `NodeId` is via `TreeUpdate`.
@@ -65,14 +65,14 @@ Nesting a tree as a subtree of another tree is a two-step process, where the ord
 
 Any `TreeUpdate` with a `tree_id` value other than [`TreeId::ROOT`](https://docs.rs/accesskit/0.24.0/accesskit/struct.TreeId.html#associatedconstant.ROOT) MUST be preceded by a `TreeUpdate` containing a `Node` with the same `tree_id` value; otherwise, the AccessKit adapter consuming the `TreeUpdate` will panic.
 
-<img alt="Diagram of subtree grafting: Tree 1 includes a node with tree_id: 2, which is labelled as 'graft node' and has a dotted line pointing to the root node of Tree 2." src="../images/accesskit-graft-node.svg">
+<img alt="Diagram of subtree grafting: Tree 1 includes a node with tree_id: 2, which is labelled as 'graft node' and has a dotted line pointing to the root node of Tree 2." src="../../images/accesskit-graft-node.svg">
 
 ### Adapters
 
 `Node`s and `TreeUpdate`s allow an application to describe a platform-independent accessibility tree.
 Adapters map between this platform-independent representation and the various platform-specific accessibility APIs.
 
-Typically, an adapter will provide a method which takes a `TreeUpdate`, and uses the [`accesskit_consumer` API](https://docs.rs/accesskit_consumer/latest/accesskit_consumer/index.html) to update an in-memory tree which can be queried via platform APIs, triggering the appropriate notifications to the API in the process.
+Typically, an adapter will provide a method which takes a `TreeUpdate`, and uses the [`accesskit_consumer` API](https://docs.rs/accesskit_consumer/latest/accesskit_consumer/index.html) to update an in-memory tree which can be queried via platform APIs, triggering the appropriate notifications to the API as it does so.
 
 AccessKit provides platform-specific adapters for Linux, macOS and Windows, as well as a cross-platform [`accesskit_winit`](https://crates.io/crates/accesskit_winit) adapter which can be used by projects using the `winit` cross-platform windowing library.
 `accesskit_winit` pulls in the respective platform-specific adapters under the hood.
@@ -80,4 +80,4 @@ AccessKit provides platform-specific adapters for Linux, macOS and Windows, as w
 ### Actions
 
 Finally, AccessKit provides an [`ActionRequest`](https://docs.rs/accesskit/0.24.0/accesskit/struct.ActionRequest.html) type for relaying user actions from assistive technology back to the application in a platform-independent way.
-Adapters provide hooks for the application to be notified of action requests to be able to handle user actions.
+Adapters provide hooks for the application to be notified of action requests, so that they can handle user actions.

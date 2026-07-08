@@ -1,8 +1,8 @@
 # WebView accessibility internals
 
-As described in the [Servo accessibility for embedders](#servo-accessibility-for-embedders) section, the Servo accessibility system is exposed to embedders on a per-`WebView` basis.
+As described in the [Servo accessibility for embedders](for-embedders.md) section, the Servo accessibility system is exposed to embedders on a per-`WebView` basis.
 
-The `WebView` has a [minimal tree](#webview-subtree) of its own, which essentially exists to provide a [graft node](#subtrees) for its top-level [`Pipeline`](https://doc.servo.org/servo_constellation/pipeline/struct.Pipeline.html)'s accessibility tree.
+The `WebView` has a [minimal tree](#webview-subtree) of its own, which essentially exists to provide a [graft node](background.md#subtrees) for its top-level [`Pipeline`](https://doc.servo.org/servo_constellation/pipeline/struct.Pipeline.html)'s accessibility tree.
 
 The tree for the pipeline is generated based on its document's structure by [layout::AccessibilityTree](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html).
 This tree is created when accessibility is activated for the pipeline, and updated each time the document is reflowed.
@@ -15,7 +15,7 @@ Any changes to the tree are captured in a `TreeUpdate`, which is sent to the emb
 
 Each WebView has a minimal tree consisting of a [`ScrollView`](https://docs.rs/accesskit/0.24.0/accesskit/enum.Role.html#variant.ScrollView) and a graft node for the top-level pipeline (i.e. the top-level document).
 
-A `TreeUpdate` with an updated graft node is emitted when accessibility is enabled for the WebView, and when the top-level pipeline (i.e. the top-level Document) changes.
+A `TreeUpdate` with an updated graft node is emitted when accessibility is [activated](https://doc.servo.org/servo/struct.WebView.html#method.set_accessibility_active) for the WebView, and when the WebView navigates to another top-level Document, causing its top-level `Pipeline` to change.
 
 ![Diagram showing subtree grafting between the minimal tree for a WebView, containing just a ScrollView node and graft node, and the tree for a pipeline for a document named webpage.html](../../images/servo-accessibility-webview-pipeline.svg)
 
@@ -24,7 +24,7 @@ A `TreeUpdate` with an updated graft node is emitted when accessibility is enabl
 When an embedder calls `set_accessibility_active(true)` on a `WebView`, the `WebView` assumes responsibility for ensuring that until accessibility is deactivated or the `WebView` is destroyed, the embedder will receive `TreeUpdate`s representing the `WebView` and its current contents at any given time.
 
 In order to do this, it needs to activate accessibility in its top-level [`Pipeline`](https://doc.servo.org/servo_constellation/pipeline/struct.Pipeline.html) both immediately, and whenever the top-level `Pipeline` changes.
-It also de-activates accessibility in any inactive pipelines.
+It also de-activates accessibility in any inactive pipelines (i.e. any pipelines which don't correspond to a Document currently being shown, but which are retained by the [back/forward cache](https://developer.mozilla.org/en-US/docs/Glossary/bfcache)).
 
 The basic initial flow is:
 
@@ -35,7 +35,7 @@ The basic initial flow is:
 4. The script thread calls [`set_accessibility_active()`](https://doc.servo.org/layout_api/trait.Layout.html#tymethod.set_accessibility_active) on the pipeline's [`LayoutThread`](https://doc.servo.org/layout/layout_impl/struct.LayoutThread.html).
 5. On the next reflow, the `LayoutThread` generates an initial `TreeUpdate` for its accessibility tree, and sends an [`EmbedderMsg::AccessibilityTreeUpdate()`](https://doc.servo.org/embedder_traits/enum.EmbedderMsg.html#variant.AccessibilityTreeUpdate) message with the tree update.
 6. The `WebView` retrieves the `TreeUpdate`'s [`tree_id`](https://doc.servo.org/accesskit/struct.TreeUpdate.html#structfield.tree_id) and stores it in its [`grafted_accesskit_tree_id`](https://doc.servo.org/servo/webview/struct.WebViewInner.html#structfield.grafted_accesskit_tree_id) field.
-   It then generates a `TreeUpdate` representing its own [minimal tree](#webview-subtree) with the [graft node](http://localhost:3000/design-documentation/accessibility.html#subtrees)'s `tree_id` set to the `grafted_accesskit_tree_id`, and passes that to its `WebViewDelegate`'s [`notify_accessibility_tree_update()`](https://doc.servo.org/servo/trait.WebViewDelegate.html#method.notify_accessibility_tree_update) method.
+   It then generates a `TreeUpdate` representing its own [minimal tree](#webview-subtree) with the [graft node](background.md#subtrees)'s `tree_id` set to the `grafted_accesskit_tree_id`, and passes that to its `WebViewDelegate`'s [`notify_accessibility_tree_update()`](https://doc.servo.org/servo/trait.WebViewDelegate.html#method.notify_accessibility_tree_update) method.
 7. Once the graft node has been updated, the `WebView` can then call `notify_accessibility_tree_update()` again to forward the `TreeUpdate` from the pipeline.
 
 After accessibility has been activated on the pipeline, it will continue to send `TreeUpdate`s to the `WebView`.
