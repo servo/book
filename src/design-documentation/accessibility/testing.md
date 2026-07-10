@@ -6,6 +6,7 @@
 - Future directions for testing
     - WebDriver methods
     - platform API testing using WPT integration (requires mapping DOM ID through to platform APIs which is not yet implemented in AccessKit)
+- integrity check (and related pref)
 
 ```
 // TODO: finish

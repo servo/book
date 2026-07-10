@@ -35,36 +35,73 @@ The `TreeUpdate` is emitted back to the embedder via [`EmbedderMessage::Accessib
 
 ### Updating the tree: `AccessibilityTree::update_tree()`
 
-Each time a reflow occurs, `LayoutThread` will check its [`needs_accessibility_update`](https://doc.servo.org/layout/layout_impl/struct.LayoutThread.html#structfield.needs_accessibility_update) flag, and if it is set will call the [`update_tree()`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html#method.update_tree) method with the root node of the document.
+Each time a reflow occurs, `LayoutThread` will check its [`needs_accessibility_update`](https://doc.servo.org/layout/layout_impl/struct.LayoutThread.html#structfield.needs_accessibility_update) flag, and if it is set will call the [`update_tree()`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html#method.update_tree) method on its [`accessibility_tree`](https://doc.servo.org/layout/layout_impl/struct.LayoutThread.html#structfield.accessibility_tree).
 
-`update_tree()` creates a new [`AccessibilityUpdate`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityUpdate.html) to track data relating to the update pass, updates its [`root_node_id`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html#structfield.root_node_id) if necessary, and then calls into the recursive [update_node_and_descendants()](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html#method.update_node_and_descendants).
+`update_tree()` creates a new [`AccessibilityUpdate`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityUpdate.html) to track data relating to the update pass, updates its [`root_node_id`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html#structfield.root_node_id) if necessary, and then updates itself based on data from the DOM.
 
-### `AccessibilityUpdate` and tree mutations
+### `AccessibilityUpdate`
 
 Methods in `AccessibilityTree` which can mutate the tree, such as [`get_or_create_node()`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html#method.get_or_create_node) and `remove_stale_nodes()`, take an `AccessibilityUpdate` in order to track what changes were made.
 
 If an `AccessibilityNode` is changed in any way, it is added to the `AccessibilityUpdate`'s [`changed_nodes`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityUpdate.html#structfield.changed_nodes) set.
 This set is used to produce the `accesskit::TreeUpdate` when the `AccessibilityUpdate` is [finalized](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityUpdate.html#method.finalize).
 
-The `AccessibilityUpdate` also tracks what nodes have been added to, removed from and moved within the tree during the current update pass, in its [tree_changes](`https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityUpdate.html#structfield.tree_changes`) map.
-This map is consumed by the `AccessibilityTree::remove_stale_nodes()`.
+### Initial tree construction
+
+The first time [`update_tree`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html#method.update_tree) is called on the accessibility tree, its [`nodes`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html#structfield.nodes) map is empty and needs to be populated from the DOM tree.
+This will also produce an initial `accesskit::TreeUpdate` to populate the tree on the AccessKit side
+
+[`ensure_root_node()`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html#method.ensure_root_node) will create the root node for the accessibility tree based on the root DOM node.
+Since the root node is newly created, its corresponding DOM node gets pushed into the `damage_from_dom` structure with [`AccessibilityDamage::Rebuild`](https://doc.servo.org/layout_api/layout_damage/struct.AccessibilityDamage.html#associatedconstant.Rebuild), ensuring it will be completely populated from the DOM tree, including populating its children.
+
+[`apply_changes_from_dom_tree()`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html#method.apply_changes_from_dom_tree) takes the `damage_from_dom` structure with the root DOM node marked as `Rebuild` (and potentially other DOM nodes marked with various damage, although since all nodes will be newly created any damage from the DOM tree is irrelevant).
+This method will then call into [`update_node_and_descendants_from_dom_node()`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html#method.update_node_and_descendants_from_dom_node) for the root node.
+
+[`update_node_and_descendants_from_dom_node()`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html#method.update_node_and_descendants_from_dom_node) populates the root node in two steps:
+- First [`AccessibilityNode::update_node_from_dom_node()`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityNode.html#method.update_node_from_dom_node) populates the node's local properties, such as its role.
+- Second, [`AccessibilityNode::update_descendants_from_dom_node()`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityNode.html#method.update_descendants_from_dom_node) populates the node's children - recursively calling into `AccessibilityTree::update_node_and_descendants_from_dom_node()` for each new child.
+
+As the tree is populated from the DOM tree via `update_node_and_descendants_from_dom_node()`, the `AccessibilityUpdate` keeps track of changes to accessibility nodes which need to be resolved as updates to properties computed within the accessibility tree.
+This [`LocalAccessibilityDamage`](https://doc.servo.org/layout/accessibility_tree/struct.LocalAccessibilityDamage.html) is propagated within the accessibility tree, and consumed in [`AccessibilityTree::resolve_local_damage_for_node_and_subtree()`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html#method.resolve_local_damage_for_node_and_subtree), starting from the root node.
+This method first calls into [`AccessibilityNode::update_node_local()`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityNode.html#method.update_node_local) to resolve the local damage on the node, and then recurses into the node's children if necessary.
+
+Finally, after these three update phases (creating the root node, populating it recursively from the DOM tree, and computing properties which are based on the populated accessibility tree) are complete, the `AccessibilityUpdate` is [`finalize()`d](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityUpdate.html#method.finalize), producing the initial `accesskit::TreeUpdate` for the tree.
+
+### Incremental updates
+
+Calls to [`update_tree()`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html#method.update_tree) after the tree has been populated for the first time follow the same basic flow, but with differences resulting from the tree already being populated.
+
+Typically, calls to `ensure_root_node()` after the tree has been populated will be a mostly no-op, since there will already be a node associated with the root DOM node.
+
+The `damage_from_dom` argument to `update_tree()` should now contain pairs of corresponding `ServoLayoutNode`s and `AccessibilityDamage` values.
+These are collected in between reflows on the Document's [`AccessibilityData`](https://doc.servo.org/script/dom/document/accessibility_data/struct.AccessibilityData.html), and passed in to the reflow method via [`ReflowRequest`](https://doc.servo.org/layout_api/struct.ReflowRequest.html#structfield.accessibility_damage).
+
+The `damage_from_dom` structure is passed (as previously) to [`apply_changes_from_dom_tree()`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html#method.apply_changes_from_dom_tree), where it now allows us to update only nodes whose corresponding DOM nodes have changed since the last tree update.
+Any nodes which have been added to the DOM tree will be picked up due to a parent node having a [`Children`](https://doc.servo.org/layout_api/struct.AccessibilityDamage.html#associatedconstant.Children) damage value; from there, any new nodes will be populated recursively the same way the root node is in the initial update.
+
+### Dropping nodes from the cache: `TreeChange`
+
+Once the tree update is complete, any `AccessibilityNode` which is no longer in the tree is dropped.
+This happens in the [`AccessibilityTree::drop_removed_nodes()`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html#method.drop_removed_nodes) method, which consumes the `AccessibilityUpdate`.
+`drop_removed_nodes()` is called at the end of the update so that we can distinguish between a node which has been removed from its parent node because it was moved elsewhere in the tree, and a node which has been removed from the tree altogether.
+
+We determine which nodes to drop using the `AccessibilityUpdate`'s [`tree_changes`](`https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityUpdate.html#structfield.tree_changes`) map, which tracks what nodes have been added to, removed from and moved within the tree during the current update pass.
 
 Tree changes are determined based on updates to parent nodes:
 - If a DOM node has a child which hasn't yet been added to the tree, that node will be created when [`get_or_create_node()`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html#method.get_or_create_node) is called, and it will be tracked as [`TreeChange::New`](https://doc.servo.org/layout/accessibility_tree/enum.TreeChange.html#variant.New)
+    - A node which is `New` a particular update can never be `Moved` or `Removed` in the same update.
 - If a DOM node has a child which was previously the child of a different node, the child node will be tracked as [`TreeChange::PendingMove`](https://doc.servo.org/layout/accessibility_tree/enum.TreeChange.html#variant.PendingMove)
     - If it was previously tracked as `Removed`, it will be tracked as `Moved`
 - If a DOM node *no longer* has a child which it had previously, that child node will be tracked as [`TreeChange::Removed`](https://doc.servo.org/layout/accessibility_tree/enum.TreeChange.html#variant.Removed)
     - If it was previously tracked as `PendingMove`, it will be tracked as `Moved`.
 
 For a node to be tracked as [`Moved`](https://doc.servo.org/layout/accessibility_tree/enum.TreeChange.html#variant.Moved), it must be both removed from its old parent and added to its new parent in the same update pass, in either order.
-When [tree_changes](`https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityUpdate.html#structfield.tree_changes`) is processed during [finalization](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityUpdate.html#method.finalize), any nodes with a `Removed` status will be deleted from the `AccessibilityTree`.
+When [tree_changes](`https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityUpdate.html#structfield.tree_changes`) is processed by [`AccessibilityTree::drop_removed_nodes()`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html#method.drop_removed_nodes) during [finalization](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityUpdate.html#method.finalize), any nodes in the subtree of a node with `Removed` status will be dropped from the tree's cache.
 Any nodes which still have a `PendingMove` status at this point will cause a panic, as this would mean that they have been added to their new parent without being removed from their old parent.
 
-### Updating a single `AccessibilityNode`
-
-
-
+### Ensuring `AccessibilityNode`s don't outlive their corresponding DOM nodes
 
 ```
-// TODO: finish
+// TODO: write
 ```
+

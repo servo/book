@@ -23,11 +23,6 @@ While the system is being developed, the [`accessibility_enabled`](https://doc.s
 
 ## TODOs
 
-- Adapters typically use accesskit_consumer to ingest tree updates; consumer can also be useful in other ways
-    - Add section on `accesskit_consumer`?
-- Future directions for testing
-    - WebDriver methods
-    - platform API testing using WPT integration (requires mapping DOM ID through to platform APIs which is not yet implemented in AccessKit)
 - Link to PRs introducing various concepts?
     - Maybe just a standalone paragraph with the GitHub PR number as a link
 
