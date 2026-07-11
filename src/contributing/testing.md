@@ -25,9 +25,11 @@ with `#[test]` annotations. You can run unit tests with `./mach test-unit`. Exam
 ./mach test-unit -p servo-net test_fetch_response_is_not_network_error
 ```
 
+To be able to run unit tests for a new crate, you need to add the name of the crate to
+`self_contained_tests` in `python/servo/testing_commands.py`.
+
 Running the whole test-suite can be very memory intensive, you can dampen this behaviour somewhat with
 with restricting the amount of compiled crates with `./mach test-unit -j 4`.
-
 
 ## Integration Tests
 Tests are located in the `tests` directory.
