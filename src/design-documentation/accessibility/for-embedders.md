@@ -25,3 +25,5 @@ Servo manages subtrees within the `WebView`'s accessibility tree; the embedder o
 
 > [!NOTE]
 > The updates from the `WebView` are currently one-way: we don't yet support [`ActionRequest`](https://docs.rs/accesskit/latest/accesskit/struct.ActionRequest.html)s.
+
+Per-`WebView` accessibility activation was added in [#42309](https://github.com/servo/servo/pull/43029).
