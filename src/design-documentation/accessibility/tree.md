@@ -7,7 +7,7 @@ The logic for generating and updating the accessibility tree lives in [`layout::
 This module includes:
 - [`AccessibilityTree`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html), representing the current state of the accessibility tree and the logic to update the tree based on the current document state
 - [`AccessibilityNode`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityNode.html), representing a single node in the accessibility tree and the logic to update it based on its corresponding DOM node
-- [`AccessibilityUpdate`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityUpdate.html), representing the in-process update pass, and providing the `TreeUpdate` when the update is complete.
+- [`AccessibilityUpdate`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityUpdate.html), representing the in-progress update pass, and providing the `TreeUpdate` when the update is complete.
 
 Our aspirational goal is to make updating the accessibility tree fast enough that users won't notice any performance degradation when accessibility is active.
 
@@ -89,7 +89,7 @@ Any nodes which have been added to the DOM tree since the last accessibility upd
 ### Dropping nodes from the `AccessibilityTree`: `TreeChange`
 
 Once the tree update is complete, any `AccessibilityNode` which is no longer in the tree is dropped.
-This happens in the [`AccessibilityTree::drop_removed_nodes()`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html#method.drop_removed_nodes) method, which consumes parts of the `AccessibilityUpdate`.
+This happens in the [`AccessibilityTree::drop_removed_nodes()`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html#method.drop_removed_nodes) method, which consumes parts of the `AccessibilityUpdate` during `finalize()`.
 `drop_removed_nodes()` is called at the end of the update so that we can distinguish between a node which has been removed from its parent node because it was moved elsewhere in the tree, and a node which has been removed from the tree altogether.
 
 We determine which nodes to drop using the `AccessibilityUpdate`'s [`tree_changes`](`https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityUpdate.html#structfield.tree_changes`) map, which tracks what nodes have been added to, removed from and moved within the tree during the current update pass.

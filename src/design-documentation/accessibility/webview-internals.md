@@ -50,7 +50,7 @@ After the first, there's no need to send a separate `TreeUpdate` for the `WebVie
 
 ### Handling navigations: grafted tree epoch
 
-When there is a navigation, such as when a user enters a new URL in the address bar, clicks a link, or uses the Back or Forwards buttons, the `WebView`'s top-level pipeline changes.
+When there is a navigation, such as when a user enters a new URL in the address bar, clicks a link, or uses the Back or Forward buttons, the `WebView`'s top-level pipeline changes.
 This means that it needs to:
 
 - de-activate accessibility in the old top-level pipeline,
