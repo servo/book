@@ -7,7 +7,7 @@ The logic for generating and updating the accessibility tree lives in [`layout::
 This module includes:
 - [`AccessibilityTree`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityTree.html), representing the current state of the accessibility tree and the logic to update the tree based on the current document state
 - [`AccessibilityNode`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityNode.html), representing a single node in the accessibility tree and the logic to update it based on its corresponding DOM node
-- [`AccessibilityUpdate`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityUpdate.html), representing the in-progress update pass, and providing the `TreeUpdate` when the update is complete.
+- [`AccessibilityUpdate`](https://doc.servo.org/layout/accessibility_tree/struct.AccessibilityUpdate.html), representing the in-progress update pass, and yielding the `TreeUpdate` when the update is complete.
 
 Our aspirational goal is to make updating the accessibility tree fast enough that users won't notice any performance degradation when accessibility is active.
 

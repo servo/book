@@ -6,13 +6,13 @@ This section contains information on the design of Servo's accessibility system.
 
 **[Servo accessibility for embedders](for-embedders.md)** explains the embedder APIs for activating accessibility and consuming accessibility information produced by Servo.
 
-**[servoshell accessibility](servoshell.md)** describes how we use the embedder API to embed Servo's accessibility trees in the servoshell application.
+**[(TODO) servoshell accessibility](servoshell.md)** will describe how we use the embedder API to embed Servo's accessibility trees in the servoshell application.
 
 **[WebView accessibility internals](webview-internals.md)** explains how accessibility activation for a particular webview is implemented.
 
 **[Generating accessibility trees for web content](tree.md)** explains how the tree for a particular web page is created and updated.
 
-**[Servo accessibility tree testing](testing.md)** describes how we test the correctness of our accessibility tree implementation.
+**[(TODO) Servo accessibility tree testing](testing.md)** will describe how we test the correctness of our accessibility tree implementation.
 
 ## `accessibility_enabled` pref
 
