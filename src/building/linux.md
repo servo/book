@@ -13,7 +13,7 @@
 
 ## Unsupported Distributions 
 
-If `./mach boostrap` reports that your distribution is unsupported, then you will need to install dependencies manually.
+If `./mach bootstrap` reports that your distribution is unsupported, then you will need to install dependencies manually.
 Below you will find instructions for installing build dependencies on a variety of types of distributions.
 If your distribution is not listed, it's recommended that you try to adapt the list for the package names on your system.
 Updates to this list are very welcome!
