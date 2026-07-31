@@ -52,7 +52,7 @@ Solid lines indicate communication channels or API calls.
 ## Constellation, script threads, and pipelines
 
 Each Servo instance has a single [constellation](https://github.com/servo/servo/blob/main/components/constellation/lib.rs), which manages the web content processes for all frames in all `WebView`s.
-The script thread in the web content process can manages multiple pipelines, one for each `<iframe>` or main frame in the `WebView`.
+The script thread in the web content process manages multiple pipelines, one for each `<iframe>` or main frame in the `WebView`.
 The pipeline in the script thread is responsible for accepting input, running JavaScript against the DOM, performing layout, building display lists, and sending display lists to the renderer.
 There is a single renderer for the entire Servo instance, which manages multiple WebRender instances which render to a variety of `RenderingContext`s (essentially OpenGL contexts on platform surfaces).
 
