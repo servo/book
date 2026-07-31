@@ -103,7 +103,7 @@ Here are some ways that we take advantage of both:
   If we throw maximum parallelism and concurrency at everything, we will end up overwhelming the system with too many threads.
 * **Too many open file handles**:
   IPC communication usually requires opening a file handle on the system.
-  We have run into issues ([#23910](https://github.com/servo/servo/issues/23910), [#33672](https://github.com/servo/servo/issues/33672), [#23905](https://github.com/servo/servo/issues/23906) with file handle exhaustion due to overuse of IPC mechanisms.
+  We have run into issues ([#23910](https://github.com/servo/servo/issues/23910), [#33672](https://github.com/servo/servo/issues/33672), [#23905](https://github.com/servo/servo/issues/23906)) with file handle exhaustion due to overuse of IPC mechanisms.
 
 ## JavaScript and DOM bindings
 
