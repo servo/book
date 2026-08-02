@@ -93,11 +93,6 @@ It's recommended to build Servo via the command-line for Android, but you can al
 
 You can request a force-stop of Servo by running:
 ```
-adb shell am force-stop org.servo.servoshell/org.servo.servoshell.MainActivity
-```
-
-If the above doesn't work, try this:
-```
 adb shell am force-stop org.servo.servoshell
 ```
 
