@@ -5,7 +5,6 @@
 - **components**
   - **bluetooth** — Implementation of the bluetooth thread.
   - **canvas** — Implementation of painting threads for 2D and WebGL canvases.
-  - **compositing** — Integration with OS windowing/rendering and event loop.
   - **constellation** — Management of resources for a top-level browsing context (ie. tab).
   - **devtools** — In-process server to allow manipulating browser instances via a remote Firefox developer tools client.
   - **fonts** — Code for dealing with fonts and text shaping.
@@ -15,6 +14,7 @@
   - **media** — Implementation of multimedia-related functionality, currently GStreamer-only.
   - **msg** — Shared APIs for communicating between specific threads and crates.
   - **net** — Network protocol implementations, and state and resource management (caching, cookies, etc.).
+  - **paint** — Integration with OS windowing/rendering and event loop.
   - **plugins** — Syntax extensions, custom attributes, and lints.
   - **profile** — Memory and time profilers.
   - **script** — Implementation of the DOM (native Rust code and bindings to SpiderMonkey).
