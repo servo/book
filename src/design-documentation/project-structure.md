@@ -31,6 +31,7 @@
   - **util** — Assorted utility methods and types that are commonly used throughout the project.
   - **webdriver_server** — In-process server to allow manipulating browser instances via a WebDriver client.
   - **webgpu** — Implementation of threads for the WebGPU API.
+  - **webxr** — OpenXR intergration for Virtual reality and augmented reality devices.
 - **etc** — Useful tools and scripts for developers.
 - **ports**
   - **servoshell** — The example browser that uses servo.
@@ -85,6 +86,7 @@ The Servo project maintains a number of repositories that are either released in
 ## Historical repos
 
 - [media](https://github.com/servo/media) merged in [#42369](https://github.com/servo/servo/pull/42369) 2026-02-07
+- [webxr](https://github.com/servo/webxr) merged in [#35228](https://github.com/servo/servo/pull/35228) 2025-01-31
 - [hyper_serde](https://github.com/servo/hyper_serde) merged in [#30803](https://github.com/servo/servo/pull/30803) 2023-12-14
 
 
