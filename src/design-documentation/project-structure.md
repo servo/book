@@ -23,7 +23,6 @@
   SpiderMonkey JavaScript engine.
     The actual trait implementations are located in the `script` crate.
     These are split into two crates in order to improve the speed of incremental builds.
-  - **script_layout_interface** — The API the script crate provides for the layout crate.
   - **selectors** — CSS selector matching.
   - **servo** — Entry points for the servo application and libservo embedding library.
   - **shared** — Shared traits/code used by multiple components that don't want to depend on the main crate for build speed reasons.
