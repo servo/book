@@ -13,7 +13,6 @@
   - **media** — Implementation of multimedia-related functionality, currently GStreamer-only.
   - **net** — Network protocol implementations, and state and resource management (caching, cookies, etc.).
   - **paint** — Integration with OS windowing/rendering and event loop.
-  - **plugins** — Syntax extensions, custom attributes, and lints.
   - **profile** — Memory and time profilers.
   - **script** — Implementation of the DOM (native Rust code and bindings to SpiderMonkey).
   - **script_bindings** - Support code and bindings generated from WebIDL files.
