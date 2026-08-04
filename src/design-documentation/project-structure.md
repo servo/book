@@ -32,6 +32,7 @@
   - **webdriver_server** — In-process server to allow manipulating browser instances via a WebDriver client.
   - **webgpu** — Implementation of threads for the WebGPU API.
   - **webxr** — OpenXR intergration for Virtual reality and augmented reality devices.
+  - **webvtt** — Captions and subtitles.
 - **etc** — Useful tools and scripts for developers.
 - **ports**
   - **servoshell** — The example browser that uses servo.
