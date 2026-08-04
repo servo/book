@@ -8,6 +8,7 @@
   - **constellation** — Management of resources for a top-level browsing context (ie. tab).
   - **devtools** — In-process server to allow manipulating browser instances via a remote Firefox developer tools client.
   - **fonts** — Code for dealing with fonts and text shaping.
+  - **geometry** — Provides units and helper functions for use with [euclid].
   - **hyper_serde** — Provides wrappers and convenience functions to support [Serde] for some types defined in [cookie], [hyper], [mime] and [time].
   - **layout** — Converts page content into positioned, styled boxes and passes the result to the renderer.
   - **media** — Implementation of multimedia-related functionality, currently GStreamer-only.
@@ -55,7 +56,7 @@ The Servo project maintains a number of repositories that are either released in
 
 ## Widely-used in Rust ecosystem
 
-- [euclid](https://github.com/servo/euclid): Geometric types
+- [euclid]: Geometric types
 - [ipc-channel](https://github.com/servo/ipc-channel): Interprocess communication channels
 - [html5ever](https://github.com/servo/html5ever): an HTML5 parser written in Rust
 - [rust-cssparser](https://github.com/servo/rust-cssparser): A CSS parser written in Rust
@@ -85,6 +86,7 @@ The Servo project maintains a number of repositories that are either released in
 
 
 [cookie]: https://github.com/SergioBenitez/cookie-rs
+[euclid]: https://github.com/servo/euclid
 [hyper]: https://github.com/hyperium/hyper
 [mime]: https://github.com/hyperium/mime
 [Serde]: https://github.com/serde-rs/serde
