@@ -9,7 +9,7 @@
   - **constellation** — Management of resources for a top-level browsing context (ie. tab).
   - **devtools** — In-process server to allow manipulating browser instances via a remote Firefox developer tools client.
   - **fonts** — Code for dealing with fonts and text shaping.
-  - **hyper_serde** — Provides wrappers and convenience functions to support [Serde] for some types defined in [cookie], [Hyper], [mime] and [time].
+  - **hyper_serde** — Provides wrappers and convenience functions to support [Serde] for some types defined in [cookie], [hyper], [mime] and [time].
   - **layout** — Converts page content into positioned, styled boxes and passes the result to the renderer.
   - **layout_thread** — Runs the threads for layout, communicates with the script thread, and calls into the layout crate to do the layout.
   - **media** — Implmentation of all multimedia related functionality, currently GStreamer-only.
