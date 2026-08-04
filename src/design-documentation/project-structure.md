@@ -91,7 +91,7 @@ The Servo project maintains a number of repositories that are either released in
 
 
 [cookie]: https://github.com/SergioBenitez/cookie-rs
-[Hyper]: https://github.com/hyperium/hyper
+[hyper]: https://github.com/hyperium/hyper
 [mime]: https://github.com/hyperium/mime
 [Serde]: https://github.com/serde-rs/serde
 [time]: https://github.com/time-rs/time
