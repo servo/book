@@ -12,7 +12,7 @@
   - **hyper_serde** — Provides wrappers and convenience functions to support [Serde] for some types defined in [cookie], [hyper], [mime] and [time].
   - **layout** — Converts page content into positioned, styled boxes and passes the result to the renderer.
   - **layout_thread** — Runs the threads for layout, communicates with the script thread, and calls into the layout crate to do the layout.
-  - **media** — Implmentation of all multimedia related functionality, currently GStreamer-only.
+  - **media** — Implementation of multimedia-related functionality, currently GStreamer-only.
   - **msg** — Shared APIs for communicating between specific threads and crates.
   - **net** — Network protocol implementations, and state and resource management (caching, cookies, etc.).
   - **plugins** — Syntax extensions, custom attributes, and lints.
