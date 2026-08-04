@@ -9,8 +9,10 @@
   - **constellation** — Management of resources for a top-level browsing context (ie. tab).
   - **devtools** — In-process server to allow manipulating browser instances via a remote Firefox developer tools client.
   - **fonts** — Code for dealing with fonts and text shaping.
+  - **hyper_serde** — Provides wrappers and convenience functions to support [Serde] for some types defined in [cookie], [Hyper], [mime] and [time].
   - **layout** — Converts page content into positioned, styled boxes and passes the result to the renderer.
   - **layout_thread** — Runs the threads for layout, communicates with the script thread, and calls into the layout crate to do the layout.
+  - **media** — Implmentation of all multimedia related functionality, currently GStreamer-only.
   - **msg** — Shared APIs for communicating between specific threads and crates.
   - **net** — Network protocol implementations, and state and resource management (caching, cookies, etc.).
   - **plugins** — Syntax extensions, custom attributes, and lints.
@@ -76,7 +78,18 @@ The Servo project maintains a number of repositories that are either released in
 - [book](https://github.com/servo/book): This book!
 - [ci-runners](https://github.com/servo/ci-runners): Scripts and tools used for Servo's CI (continuous integration)
 - [malloc_size_of](https://github.com/servo/malloc_size_of): Measure the runtime size of values
-- [media](https://github.com/servo/media): The media backend that Servo uses, currently GStreamer-only
 - [servo](https://github.com/servo/servo): The main repository for the Servo web platform engine
 - [surfman](https://github.com/servo/surfman): Low-level cross-platform Rust library for managing graphic surfaces
 - [wpt](https://github.com/servo/wpt): Servo's fork of the Web Platform Tests
+
+## Historical repos
+
+- [media](https://github.com/servo/media) merged in [#42369](https://github.com/servo/servo/pull/42369) 2026-02-07
+- [hyper_serde](https://github.com/servo/hyper_serde) merged in [#30803](https://github.com/servo/servo/pull/30803) 2023-12-14
+
+
+[cookie]: https://github.com/SergioBenitez/cookie-rs
+[Hyper]: https://github.com/hyperium/hyper
+[mime]: https://github.com/hyperium/mime
+[Serde]: https://github.com/serde-rs/serde
+[time]: https://github.com/time-rs/time
