@@ -3,26 +3,26 @@
 # Project Structure
 
 - **components**
-  - **allocator** —
-  - **background_hang_monitor** —
+  - **allocator** — Selects the default global allocator for Servo, and exposing common allocator introspection APIs for memory profiling.
+  - **background_hang_monitor** — Code for detecting hangs in child constellation/script threads.
   - **bluetooth** — Implementation of the bluetooth thread.
   - **canvas** — Implementation of painting threads for 2D and WebGL canvases.
-  - **config** —
+  - **config** — Exposes `opts` for inital read only configuration, and `prefs` for runtime configuration.
   - **constellation** — Management of resources for a top-level browsing context (ie. tab).
-  - **default-resources** —
+  - **default-resources** — A default resource reader that provides baked in resources.
   - **devtools** — In-process server to allow manipulating browser instances via a remote Firefox developer tools client.
-  - **dom_struct** —
+  - **dom_struct** — Macro for constructing DOM object structs to be passed to `spidermonkey`
   - **fonts** — Code for dealing with fonts and text shaping.
   - **geometry** — Provides units and helper functions for use with [euclid].
   - **hyper_serde** — Provides wrappers and convenience functions to support [Serde] for some types defined in [cookie], [hyper], [mime] and [time].
-  - **jstraceable_derive** —
+  - **jstraceable_derive** — Derive macro implmenting JSTracable for generated and script code
   - **layout** — Converts page content into positioned, styled boxes and passes the result to the renderer.
-  - **malloc_size_of** —
+  - **malloc_size_of** — Measures heap usage of data structures in a way that integrates with Firefox's memory reporting.
   - **media** — Implementation of multimedia-related functionality, currently GStreamer-only.
-  - **metrics** —
+  - **metrics** — A data structure to track web metrics defined in various specifications.
   - **net** — Network protocol implementations, and state and resource management (caching, cookies, etc.).
   - **paint** — Integration with OS windowing/rendering and event loop.
-  - **pixels** —
+  - **pixels** — Helper functions relating to image/pixel manipulation and decoding
   - **profile** — Memory and time profilers.
   - **script** — Implementation of the DOM (native Rust code and bindings to SpiderMonkey).
   - **script_bindings** - Support code and bindings generated from WebIDL files.
