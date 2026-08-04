@@ -3,17 +3,26 @@
 # Project Structure
 
 - **components**
+  - **allocator** —
+  - **background_hang_monitor** —
   - **bluetooth** — Implementation of the bluetooth thread.
   - **canvas** — Implementation of painting threads for 2D and WebGL canvases.
+  - **config** —
   - **constellation** — Management of resources for a top-level browsing context (ie. tab).
+  - **default-resources** —
   - **devtools** — In-process server to allow manipulating browser instances via a remote Firefox developer tools client.
+  - **dom_struct** —
   - **fonts** — Code for dealing with fonts and text shaping.
   - **geometry** — Provides units and helper functions for use with [euclid].
   - **hyper_serde** — Provides wrappers and convenience functions to support [Serde] for some types defined in [cookie], [hyper], [mime] and [time].
+  - **jstraceable_derive** —
   - **layout** — Converts page content into positioned, styled boxes and passes the result to the renderer.
+  - **malloc_size_of** —
   - **media** — Implementation of multimedia-related functionality, currently GStreamer-only.
+  - **metrics** —
   - **net** — Network protocol implementations, and state and resource management (caching, cookies, etc.).
   - **paint** — Integration with OS windowing/rendering and event loop.
+  - **pixels** —
   - **profile** — Memory and time profilers.
   - **script** — Implementation of the DOM (native Rust code and bindings to SpiderMonkey).
   - **script_bindings** - Support code and bindings generated from WebIDL files.
@@ -22,11 +31,19 @@
     The actual trait implementations are located in the `script` crate.
     These are split into two crates in order to improve the speed of incremental builds.
   - **servo** — Entry points for the servo application and libservo embedding library.
+  - **script_webgpu** —
+  - **servo_tracing** —
   - **shared** — Shared traits/code used by multiple components that don't want to depend on the main crate for build speed reasons.
+  - **storage** —
+  - **timers** —
+  - **url** —
+  - **wakelock** —
   - **webdriver_server** — In-process server to allow manipulating browser instances via a WebDriver client.
+  - **webgl** —
   - **webgpu** — Implementation of threads for the WebGPU API.
-  - **webxr** — OpenXR intergration for virtual reality and augmented reality devices.
   - **webvtt** — Captions and subtitles.
+  - **webxr** — OpenXR intergration for virtual reality and augmented reality devices.
+  - **xpath** —
 - **etc** — Useful tools and scripts for developers.
 - **ports**
   - **servoshell** — The example browser that uses servo.
