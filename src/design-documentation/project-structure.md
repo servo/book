@@ -30,7 +30,7 @@
   - **util** — Assorted utility methods and types that are commonly used throughout the project.
   - **webdriver_server** — In-process server to allow manipulating browser instances via a WebDriver client.
   - **webgpu** — Implementation of threads for the WebGPU API.
-  - **webxr** — OpenXR intergration for Virtual reality and augmented reality devices.
+  - **webxr** — OpenXR intergration for virtual reality and augmented reality devices.
   - **webvtt** — Captions and subtitles.
 - **etc** — Useful tools and scripts for developers.
 - **ports**
