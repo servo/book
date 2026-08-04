@@ -22,7 +22,6 @@
     These are split into two crates in order to improve the speed of incremental builds.
   - **servo** — Entry points for the servo application and libservo embedding library.
   - **shared** — Shared traits/code used by multiple components that don't want to depend on the main crate for build speed reasons.
-  - **util** — Assorted utility methods and types that are commonly used throughout the project.
   - **webdriver_server** — In-process server to allow manipulating browser instances via a WebDriver client.
   - **webgpu** — Implementation of threads for the WebGPU API.
   - **webxr** — OpenXR intergration for virtual reality and augmented reality devices.
