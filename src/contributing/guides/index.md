@@ -9,7 +9,7 @@ Visual bugs are often caused by missing features or bugs in Servo's CSS and layo
 while interactivity problems and broken content is often caused by bugs or missing features
 in Servo's DOM and JavaScript implementation.
 
-- For help fixing a bug with our implementation of the DOM see [Diangnosing DOM Errors](diagnosing-dom-errors.md).
+- For help fixing a bug with our implementation of the DOM see [Diagnosing DOM Errors](diagnosing-errors/dom-errors.md).
 - For help narrowing down issues, whether in layout or in the DOM, see [Minimal Reproducible Test Cases](minimal-reproducible-test-cases.md).
 
 # Adding new features
