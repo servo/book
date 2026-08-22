@@ -3,17 +3,26 @@
 # Project Structure
 
 - **components**
+  - **allocator** — Selects the default global allocator for Servo, and exposing common allocator introspection APIs for memory profiling.
+  - **background_hang_monitor** — Code for detecting hangs in child constellation/script threads.
   - **bluetooth** — Implementation of the bluetooth thread.
   - **canvas** — Implementation of painting threads for 2D and WebGL canvases.
-  - **compositing** — Integration with OS windowing/rendering and event loop.
+  - **config** — Exposes `opts` for inital read only configuration, and `prefs` for runtime configuration.
   - **constellation** — Management of resources for a top-level browsing context (ie. tab).
+  - **default-resources** — A default resource reader that provides baked-in resources.
   - **devtools** — In-process server to allow manipulating browser instances via a remote Firefox developer tools client.
+  - **dom_struct** — Macro for defining Rust structs that implement WebIDL interfaces.
   - **fonts** — Code for dealing with fonts and text shaping.
+  - **geometry** — Provides units and helper functions for use with [euclid].
+  - **hyper_serde** — Provides wrappers and convenience functions to support [Serde] for some types defined in [cookie], [hyper], [mime] and [time].
+  - **jstraceable_derive** — Derive macro implmenting JSTracable for types in the [script]-related crates.
   - **layout** — Converts page content into positioned, styled boxes and passes the result to the renderer.
-  - **layout_thread** — Runs the threads for layout, communicates with the script thread, and calls into the layout crate to do the layout.
-  - **msg** — Shared APIs for communicating between specific threads and crates.
+  - **malloc_size_of** — Measures heap usage of data structures.
+  - **media** — Implementation of multimedia-related functionality, abstracting over GStreamer and OpenHarmony.
+  - **metrics** — A data structure to track web metrics defined in various specifications.
   - **net** — Network protocol implementations, and state and resource management (caching, cookies, etc.).
-  - **plugins** — Syntax extensions, custom attributes, and lints.
+  - **paint** — Integration with OS windowing/rendering and event loop.
+  - **pixels** — Helper functions relating to image/pixel manipulation and decoding
   - **profile** — Memory and time profilers.
   - **script** — Implementation of the DOM (native Rust code and bindings to SpiderMonkey).
   - **script_bindings** - Support code and bindings generated from WebIDL files.
@@ -21,14 +30,20 @@
   SpiderMonkey JavaScript engine.
     The actual trait implementations are located in the `script` crate.
     These are split into two crates in order to improve the speed of incremental builds.
-  - **script_layout_interface** — The API the script crate provides for the layout crate.
-  - **selectors** — CSS selector matching.
   - **servo** — Entry points for the servo application and libservo embedding library.
+  - **script_webgpu** — Implementation of WebGPU web specification.
+  - **servo_tracing** — Servo-specific macros for integration with the `tracing` crate.
   - **shared** — Shared traits/code used by multiple components that don't want to depend on the main crate for build speed reasons.
-  - **style** — APIs for parsing CSS and interacting with stylesheets and styled elements.
-  - **util** — Assorted utility methods and types that are commonly used throughout the project.
+  - **storage** — Persistent storage backend for LocalStorage/IndexedDB.
+  - **timers** — Logic for scheduling and running asynchronous timers with callbacks.
+  - **url** — Implementation of URL-related concepts like blobs and origins.
+  - **wakelock** — Interface for platform-specific wakelock/screen lock implementation.
   - **webdriver_server** — In-process server to allow manipulating browser instances via a WebDriver client.
+  - **webgl** — Integration with native accelerated rendering for WebGL.
   - **webgpu** — Implementation of threads for the WebGPU API.
+  - **webvtt** — Captions and subtitles.
+  - **webxr** — OpenXR intergration for virtual reality and augmented reality devices.
+  - **xpath** — Implementation of XPath specification.
 - **etc** — Useful tools and scripts for developers.
 - **ports**
   - **servoshell** — The example browser that uses servo.
@@ -58,7 +73,7 @@ The Servo project maintains a number of repositories that are either released in
 
 ## Widely-used in Rust ecosystem
 
-- [euclid](https://github.com/servo/euclid): Geometric types
+- [euclid]: Geometric types
 - [ipc-channel](https://github.com/servo/ipc-channel): Interprocess communication channels
 - [html5ever](https://github.com/servo/html5ever): an HTML5 parser written in Rust
 - [rust-cssparser](https://github.com/servo/rust-cssparser): A CSS parser written in Rust
@@ -76,7 +91,20 @@ The Servo project maintains a number of repositories that are either released in
 - [book](https://github.com/servo/book): This book!
 - [ci-runners](https://github.com/servo/ci-runners): Scripts and tools used for Servo's CI (continuous integration)
 - [malloc_size_of](https://github.com/servo/malloc_size_of): Measure the runtime size of values
-- [media](https://github.com/servo/media): The media backend that Servo uses, currently GStreamer-only
 - [servo](https://github.com/servo/servo): The main repository for the Servo web platform engine
 - [surfman](https://github.com/servo/surfman): Low-level cross-platform Rust library for managing graphic surfaces
 - [wpt](https://github.com/servo/wpt): Servo's fork of the Web Platform Tests
+
+## Historical repos
+
+- [media](https://github.com/servo/media) merged in [#42369](https://github.com/servo/servo/pull/42369) 2026-02-07
+- [webxr](https://github.com/servo/webxr) merged in [#35228](https://github.com/servo/servo/pull/35228) 2025-01-31
+- [hyper_serde](https://github.com/servo/hyper_serde) merged in [#30803](https://github.com/servo/servo/pull/30803) 2023-12-14
+
+
+[cookie]: https://github.com/SergioBenitez/cookie-rs
+[euclid]: https://github.com/servo/euclid
+[hyper]: https://github.com/hyperium/hyper
+[mime]: https://github.com/hyperium/mime
+[Serde]: https://github.com/serde-rs/serde
+[time]: https://github.com/time-rs/time
