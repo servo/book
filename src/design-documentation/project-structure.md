@@ -9,16 +9,16 @@
   - **canvas** — Implementation of painting threads for 2D and WebGL canvases.
   - **config** — Exposes `opts` for inital read only configuration, and `prefs` for runtime configuration.
   - **constellation** — Management of resources for a top-level browsing context (ie. tab).
-  - **default-resources** — A default resource reader that provides baked in resources.
+  - **default-resources** — A default resource reader that provides baked-in resources.
   - **devtools** — In-process server to allow manipulating browser instances via a remote Firefox developer tools client.
-  - **dom_struct** — Macro for constructing DOM object structs to be passed to `spidermonkey`
+  - **dom_struct** — Macro for defining Rust structs that implement WebIDL interfaces.
   - **fonts** — Code for dealing with fonts and text shaping.
   - **geometry** — Provides units and helper functions for use with [euclid].
   - **hyper_serde** — Provides wrappers and convenience functions to support [Serde] for some types defined in [cookie], [hyper], [mime] and [time].
-  - **jstraceable_derive** — Derive macro implmenting JSTracable for generated and script code
+  - **jstraceable_derive** — Derive macro implmenting JSTracable for types in the [script]-related crates.
   - **layout** — Converts page content into positioned, styled boxes and passes the result to the renderer.
-  - **malloc_size_of** — Measures heap usage of data structures in a way that integrates with Firefox's memory reporting.
-  - **media** — Implementation of multimedia-related functionality, currently GStreamer-only.
+  - **malloc_size_of** — Measures heap usage of data structures.
+  - **media** — Implementation of multimedia-related functionality, abstracting over GStreamer and OpenHarmony.
   - **metrics** — A data structure to track web metrics defined in various specifications.
   - **net** — Network protocol implementations, and state and resource management (caching, cookies, etc.).
   - **paint** — Integration with OS windowing/rendering and event loop.
@@ -31,19 +31,19 @@
     The actual trait implementations are located in the `script` crate.
     These are split into two crates in order to improve the speed of incremental builds.
   - **servo** — Entry points for the servo application and libservo embedding library.
-  - **script_webgpu** —
-  - **servo_tracing** —
+  - **script_webgpu** — Implementation of WebGPU web specification.
+  - **servo_tracing** — Servo-specific macros for integration with the `tracing` crate.
   - **shared** — Shared traits/code used by multiple components that don't want to depend on the main crate for build speed reasons.
-  - **storage** —
-  - **timers** —
-  - **url** —
-  - **wakelock** —
+  - **storage** — Persistent storage backend for LocalStorage/IndexedDB.
+  - **timers** — Logic for scheduling and running asynchronous timers with callbacks.
+  - **url** — Implementation of URL-related concepts like blobs and origins.
+  - **wakelock** — Interface for platform-specific wakelock/screen lock implementation.
   - **webdriver_server** — In-process server to allow manipulating browser instances via a WebDriver client.
-  - **webgl** —
+  - **webgl** — Integration with native accelerated rendering for WebGL.
   - **webgpu** — Implementation of threads for the WebGPU API.
   - **webvtt** — Captions and subtitles.
   - **webxr** — OpenXR intergration for virtual reality and augmented reality devices.
-  - **xpath** —
+  - **xpath** — Implementation of XPath specification.
 - **etc** — Useful tools and scripts for developers.
 - **ports**
   - **servoshell** — The example browser that uses servo.
