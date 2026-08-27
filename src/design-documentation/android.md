@@ -5,9 +5,9 @@ The implementation of the Android app is divided into a number of components:
 * the Android-specific `servoshell` integration (`ports/servoshell/egl/android.rs`)
 * the main Android activity (`support/android/apk/servoapp/src/main/java/org/servoshell`)
 * the ServoView component (`support/android/apk/servoview/src/main/java/org/servo/servoview`)
-  * the Android SurfaceView (`ServoView.java`)
-  * the Servo engine wrapper (`Servo.java`)
-  * the JNI servoshell integration (`JNIServo.java`)
+  * the Android SurfaceView (`ServoView.kt`)
+  * the Servo engine wrapper (`Servo.kt`)
+  * the JNI servoshell integration (`JNIServo.kt`)
 
 # Control flow
 
