@@ -158,6 +158,6 @@ To run servoshell with mach, replace `./servo` with `./mach run -d --` or `./mac
 For example, both of the commands below run the debug build of servoshell with the same options:
 
 ```sh
-$ target/debug/servo https://demo.servo.org
+$ target/debug/servoshell https://demo.servo.org
 $ ./mach run -d -- https://demo.servo.org
 ```
