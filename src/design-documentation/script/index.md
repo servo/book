@@ -25,7 +25,7 @@ struct Kittens {
     children: Vec<Dom<Cat>>
 }
 
-fn play_with_kittens(kittens: &Kittens) {
+fn play_with_kittens(cats: &Kittens) {
     let children = & cats.children;
     play_with(children)
 }
