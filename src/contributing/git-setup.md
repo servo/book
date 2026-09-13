@@ -21,8 +21,6 @@ You can choose to keep that configuration, but the recommneded workflow is the f
    git remote add upstream https://github.com/servo/servo.git
    ```
 
-For GitHub actions to work on your fork, you should also go to Settings -> Actions -> General -> Workflow permissions and enable "Read and write permissions". 
-
 ## Starting a new change
 
 When you want to work on a new change, you shouldn't do it on the `main` branch as that's where you want to keep your copy of the upstream repository.
