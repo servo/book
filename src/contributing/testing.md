@@ -107,6 +107,7 @@ Unexpected results that are known-intermittent can likely be ignored.
 When opening a PR, you can include a link to the run. Otherwise, reviewers will run the tests again.
 
 If you get an error when running `mach try`, ensure GitHub actions are set up correctly on your fork by going to Settings -> Actions -> General -> Workflow permissions and enabling "Read and write permissions". 
+
 ## Updating Web Platform Test expectations
 
 When fixing a bug that causes the result of a test to change, the expected results for that test need to be changed.
