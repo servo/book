@@ -30,7 +30,8 @@ It's recommend that you add the following to your project specific settings in `
         "--target-dir",
         "target/lsp",
         "--features",
-        "tracing,tracing-perfetto"    ],
+        "tracing,tracing-perfetto"
+    ],
 }
 ```
 
