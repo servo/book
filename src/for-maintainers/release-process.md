@@ -14,7 +14,20 @@ The version bump should be merged **after** this commit, so that all changes men
 
 Create a branch with the name `release/vX.Y.Z`, based on the commit that bumped the version number (in `main`).
 If the date of merge was (significantly) later, and significant changes were made, then the release branch can also be based on an earlier commit and the version number bump backported / re-applied.
-The branch should be pushed to the upstream servo repository. 
+The branch should be pushed to the upstream servo repository.
+
+### Request a stylo release
+
+In order to publish `servo` to crates.io we need a stylo release, corresponding to the git commit we depend on.
+Check the stylo commit hash specified in servos Cargo.toml, and open an issue on stylo requesting a release based on that commit.
+Usually the stylo release is handled by @Loirooriol.
+Once the new stylo release has been published, we need to create a PR against the servo release branch to update stylo to the crates.io version. 
+Create a branch based on the release branch, and edit the `Cargo.toml` to depend on the released crates, like in this [servo stylo bump example].
+Note that not all crates share the same stylo workspace version number, so pure search and replace won't work.
+The `servo` PR against the release branch will be merged with `rebase`, so be sure to squash your commits if you have more than one.
+
+[stylo]: https://github.com/servo/stylo
+[servo stylo bump example]: https://github.com/servo/servo/commit/77fccacc1f1fdce10498d50173aafaa09d02879e
 
 ### Creating a draft release for testing
 
