@@ -6,3 +6,6 @@ License, v. 2.0. If a copy of the MPL was not distributed with can be obtained a
 Servo also bundles freetype.
 Portions of this software are copyright © 2026 The FreeType
 Project (https://freetype.org).  All rights reserved.
+
+## Obligations
+Embedders can choose to either acknowledge the freetype project as above or choose the GPL license of freetype.
