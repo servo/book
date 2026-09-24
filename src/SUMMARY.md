@@ -25,6 +25,7 @@
 
 - [Overview](embedding/overview.md)
 - [LTS Release](embedding/lts-release.md)
+- [License](license.md)
 
 # Contributing
 
