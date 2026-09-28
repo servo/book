@@ -37,3 +37,17 @@ This means that LTS patch releases of Servo shouldn't be expected to be avaiable
 
 - @jschwe (Jonathan Schwender)
 - TBD
+
+## Migration guides
+
+### Migrating from 0.1 to 0.6 LTS
+
+There are too many changes to list here, but here are likely issues you will run into when migrating from 0.1 to 0.6 LTS:
+
+- **Features**: As part of the modularization effort several features have been placed behind feature flags.
+  You may wish to enable the new feature group `default_web_features` explicitly to select all web-features.
+- **Prefs**: Several Preferences were renamed or removed. If you use a preference that doesn't exist servo will panic. Please validate your custom preference settings.
+- `MouseButton::{Left,Middle,Right}` changed to `MouseButton::{Primary,Auxiliary,Secondary}`.
+- `webxr_registry` moved from `ServoBuilder` to `Servo::register_webxr_registry`.
+- **Toolchain**: The new MSRV is Rust 1.88. The minimum support C/C++ compiler is clang-19.
+- **Resources**: New variant `JsonViewerHTML` you need to provide, if you aren't using the default `bundled` / `baked-in-resources` feature.
