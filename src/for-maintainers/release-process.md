@@ -21,6 +21,13 @@ The branch should be pushed to the upstream servo repository.
 In order to publish `servo` to crates.io we need a stylo release, corresponding to the git commit we depend on.
 Check the stylo commit hash specified in servos Cargo.toml, and open an issue on stylo requesting a release based on that commit.
 Usually the stylo release is handled by @Loirooriol.
+To help prepare the stylo release you can do the following steps:
+- In `Cargo.toml`, raise `version` in `[workspace.package]`.
+- For the standalone crates that have their own version, use `git diff <prev> --stat` to see what changed since last time. 
+  If there was some change, then raise the version.
+  This needs to happen both in the `[workspace.dependencies]` of the root `Cargo.toml`, and in the `[package]` of the `Cargo.toml` of the crate being bumped.
+- Raising just the patch version is problematic if the changes weren't backward compatible, so we commonly always raise the minor version to signal a breaking change (major version is 0)
+
 Once the new stylo release has been published, we need to create a PR against the servo release branch to update stylo to the crates.io version. 
 Create a branch based on the release branch, and edit the `Cargo.toml` to depend on the released crates, like in this [servo stylo bump example].
 Note that not all crates share the same stylo workspace version number, so pure search and replace won't work.
