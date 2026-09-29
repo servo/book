@@ -86,8 +86,17 @@ Click on `Generate release notes` and then wrap the generated release notes with
 </details>
 ```
 
-Contact the dedicated signer of the macOS artifact and ask them to sign the release. 
+Contact the dedicated signer of the macOS artifact (currently `@mrobinson`) and ask them to sign the release. 
 This might take a while, so this should be done a couple of days before the planned release date.
 
 Finally, add our usual release notes summary, linking to the blog post and to the common issues section (check the previous release notes for examples).
 Once the blog post is published, we publish the release.
+
+### Publishing the crates.io release
+
+The crates.io release can be published independently of the Github release via the [`Release` workflow](https://github.com/servo/servo/actions/workflows/release.yml).
+Note that changing the name of the workflow would require editing the settings on all released crates, so renaming it to e.g. publish would be quite a bit of work.
+The GitHub release and the crate.io release should be based on the same tag, so we should wait until the Github release is "ready". 
+Since signing the macos release may take time, and otherwise doesn't affect the release, doing the crates.io release at that point is okay.
+Once you started the workflow, it will need an admin to approve the workflow to proceed with the publishing.
+If the publishing fails for whatever reason, the workflow can be restarted and the script will skip previously published crates.
