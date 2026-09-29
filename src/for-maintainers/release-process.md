@@ -36,6 +36,24 @@ The `servo` PR against the release branch will be merged with `rebase`, so be su
 [stylo]: https://github.com/servo/stylo
 [servo stylo bump example]: https://github.com/servo/servo/commit/77fccacc1f1fdce10498d50173aafaa09d02879e
 
+### Check for crates.io publish blockers
+
+If there were any new crates added after the last release they need to be published manually first and trusted publishing enabled:
+  - Check the newly added crate on crates.io - If it already exists, we would need to rename the crate on main first and backport that commit.
+  - If it doesn't exist, it's easiest to create a new library, change the name to the one we want to publish and publish a place-holder release.
+  - Then go to the settings page on crates.io (`https://crates.io/crates/<crate-name>/settings`) and add the set of active admins (`@mrobinson`, `@jdm`, `@sagudev`) as crate owners.
+  - Enable `Trusted Publishing` with the following settings:
+    - Repository: servo/servo
+    - Workflow: release.yml
+    - Environment: publish_crates_io
+    - Tick the box "Require trusted publishing for all new versions"
+
+One way to check for newly added crates, is running the following command, and checking if the newly added crates have `publish = false` or not:
+```sh
+# Replace <last_release_tag> with the tag from the last release, e.g. `v0.5.0`.
+git diff --name-only --diff-filter=A <last_release_tag>..HEAD -- ':(glob)**/Cargo.toml'
+```
+
 ### Creating a draft release for testing
 
 Go to the `actions` tab of the servo repository, and select the [`Release` workflow](https://github.com/servo/servo/actions/workflows/release.yml).
