@@ -56,7 +56,7 @@ git diff --name-only --diff-filter=A <last_release_tag>..HEAD -- ':(glob)**/Carg
 
 ### Creating a draft release for testing
 
-Go to the `actions` tab of the servo repository, and select the [`Release` workflow](https://github.com/servo/servo/actions/workflows/release.yml).
+Go to the `actions` tab of the servo repository, and select the [`Github Release` workflow](https://github.com/servo/servo/actions/workflows/release-github.yml).
 Select the `Run workflow` button on the top right corner.
 Choose the branch `release/vX.Y.Z` (that you just pushed) as the branch to run the workflow on.
 Leave the tickbox **unchecked** to create a release on the **nightly-releases repository**, since that allows non-maintainers to help test the release.
