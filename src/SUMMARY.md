@@ -21,11 +21,12 @@
   - [Building Offline](building/building-offline.md)
 - [General Troubleshooting](building/general-troubleshooting.md)
 
-# Embedding Servo
+# Project Policy
 
-- [Overview](embedding/overview.md)
-- [LTS Release](embedding/lts-release.md)
-- [License](license.md)
+- [Code of Conduct](policy/code-of-conduct.md)
+- [AI Usage](policy/ai-usage.md)
+- [License](policy/license.md)
+- [Governance](policy/governance.md)
 
 # Contributing
 
@@ -49,11 +50,17 @@
     - [Stable WPT Failures](contributing/guides/diagnosing-errors/stable-wpt-errors.md)
     - [Intermittent WPT Failures](contributing/guides/diagnosing-errors/intermittent-wpt-errors.md)
 
+# Embedding
+
+- [Overview](embedding/overview.md)
+- [LTS Release](embedding/lts-release.md)
+
 # Maintainer Guides
 
 - [Making a Release](for-maintainers/release-process.md)
 
 # Design Documentation
+
 - [Architecture](design-documentation/architecture.md)
 - [Project Structure\*](design-documentation/project-structure.md)
 - [Experimental features](design-documentation/experimental-features.md)
