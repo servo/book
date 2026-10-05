@@ -9,6 +9,8 @@ Portions of this software are copyright © 2026 The FreeType Project (https://fr
 
 ## Obligations
 
-FreeType is [dual-licensed]. Embedders can choose to either acknowledge the FreeType project as above or choose the GPL license of FreeType.
+**Note: This section is still a work-in-progress as we review the additional license obligations of our vendored code.**
+
+- FreeType is [dual-licensed]. Embedders can choose to either acknowledge the FreeType project as above or choose the GPL license of FreeType.
 
 [dual-licensed]: https://freetype.org/license.html
