@@ -23,7 +23,7 @@ Updates to this list are very welcome!
 <!-- https://archlinux.org/packages/ -->
 - `sudo pacman -S --needed curl`
 
-- `sudo pacman -S --needed base-devel git mesa cmake libxmu pkg-config ttf-fira-sans harfbuzz ccache llvm clang autoconf2.13 gstreamer gstreamer-vaapi gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly vulkan-icd-loader wireshark-cli`
+- `sudo pacman -S --needed base-devel git mesa cmake libxmu pkg-config ttf-fira-sans harfbuzz ccache llvm clang autoconf gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly vulkan-icd-loader wireshark-cli`
 
 ### Debian-like{ #dependencies-for-debian }
 **(including elementary OS, KDE neon, Linux Mint, Pop!_OS, Raspbian, TUXEDO OS, Ubuntu)**
