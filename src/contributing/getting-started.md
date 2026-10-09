@@ -5,15 +5,16 @@ Working on a web engine can be challenging and sometimes frustrating, but it can
 If you spend the time and effort to get involved, you will constantly be learning and growing as a developer and open source contributor.
 To get started, please do the following:
 
-1. Read the rest of this page for basic information about contributing to Servo.
-2. Successfully [fetch the Servo repository](../building/getting-the-code.md) and build Servo.
-2. Set up your fork of Servo and learn the basics of using Git, following the contents of our [Git Setup](git-setup.md) chapter.
-3. Learn a bit of Rust.
+1. Familiarize yourself with the [Code of Conduct](../policy/code-of-conduct.md) and [AI usage guidelines](../policy/ai-usage.md).
+2. Read the rest of this page for basic information about contributing to Servo.
+3. Successfully [fetch the Servo repository](../building/getting-the-code.md) and build Servo.
+4. Set up your fork of Servo and learn the basics of using Git, following the contents of our [Git Setup](git-setup.md) chapter.
+5. Learn a bit of Rust.
    There are many resources online for how to do this, but one of the best is the official [Learning Rust documentation](https://doc.rust-lang.org/stable/#learning-rust).
    If you are familiar with other imperative programming languages, you can learn Rust as you work more on Servo, but having a basic familiarity with the language is very useful to get started.
-4. [Set up your editor](editor-setup.md) so that it integrates with `rust-analyzer`.
-5. Read our [Style Guide](style-guide.md) for expectations about the code you contribute.
-6. Read and follow the [steps for making a pull request](making-a-pull-request.md).
+6. [Set up your editor](editor-setup.md) so that it integrates with `rust-analyzer`.
+7. Read our [Style Guide](style-guide.md) for expectations about the code you contribute.
+8. Read and follow the [steps for making a pull request](making-a-pull-request.md).
 
 ## Working on an issue
 
