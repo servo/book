@@ -22,7 +22,6 @@ In addition, you can enable a useful subset of these features with the `--enable
 ## Keyboard shortcuts
 
 - **Ctrl**+`Q` (⌘Q on macOS) exits servoshell
-- **Ctrl**+`L` (⌘L on macOS) focuses the location bar
 - **Ctrl**+`R` (⌘R on macOS) reloads the page
 - **Alt**+`←` (⌘← on macOS) goes back in history
 - **Alt**+`→` (⌘→ on macOS) goes forward in history
