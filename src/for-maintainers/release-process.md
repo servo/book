@@ -14,11 +14,49 @@ The version bump should be merged **after** this commit, so that all changes men
 
 Create a branch with the name `release/vX.Y.Z`, based on the commit that bumped the version number (in `main`).
 If the date of merge was (significantly) later, and significant changes were made, then the release branch can also be based on an earlier commit and the version number bump backported / re-applied.
-The branch should be pushed to the upstream servo repository. 
+The branch should be pushed to the upstream servo repository.
+
+### Request a stylo release
+
+In order to publish `servo` to crates.io we need a stylo release, corresponding to the git commit we depend on.
+Check the stylo commit hash specified in servos Cargo.toml, and open an issue on stylo requesting a release based on that commit.
+Usually the stylo release is handled by @Loirooriol.
+To help prepare the stylo release you can do the following steps:
+- In `Cargo.toml`, raise `version` in `[workspace.package]`.
+- For the standalone crates that have their own version, use `git diff <prev> --stat` to see what changed since last time. 
+  If there was some change, then raise the version.
+  This needs to happen both in the `[workspace.dependencies]` of the root `Cargo.toml`, and in the `[package]` of the `Cargo.toml` of the crate being bumped.
+- Raising just the patch version is problematic if the changes weren't backward compatible, so we commonly always raise the minor version to signal a breaking change (major version is 0)
+
+Once the new stylo release has been published, we need to create a PR against the servo release branch to update stylo to the crates.io version. 
+Create a branch based on the release branch, and edit the `Cargo.toml` to depend on the released crates, like in this [servo stylo bump example].
+Note that not all crates share the same stylo workspace version number, so pure search and replace won't work.
+The `servo` PR against the release branch will be merged with `rebase`, so be sure to squash your commits if you have more than one.
+
+[stylo]: https://github.com/servo/stylo
+[servo stylo bump example]: https://github.com/servo/servo/commit/77fccacc1f1fdce10498d50173aafaa09d02879e
+
+### Check for crates.io publish blockers
+
+If there were any new crates added after the last release they need to be published manually first and trusted publishing enabled:
+  - Check the newly added crate on crates.io - If it already exists, we would need to rename the crate on main first and backport that commit.
+  - If it doesn't exist, it's easiest to create a new library, change the name to the one we want to publish and publish a place-holder release.
+  - Then go to the settings page on crates.io (`https://crates.io/crates/<crate-name>/settings`) and add the set of active admins (`@mrobinson`, `@jdm`, `@sagudev`) as crate owners.
+  - Enable `Trusted Publishing` with the following settings:
+    - Repository: servo/servo
+    - Workflow: release.yml
+    - Environment: publish_crates_io
+    - Tick the box "Require trusted publishing for all new versions"
+
+One way to check for newly added crates, is running the following command, and checking if the newly added crates have `publish = false` or not:
+```sh
+# Replace <last_release_tag> with the tag from the last release, e.g. `v0.5.0`.
+git diff --name-only --diff-filter=A <last_release_tag>..HEAD -- ':(glob)**/Cargo.toml'
+```
 
 ### Creating a draft release for testing
 
-Go to the `actions` tab of the servo repository, and select the [`Release` workflow](https://github.com/servo/servo/actions/workflows/release.yml).
+Go to the `actions` tab of the servo repository, and select the [`Github Release` workflow](https://github.com/servo/servo/actions/workflows/release-github.yml).
 Select the `Run workflow` button on the top right corner.
 Choose the branch `release/vX.Y.Z` (that you just pushed) as the branch to run the workflow on.
 Leave the tickbox **unchecked** to create a release on the **nightly-releases repository**, since that allows non-maintainers to help test the release.
@@ -48,8 +86,17 @@ Click on `Generate release notes` and then wrap the generated release notes with
 </details>
 ```
 
-Contact the dedicated signer of the macOS artifact and ask them to sign the release. 
+Contact the dedicated signer of the macOS artifact (currently `@mrobinson`) and ask them to sign the release. 
 This might take a while, so this should be done a couple of days before the planned release date.
 
 Finally, add our usual release notes summary, linking to the blog post and to the common issues section (check the previous release notes for examples).
 Once the blog post is published, we publish the release.
+
+### Publishing the crates.io release
+
+The crates.io release can be published independently of the Github release via the [`Release` workflow](https://github.com/servo/servo/actions/workflows/release.yml).
+Note that changing the name of the workflow would require editing the settings on all released crates, so renaming it to e.g. publish would be quite a bit of work.
+The GitHub release and the crate.io release should be based on the same tag, so we should wait until the Github release is "ready". 
+Since signing the macos release may take time, and otherwise doesn't affect the release, doing the crates.io release at that point is okay.
+Once you started the workflow, it will need an admin to approve the workflow to proceed with the publishing.
+If the publishing fails for whatever reason, the workflow can be restarted and the script will skip previously published crates.
