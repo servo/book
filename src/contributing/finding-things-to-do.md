@@ -24,7 +24,7 @@ These can be good issues to work on because the panic backtrace can provide poin
 ## Minimizing testcases
 
 It's easy to file an issue about Servo rendering a web page incorrectly, but it's often difficult to act on those issues.
-It's very helpful to look for issues with the [`C-needs minimized testcase` label](https://github.com/servo/servo/issues/?q=is%3Aissue%20state%3Aopen%20label%3A%22C-needs%20minimized%20testcase%22) and work on isolating the HTML/CSS/JS required to reproduce the problem.
+It's very helpful to look for issues with the [`C-needs-minimized-testcase` label](https://github.com/servo/servo/issues?q=is%3Aissue+state%3Aopen+label%3A%22C-needs-minimized-testcase%22) and work on isolating the HTML/CSS/JS required to reproduce the problem.
 See the [guide](guides/minimal-reproducible-test-cases.md) for tips about minimizing nontrivial pages.
 
 ## Diagnosing failing Web Platform Tests
