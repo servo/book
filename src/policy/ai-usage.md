@@ -29,19 +29,19 @@ Note that aside from generating code or other contributions, AI tools can someti
 In general, do not assume that AI tools are a source of truth regarding how Servo works. Consider asking your questions [on Zulip](https://servo.zulipchat.com) instead.
 </div>
 
-### Reporting Security vulnerabilities found with the help of AI tooling
+### Vulnerability Report Exception
 
-The Servo project takes Security seriously.
-To avoid endangering our users by ignoring real security issues, the project accepts vulnerability reports found with the help of AI tooling, under the following conditions:
+The Servo project takes security seriously.
+To avoid endangering our users by ignoring real security issues, the project accepts vulnerability reports found with the help of large language models under the following conditions:
 
 - The report contains a **minimal** reproducer.
 - The Submitter must have **personally** run the reproducer, and verified themselves that the reproducer works and is reasonably minimal.
 - We request prose to be concise, human authored, and limited to what the submitter understands themselves.
   - If the submitter believes there is (concise!) AI-prose which is helpful towards understanding the issue, then this may be added in a collapsible `<details>` section,
     clearly marked as AI output.
-- Any Security Advisory the Servo Project publishes should contain fully human-written prose.
+- Any security advisory the Servo project publishes should contain fully human-written prose.
   If the submitted report is deemed to contain AI-prose by the maintainers, then we reserve the right to transform the advisory into a regular issue, and skip publishing a GitHub Security advisory.
-  Judgment will be made taking into account the severity of the issue, and in any case we will mention Security fixes in our Changelog.
+  Judgment will be made taking into account the severity of the issue, and in any case we will mention security fixes in our changelog.
 
 ### AI Policy FAQ
 
