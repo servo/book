@@ -35,3 +35,37 @@ Every `.ini`. file under that directory corresponds to a [test source file](http
 
 You can also explore all the tests that Servo fails in the web-based [wpt.fyi interface](https://wpt.fyi/results/?label=master&label=experimental&product=servo&aligned).
 See the [guide](guides/diagnosing-errors/stable-wpt-errors.md) for tips about identifying the cause of WPT test failures.
+
+## Triaging untriaged issues
+
+All new issues start with a [C-untriaged](https://github.com/servo/servo/issues?q=is%3Aissue+state%3Aopen+label%3AC-untriaged) label.
+To triage an issue, we need to categorize it by area and impact, as well as the current condition of the issue, and any platform restrictions.
+These are all indicated through [labels](contributing/issue-labels.md) applied to the issue.
+Once an issue is triaged, we should remove the `C-untriaged` label.
+
+While triage can be performed directly by any [contributor](https://github.com/servo/project/blob/main/governance/README.md#contributors) or [maintainer](https://github.com/servo/project/blob/main/governance/README.md#maintainers), anybody can leave a comment suggesting adding labels or next steps.
+
+### Area
+
+To triage the area of an issue, figure out which labels with the [`A-` prefix](https://github.com/servo/servo/labels?q=A-) are relevant.
+Does it affect a particular web API or project component?
+
+### Impact
+
+To triage the impact of an issue, figure out which labels with the [`I-` prefix](https://github.com/servo/servo/labels?q=I-) are relevant.
+Does the engine crash (`I-crash`) or panic (`I-panic`)?
+Does the issue trigger unnecessary memory usage (`I-perf-bloat`) or performance slowdowns (`I-perf-slow`)?
+
+### Condition
+
+To triage the condition of an issue, figure out which labels with the [`C-` prefix](https://github.com/servo/servo/labels?q=I-) are relevant.
+
+Is more information required from the submitter (`C-clarifying`)?
+Has someone else reproduced the problem (`C-reproduced`)?
+Is the issue a regression, and is there a regression range (`C-needs-regression-range`)?
+Are there reliable steps for anyone to reproduce the issue (`C-needs-investigation`), or do we still need a minimized testcase (`C-needs-minimized-testcase`/`C-has-manual-testcase`)?
+
+### Platform
+
+To triage the platform of an issue, determine if it affects all platforms equally or only a subset of supported platforms.
+If only a subset are affected, find appropriate labels with the [`P-` prefix](https://github.com/servo/servo/labels?q=P-) that should be applied.
