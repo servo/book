@@ -35,7 +35,7 @@
 - [Git Setup](contributing/git-setup.md)
 - [Editor Setup](contributing/editor-setup.md)
 - [Style Guide](contributing/style-guide.md)
-- [Issue labels](contributing/issue-labels.md)
+- [Issue Labels](contributing/issue-labels.md)
 - [Making a Pull Request](contributing/making-a-pull-request.md)
 - [Testing](contributing/testing.md)
 - [Debugging](contributing/debugging/index.md)
