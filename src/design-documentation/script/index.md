@@ -221,7 +221,8 @@ So in fact
     let children = & cats.children;
     play_with(children)
 ```
-is actually safe code! To iterate: Because by construction we enforce that `dom_structs` can never move, the reference `&cats.children` is always valid.
+is actually safe code!
+Because by construction we enforce that `dom_struct`s can never move, the reference `&cats.children` is always valid.
 In constrast, this is invalid code (and crown will complain about it).
 ```rust
     #[dom_struct]
