@@ -20,7 +20,6 @@ normal references.
 The following examples contain simplifications of real Servo code patterns to make them easier to understand.
 Assume the following code, declaring a `Kittens` type that contains pointers to `Cat` types, all of which are owned by the garbage collector:
 ```rust
-#[dom_struct]
 struct Kittens {
     children: Vec<Dom<Cat>>
 }
@@ -38,7 +37,6 @@ Remember that the Garbage Collector cannot change pointers of our local variable
 
 Hence, we need to transform the code into
 ```rust
-#[dom_struct]
 struct Kittens {
     children: Vec<Dom<Cat>>
 }
@@ -139,7 +137,6 @@ Since this type borrows the `&mut JSContext`, it makes it impossible to invoke a
 # The performance of rooting
 
 ```rust
-#[dom_struct]
 struct Kittens {
     children: Vec<Cat>
 }
@@ -172,7 +169,6 @@ struct UnrootedDom<'a, T> {
 Then whenever we have a handle on `UnrootedDom` we know that as long as this lives we can not call any methods that has a GC.
 The following is **invalid** code.
 ```rust
-#[dom_struct]
 struct Kittens {
     children: Vec<UnrootedDom<'_, Cat>>,
 }
@@ -206,6 +202,53 @@ fn some_function(cx: &mut JSContext, cat: &Cat) {
 }
 ```
 
+# DOMStructs
+In servo you will see structs such as:
+```rust
+#[dom_struct]
+struct Kitten {
+  children: Vec<Dom<Cat>>
+}
+```
+We ignored these for now because getting the rooting right is important.
+Because of how we allocate `dom_structs`, we will actually enforce that the whole `Kitten` struct can never be moved by the GC.
+So in fact
+```rust
+    #[dom_struct]
+    struct Kitten {
+        children: Vec<Dom<Cat>>
+    }
+    let children = & cats.children;
+    play_with(children)
+```
+is actually safe code!
+Because by construction we enforce that `dom_struct`s can never move, the reference `&cats.children` is always valid.
+In constrast, this is invalid code (and crown will complain about it).
+```rust
+    #[dom_struct]
+    struct Kitten {
+        children: Vec<Dom<Cat>>
+    }
+    for child in cats.children.drain(..) {
+        play_with(children);
+    }
+```
+The reason is simple. This can be written as:
+```rust
+    #[dom_struct]
+    struct Kitten {
+        children: Vec<Dom<Cat>>
+    }
+    loop  {
+        let child = cats.children.pop();
+        RUN_GC();
+        if child.is_none() {
+            break;
+        }
+        play_with(child.unwrap());
+    }
+```
+This clearly demonstrates that in a loop `child` would be a dangling reference, as it has moved from the `dom_struct` into something not reached.
 
 ## More Information
 TODO:
