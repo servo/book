@@ -122,6 +122,8 @@ You can also update test expectations from Try runs performed on CI. Every CI ru
 
     ./mach update-wpt https://github.com/servo/servo/actions/runs/<ID-OF-CI-RUN>
 
+Note that this requires installing the [GitHub CLI](https://cli.github.com/) and logging in to run properly.
+
 Running *all* Web Platform Tests locally will take a long time and often cause unrelated failures (such as the runner exceeding the maximum number of open files on your system).
 The test expectations are also set based on the results of Servo's CI machines, so differences in your setup might cause failures.
 
