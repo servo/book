@@ -24,7 +24,7 @@ If you run into trouble building Servo and you do not see your error listed on a
 
 - `curl --version` should print a version like 7.83.1 or 8.4.0
   - On Windows, type `curl.exe --version` instead, to avoid getting the PowerShell alias for `Invoke-WebRequest`
-- `uv --version` should print **0.4.30 or newer**
+- `uv --version` should print **0.11.0 or newer**
   - Servo's `mach` build tool depends on `uv` to provision a pinned version of Python (set by the `.python-version` file in the repo) and create a local virtual environment (`.venv` directory) into which the python dependency modules are installed.
   - If the system already has an installation of the required Python version, then `uv` will just symlink to that installation to save disk space.
   - If the versions do not match or no Python installation is present on the host, then `uv` will download the required binaries.
