@@ -130,7 +130,7 @@ For example, almost all tests for [SubtleCrypto](https://github.com/servo/servo/
 In this case you can run only these tests with `./mach test-wpt WebCryptoAPI`, followed by `./mach update-wpt` as described above.
 To ensure that other tests didn't break, do a [try run](#running-web-platform-tests-on-your-github-fork) afterwards.
 
-For updating WebGPU expectations, please see [WebGPU](../architecture/webgpu.md#updating-webgpu-cts-expectations) chapter for more information.
+For updating WebGPU expectations, please see [WebGPU](../design-documentation/webgpu.md#updating-webgpu-cts-expectations) chapter for more information.
 
 ## Modifying Web Platform Tests
 
