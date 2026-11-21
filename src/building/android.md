@@ -11,7 +11,7 @@
   sudo $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --install \
    "build-tools;36.0.0" \
    "emulator" \
-   "ndk;28.2.13676358" \
+   "ndk;29.0.14206865" \
    "platform-tools" \
    "platforms;android-37.2" \
    "system-images;android-37;google_apis;arm64-v8a"
