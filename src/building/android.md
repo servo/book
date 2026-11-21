@@ -13,7 +13,7 @@
    "emulator" \
    "ndk;28.2.13676358" \
    "platform-tools" \
-   "platforms;android-37" \
+   "platforms;android-37.2" \
    "system-images;android-37;google_apis;arm64-v8a"
   ```
 - Run `./mach build --android`
