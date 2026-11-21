@@ -54,3 +54,18 @@
 1. While you may ask for a review at any time if stuck, now is the time to take a last look at your code and decide if you want to refactor anything.
 2. If you are satisfied, now is the time to ask for a final review.
 3. Congratulations, the new Web API you implemented should soon merge.
+
+## Appendix - Common issues
+
+### Associated caches/resource tracking
+
+Many web APIs require tracking keeping track of WebIDL objects in some global context (e.g. GlobalScope/Window/ScriptThread).
+Forgetting to remove objects from tracking storages can lead to memory leaks.
+Two common places for this kind of cleanup are [Window::clear_js_context](https://github.com/servo/servo/blob/4dd32ba6b5d3e4990df472c3efaacefbc511293b/components/script/dom/window/window.rs#L2598) or [Document::unloading_cleanup_steps](https://github.com/servo/servo/blob/4dd32ba6b5d3e4990df472c3efaacefbc511293b/components/script/dom/document/document.rs#L863).
+
+### Unclear asynchronous reference lifecycle
+
+Many web APIs perform operations asynchronously and use the [Trusted](https://doc.servo.org/script/dom/bindings/refcounted/struct.Trusted.html) type to store safe references to WebIDL objects.
+The Trusted type prevents the stored object from being garbage collected, so any long-lived (or indefinite) Trusted value can lead to significant memory leaks.
+To avoid these leaks, ensure that any Trusted value that lives outside of a `task!` macro can be dropped via an explicit cancellation operation—this most often impacts code that uses callbacks.
+Ensure that outstanding asynchronous operations are cancelled when unloading a document by integrating with the cleanup suggestions from the previous section.
